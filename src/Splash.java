@@ -9,8 +9,9 @@ public class Splash {
 
         //Create new window
         JWindow window = new JWindow();
-        window.setBounds(100,100,400,300); 
-  
+        window.setSize(300, 200);
+    
+        //Create and show label
         JLabel label = new JLabel(new ImageIcon("src/assets/images/splash.jpg"));
         window.getContentPane().add(label, BorderLayout.CENTER);
         window.setVisible(true);
