@@ -1,3 +1,6 @@
-set -u -e
-javac Main.java PlayerScreen.java Splash.java
+#!/bin/bash
+set -u -e  
+# Compile the Java files
+javac Main.java Splash.java
+# Run the program
 java Main
