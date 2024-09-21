@@ -10,7 +10,7 @@ public class Main {
 
         // Show splash screen
         Splash.showSplashScreen(frame);
-        System.out.print("Showing Spalsh Screen")
+        System.out.print("Showing Spalsh Screen");
 
         // Timer to remove splash screen after 5 secs
         Timer timer = new Timer(5000, e -> {
