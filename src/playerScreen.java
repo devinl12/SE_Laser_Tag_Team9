@@ -2,10 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class PlayerScreen {
+public class playerScreen {
     private JFrame frame;
 
-    public PlayerScreen(JFrame frame) {
+    public playerScreen(JFrame frame) {
         this.frame = frame;
     }
 
