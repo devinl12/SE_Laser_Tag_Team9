@@ -25,6 +25,18 @@ public class PlayerService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        //Seeing if this works
+        finally {
+            // Close the resources manually
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        //block of code
 
         return players;
     }
