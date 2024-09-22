@@ -1,5 +1,6 @@
 import java.sql.*;
-public class PSQLConn {
+
+public class connectionUnitTest {
 	public static void main(String[] args) {
 		String db_url = "jdbc:postgresql://localhost:5432/photon";
 		String user = "student";
