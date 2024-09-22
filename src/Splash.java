@@ -8,8 +8,6 @@ import java.io.IOException;
 
 public class Splash {
     private static BufferedImage splashImage;
-
-
     //Displays splash screen
     public static void showSplashScreen(JFrame mainFrame) {
         //Load splash image
