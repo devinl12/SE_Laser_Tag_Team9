@@ -9,14 +9,13 @@ public class UDPTransmit {
         try {
 
             DatagramSocket socket = new DatagramSocket(); 
-            //using 255.255.255.255 broadcast address to send to all devices on the same local network
-            InetAddress broadcastAddress = InetAddress.getByName("127.0.0.1");
+            InetAddress castAddress = InetAddress.getByName("127.0.0.1");
             
             String message = String.valueOf(equipmentId);
             byte[] packetBytes = message.getBytes();
             
-            // creating packet containing the equipment ID and sending over the UDP socket to the multicast address
-            DatagramPacket packet = new DatagramPacket(packetBytes, packetBytes.length, broadcastAddress, 7500);
+            // creating packet containing the equipment ID and sending over the UDP socket to the castaddress
+            DatagramPacket packet = new DatagramPacket(packetBytes, packetBytes.length, castAddress, 7500);
             socket.send(packet);
 
             //for debugging
