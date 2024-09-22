@@ -4,7 +4,7 @@ import java.net.DatagramSocket;
 public class UDPReceive {
     public static void listenForHits() {
         try {
-            DatagramSocket socket = new DatagramSocket(7501);
+            DatagramSocket socket = new DatagramSocket(7500);
             byte[] buffer = new byte[256]; 
             
             while (true) {
