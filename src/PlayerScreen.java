@@ -31,7 +31,7 @@ public class PlayerScreen {
 
         // Team 1 Table with sample data
         String[] team1Columns = {"Team Pink Players"};
-        Object[][] team1Data = {{"Player 1"}, {"Player 2"}, {"Player 3"}}; // Sample data
+        Object[][] team1Data = {{"Opus"}, {"PhotonBlaze"}, {"LaserFury"}}; // Sample data
         JTable team1Table = new JTable(team1Data, team1Columns);
         JScrollPane team1ScrollPane = new JScrollPane(team1Table);
         leftPanel.add(team1ScrollPane, BorderLayout.CENTER);
@@ -69,7 +69,7 @@ public class PlayerScreen {
 
         // Team 2 Table with sample data
         String[] team2Columns = {"Team Green Players"};
-        Object[][] team2Data = {{"Player A"}, {"Player B"}, {"Player C"}}; // Sample data
+        Object[][] team2Data = {{"NeonViper"}, {"StormRider"}, {"CyberWolf"}}; // Sample data
         JTable team2Table = new JTable(team2Data, team2Columns);
 
         // Set custom colors for the table
