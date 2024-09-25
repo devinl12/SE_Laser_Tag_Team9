@@ -14,7 +14,7 @@ public class Main {
         // Timer to remove splash screen after 5 secs
         Timer timer = new Timer(5000, e -> {
             // Remove splash screen and show the player screen
-            playerScreen playerScreen = new playerScreen(frame);
+            PlayerScreen playerScreen = new PlayerScreen(frame);
             playerScreen.showPlayerScreen();
         });
         timer.setRepeats(false);
