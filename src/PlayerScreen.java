@@ -1,5 +1,8 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class PlayerScreen {
 
@@ -42,6 +45,17 @@ public class PlayerScreen {
 
         // Add Player Button for Team 1
         JButton addTeam1PlayerButton = new JButton("Add Player to Pink Team");
+        addTeam1PlayerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String[] nextPlayer = playerService.getNextPlayer(); // Get next player
+                if (nextPlayer != null) {
+                    ((DefaultTableModel) team1Table.getModel()).addRow(new Object[]{nextPlayer[1]}); // Add player to table
+                } else {
+                    JOptionPane.showMessageDialog(frame, "No more players available to add.");
+                }
+            }
+        });
         leftPanel.add(addTeam1PlayerButton, BorderLayout.SOUTH);
 
         // Right panel (Team 2)
@@ -69,6 +83,17 @@ public class PlayerScreen {
 
         // Add Player Button for Team 2
         JButton addTeam2PlayerButton = new JButton("Add Player to Green Team");
+        addTeam2PlayerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String[] nextPlayer = playerService.getNextPlayer(); // Get next player
+                if (nextPlayer != null) {
+                    ((DefaultTableModel) team2Table.getModel()).addRow(new Object[]{nextPlayer[1]}); // Add player to table
+                } else {
+                    JOptionPane.showMessageDialog(frame, "No more players available to add.");
+                }
+            }
+        });
         rightPanel.add(addTeam2PlayerButton, BorderLayout.SOUTH);
 
         // Add the two panels to the frame
