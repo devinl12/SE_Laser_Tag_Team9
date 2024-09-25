@@ -23,8 +23,10 @@ public class PlayerScreen {
         leftPanel.setBackground(new Color(173, 216, 230)); // Pastel blue
         leftPanel.setLayout(new BorderLayout());
 
-        // Team 1 Table
-        JTable team1Table = new JTable(0, 1); // Placeholder table with 2 columns
+        // Team 1 Table with sample data
+        String[] team1Columns = {"Player"};
+        Object[][] team1Data = {{"Player 1"}, {"Player 2"}, {"Player 3"}}; // Sample data
+        JTable team1Table = new JTable(team1Data, team1Columns);
         JScrollPane team1ScrollPane = new JScrollPane(team1Table);
         leftPanel.add(team1ScrollPane, BorderLayout.CENTER);
 
@@ -43,8 +45,11 @@ public class PlayerScreen {
         rightPanel.setBackground(new Color(152, 251, 152)); // Pastel green
         rightPanel.setLayout(new BorderLayout());
 
-        // Team 2 Table
-        JTable team2Table = new JTable(0, 1); // Placeholder table with 2 columns
+        // Team 2 Table with sample data
+        String[] team2Columns = {"Player"};
+        Object[][] team2Data = {{"Player A"}, {"Player B"}, {"Player C"}}; // Sample data
+        JTable team2Table = new JTable(team2Data, team2Columns);
+
         // Set custom colors for the table
         team2Table.setBackground(new Color(240, 255, 240));  // Light honeydew background
         team2Table.setForeground(Color.BLACK);               // Black text
