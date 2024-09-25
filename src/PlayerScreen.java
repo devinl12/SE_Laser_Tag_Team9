@@ -6,7 +6,7 @@ public class PlayerScreen {
     private JFrame frame;
 
     // Constructor
-    public playerScreen(JFrame frame) {
+    public PlayerScreen(JFrame frame) {
         this.frame = frame;
     }
 
