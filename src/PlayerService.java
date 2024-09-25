@@ -3,9 +3,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerService {
-    private String dbUrl = "jdbc:postgresql://localhost:5432/photon";
+    //private String dbUrl = "jdbc:postgresql://localhost:5432/photon";
+    private String dbUrl = "jdbc:postgresql://localhost/photon";
     private String user = "student";
-    private String pass = "student";
+    //private String pass = "student";
+    private String pass = "";
     private int nextPlayerId = 1; // Start with the first player
 
     // Method to fetch all players from the database
@@ -13,7 +15,7 @@ public class PlayerService {
         String query = "SELECT * FROM players;";
         List<String[]> players = new ArrayList<>();
 
-        try (Connection connection = DriverManager.getConnection(dbUrl, user);
+        try (Connection connection = DriverManager.getConnection(dbUrl, user,pass);
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
@@ -34,7 +36,7 @@ public class PlayerService {
         String query = "SELECT * FROM players WHERE id = ?;";
         String[] player = null;
 
-        try (Connection connection = DriverManager.getConnection(dbUrl, user);
+        try (Connection connection = DriverManager.getConnection(dbUrl, user,pass);
              PreparedStatement pstmt = connection.prepareStatement(query)) {
 
             pstmt.setInt(1, nextPlayerId); // Set the next player ID to fetch
