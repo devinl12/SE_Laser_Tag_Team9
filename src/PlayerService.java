@@ -3,9 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerService {
-    private String dbname = "photon";
+    private String dbname = "jdbc:postgresql://localhost:5432/photon";
     private String user = "student";
-    //private String pass = "student";
+    private String pass = "student";
     private int nextPlayerId = 1; // Start with the first player
 
     // Method to fetch all players from the database
@@ -13,7 +13,7 @@ public class PlayerService {
         String query = "SELECT * FROM players;";
         List<String[]> players = new ArrayList<>();
 
-        try (Connection connection = DriverManager.getConnection(dbname, user);
+        try (Connection connection = DriverManager.getConnection(dbUrl, user, pass);
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 

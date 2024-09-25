@@ -6,11 +6,15 @@ import java.awt.event.ActionListener;
 
 public class PlayerScreen {
 
-    private JFrame frame;
+     private JFrame frame;
+    private PlayerService playerService;
+    private JTable team1Table;
+    private JTable team2Table;
 
     // Constructor
     public PlayerScreen(JFrame frame) {
         this.frame = frame;
+        this.playerService = new PlayerService();
     }
 
     // Method to show the player screen
