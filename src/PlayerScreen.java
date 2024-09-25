@@ -20,11 +20,10 @@ public class PlayerScreen {
 
         // Left panel (Team 1)
         JPanel leftPanel = new JPanel();
-        leftPanel.setBackground(new Color(173, 216, 230)); // Pastel blue
         leftPanel.setLayout(new BorderLayout());
 
         // Team 1 Table with sample data
-        String[] team1Columns = {"Player"};
+        String[] team1Columns = {"Team Blue Players"};
         Object[][] team1Data = {{"Player 1"}, {"Player 2"}, {"Player 3"}}; // Sample data
         JTable team1Table = new JTable(team1Data, team1Columns);
         JScrollPane team1ScrollPane = new JScrollPane(team1Table);
@@ -37,7 +36,7 @@ public class PlayerScreen {
         team1Table.setSelectionForeground(Color.WHITE); 
 
         // Add Player Button for Team 1
-        JButton addTeam1PlayerButton = new JButton("Add Player to Team 1");
+        JButton addTeam1PlayerButton = new JButton("Add Player to Blue Team");
         leftPanel.add(addTeam1PlayerButton, BorderLayout.SOUTH);
 
         // Right panel (Team 2)
@@ -46,21 +45,21 @@ public class PlayerScreen {
         rightPanel.setLayout(new BorderLayout());
 
         // Team 2 Table with sample data
-        String[] team2Columns = {"Player"};
+        String[] team2Columns = {"Team Green Players"};
         Object[][] team2Data = {{"Player A"}, {"Player B"}, {"Player C"}}; // Sample data
         JTable team2Table = new JTable(team2Data, team2Columns);
 
         // Set custom colors for the table
-        team2Table.setBackground(new Color(240, 255, 240));  // Light honeydew background
-        team2Table.setForeground(Color.BLACK);               // Black text
-        team2Table.setSelectionBackground(new Color(144, 238, 144));  // Light green when selected
+        team2Table.setBackground(new Color(152, 251, 152));  
+        team2Table.setForeground(Color.BLACK);               
+        team2Table.setSelectionBackground(new Color(144, 238, 144));  
         team2Table.setSelectionForeground(Color.BLACK);
         JScrollPane team2ScrollPane = new JScrollPane(team2Table);
        
         rightPanel.add(team2ScrollPane, BorderLayout.CENTER);
 
         // Add Player Button for Team 2
-        JButton addTeam2PlayerButton = new JButton("Add Player to Team 2");
+        JButton addTeam2PlayerButton = new JButton("Add Player to Green Team");
         rightPanel.add(addTeam2PlayerButton, BorderLayout.SOUTH);
 
         // Add the two panels to the frame
