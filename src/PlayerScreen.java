@@ -24,9 +24,15 @@ public class PlayerScreen {
         leftPanel.setLayout(new BorderLayout());
 
         // Team 1 Table
-        JTable team1Table = new JTable(0, 2); // Placeholder table with 2 columns
+        JTable team1Table = new JTable(0, 1); // Placeholder table with 2 columns
         JScrollPane team1ScrollPane = new JScrollPane(team1Table);
         leftPanel.add(team1ScrollPane, BorderLayout.CENTER);
+
+        // Set custom colors for the table
+        team1Table.setBackground(new Color(224, 255, 255));  // Light cyan background
+        team1Table.setForeground(Color.BLACK);               // Black text
+        team1Table.setSelectionBackground(new Color(135, 206, 250));  // Light blue when selected
+        team1Table.setSelectionForeground(Color.WHITE); 
 
         // Add Player Button for Team 1
         JButton addTeam1PlayerButton = new JButton("Add Player to Team 1");
@@ -38,8 +44,14 @@ public class PlayerScreen {
         rightPanel.setLayout(new BorderLayout());
 
         // Team 2 Table
-        JTable team2Table = new JTable(0, 2); // Placeholder table with 2 columns
+        JTable team2Table = new JTable(0, 1); // Placeholder table with 2 columns
+        // Set custom colors for the table
+        team2Table.setBackground(new Color(240, 255, 240));  // Light honeydew background
+        team2Table.setForeground(Color.BLACK);               // Black text
+        team2Table.setSelectionBackground(new Color(144, 238, 144));  // Light green when selected
+        team2Table.setSelectionForeground(Color.BLACK);
         JScrollPane team2ScrollPane = new JScrollPane(team2Table);
+       
         rightPanel.add(team2ScrollPane, BorderLayout.CENTER);
 
         // Add Player Button for Team 2
