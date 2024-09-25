@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerService {
-    private String dbname = "jdbc:postgresql://localhost:5432/photon";
+    private String dbUrl = "jdbc:postgresql://localhost:5432/photon";
     private String user = "student";
     private String pass = "student";
     private int nextPlayerId = 1; // Start with the first player
