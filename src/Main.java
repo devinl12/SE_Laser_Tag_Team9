@@ -1,4 +1,4 @@
-iimport javax.swing.*;
+import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,7 +14,7 @@ public class Main {
         // Timer to remove splash screen after 5 secs
         Timer timer = new Timer(5000, e -> {
             // Remove splash screen and show the player screen
-            PlayerScreen playerScreen = new PlayerScreen(frame);
+            playerScreen playerScreen = new playerScreen(frame);
             playerScreen.showPlayerScreen();
         });
         timer.setRepeats(false);
