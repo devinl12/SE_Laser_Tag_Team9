@@ -15,11 +15,6 @@ public class PlayerScreen {
         // Clear the current content of the frame
         frame.getContentPane().removeAll();
 
-        // Add big title to the top of the frame
-        JLabel titleLabel = new JLabel("Photon Laser Tag Teams", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Verdana", Font.BOLD, 36)); // Set font and size for the title
-        frame.add(titleLabel, BorderLayout.NORTH); // Add the title to the top
-        
         // Set layout to GridLayout to split the frame into two halves
         frame.setLayout(new GridLayout(1, 2));
 
