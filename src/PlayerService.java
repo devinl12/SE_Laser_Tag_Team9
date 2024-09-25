@@ -3,11 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerService {
-    //private String dbUrl = "jdbc:postgresql://localhost:5432/photon";
-    private String dbUrl = "jdbc:postgresql://localhost/photon";
+    private String dbUrl = "jdbc:postgresql://localhost:5432/photon";
     private String user = "student";
-    //private String pass = "student";
-    private String pass = "";
+    private String pass = "student";
     private int nextPlayerId = 1; // Start with the first player
 
     // Method to fetch all players from the database
