@@ -3,18 +3,23 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class PlayerScreen {
 
-     private JFrame frame;
+    private JFrame frame;
     private PlayerService playerService;
     private JTable team1Table;
     private JTable team2Table;
+    private List<String[]> players;  // List of players from the database
+    private int nextPlayerIndex;     // Index to track the next player to be added
 
     // Constructor
     public PlayerScreen(JFrame frame) {
         this.frame = frame;
         this.playerService = new PlayerService();
+        this.players = playerService.getPlayers(); // Fetch players from the service
+        this.nextPlayerIndex = 0;  // Initialize index for the next player
     }
 
     // Method to show the player screen
@@ -29,35 +34,22 @@ public class PlayerScreen {
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new BorderLayout());
 
-        // Team 1 Table with sample data
+        // Team 1 Table with initial empty data
         String[] team1Columns = {"Team Pink Players"};
-        Object[][] team1Data = {{"Opus"}, {"PhotonBlaze"}, {"LaserFury"}}; // Sample data
-        JTable team1Table = new JTable(team1Data, team1Columns);
+        DefaultTableModel team1Model = new DefaultTableModel(team1Columns, 0);
+        team1Table = new JTable(team1Model);
         JScrollPane team1ScrollPane = new JScrollPane(team1Table);
         leftPanel.add(team1ScrollPane, BorderLayout.CENTER);
 
-        // Set custom colors for the table
-        team1Table.setBackground(new Color(250, 128, 114));  
-        team1Table.setForeground(Color.BLACK);               
-        team1Table.setSelectionBackground(new Color(255, 182, 193));  
-        team1Table.setSelectionForeground(Color.WHITE); 
-
-        // Set custom font for the table content and headers
-        Font tableFont = new Font("SansSerif", Font.PLAIN, 16); // Table content font
-        team1Table.setFont(tableFont);                          // Set table font
-        team1Table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 18)); // Set header font
+        // Set custom colors and font for the table
+        customizeTable(team1Table, new Color(250, 128, 114), new Color(255, 182, 193));
 
         // Add Player Button for Team 1
         JButton addTeam1PlayerButton = new JButton("Add Player to Pink Team");
         addTeam1PlayerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String[] nextPlayer = playerService.getNextPlayer(); // Get next player
-                if (nextPlayer != null) {
-                    ((DefaultTableModel) team1Table.getModel()).addRow(new Object[]{nextPlayer[1]}); // Add player to table
-                } else {
-                    JOptionPane.showMessageDialog(frame, "No more players available to add.");
-                }
+                addPlayerToTeam(team1Model); // Add player to team 1
             }
         });
         leftPanel.add(addTeam1PlayerButton, BorderLayout.SOUTH);
@@ -67,35 +59,22 @@ public class PlayerScreen {
         rightPanel.setBackground(new Color(152, 251, 152)); // Pastel green
         rightPanel.setLayout(new BorderLayout());
 
-        // Team 2 Table with sample data
+        // Team 2 Table with initial empty data
         String[] team2Columns = {"Team Green Players"};
-        Object[][] team2Data = {{"NeonViper"}, {"StormRider"}, {"CyberWolf"}}; // Sample data
-        JTable team2Table = new JTable(team2Data, team2Columns);
-
-        // Set custom colors for the table
-        team2Table.setBackground(new Color(152, 251, 152));  
-        team2Table.setForeground(Color.BLACK);               
-        team2Table.setSelectionBackground(new Color(144, 238, 144));  
-        team2Table.setSelectionForeground(Color.BLACK);
+        DefaultTableModel team2Model = new DefaultTableModel(team2Columns, 0);
+        team2Table = new JTable(team2Model);
         JScrollPane team2ScrollPane = new JScrollPane(team2Table);
-
-        // Set custom font for Team 2 table
-        team2Table.setFont(tableFont);                          // Set table font
-        team2Table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 18)); // Set header font
-       
         rightPanel.add(team2ScrollPane, BorderLayout.CENTER);
+
+        // Set custom colors and font for the table
+        customizeTable(team2Table, new Color(152, 251, 152), new Color(144, 238, 144));
 
         // Add Player Button for Team 2
         JButton addTeam2PlayerButton = new JButton("Add Player to Green Team");
         addTeam2PlayerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String[] nextPlayer = playerService.getNextPlayer(); // Get next player
-                if (nextPlayer != null) {
-                    ((DefaultTableModel) team2Table.getModel()).addRow(new Object[]{nextPlayer[1]}); // Add player to table
-                } else {
-                    JOptionPane.showMessageDialog(frame, "No more players available to add.");
-                }
+                addPlayerToTeam(team2Model); // Add player to team 2
             }
         });
         rightPanel.add(addTeam2PlayerButton, BorderLayout.SOUTH);
@@ -107,5 +86,29 @@ public class PlayerScreen {
         // Revalidate and repaint the frame to reflect changes
         frame.revalidate();
         frame.repaint();
+    }
+
+    // Helper method to add the next player to a team
+    private void addPlayerToTeam(DefaultTableModel teamModel) {
+        if (nextPlayerIndex < players.size()) {
+            String[] player = players.get(nextPlayerIndex);  // Get the next player
+            teamModel.addRow(new Object[]{player[1]});  // Add player's codename to the table
+            nextPlayerIndex++;  // Increment to the next player for future button clicks
+        } else {
+            JOptionPane.showMessageDialog(frame, "No more players available to add.");
+        }
+    }
+
+    // Helper method to customize the JTable
+    private void customizeTable(JTable table, Color bgColor, Color selectionColor) {
+        table.setBackground(bgColor);  
+        table.setForeground(Color.BLACK);               
+        table.setSelectionBackground(selectionColor);  
+        table.setSelectionForeground(Color.WHITE); 
+
+        // Set custom font for the table content and headers
+        Font tableFont = new Font("SansSerif", Font.PLAIN, 16);  // Table content font
+        table.setFont(tableFont);                                // Set table font
+        table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 18));  // Set header font
     }
 }
