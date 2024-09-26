@@ -1,6 +1,6 @@
 #!/bin/bash
 set -u -e  
 # Compile the Java files
-javac -cp "lib/postgresql-42.7.4.jar" Main.java  playerScreen.java PSQLConn.java Splash.java PlayerService.java
+javac Main.java  PlayerScreen.java Splash.java PlayerService.java UDPTransmit.java UDPReceive.java
 # Run the program
-java -cp "lib/postgresql-42.7.4.jar" Main
+java -cp "../lib/postgresql-42.7.4.jar":. Main
