@@ -12,14 +12,12 @@ public class PlayerScreen {
     private JTable team1Table;
     private JTable team2Table;
     private List<String[]> players;  // List of players from the database
-    private int nextPlayerIndex;     // Index to track the next player to be added
 
     // Constructor
     public PlayerScreen(JFrame frame) {
         this.frame = frame;
         this.playerService = new PlayerService();
         this.players = playerService.getPlayers(); // Fetch players from the service
-        this.nextPlayerIndex = 0;  // Initialize index for the next player
     }
 
     // Method to show the player screen
@@ -88,23 +86,48 @@ public class PlayerScreen {
         frame.repaint();
     }
 
-    // Helper method to add the next player to a team
+    // Helper method to add a player based on ID input from the user
     private void addPlayerToTeam(DefaultTableModel teamModel) {
-        if (nextPlayerIndex < players.size()) {
-            String[] player = players.get(nextPlayerIndex);  // Get the next player
-            teamModel.addRow(new Object[]{player[1]});  // Add player's codename to the table
-            nextPlayerIndex++;  // Increment to the next player for future button clicks
-        } else {
-            JOptionPane.showMessageDialog(frame, "No more players available to add.");
+        // Prompt the user to input the player's ID
+        String inputId = JOptionPane.showInputDialog(frame, "Enter Player ID:");
+
+        if (inputId != null && !inputId.trim().isEmpty()) {
+            String[] player = findPlayerById(inputId);
+
+            if (player != null) {
+                // Player ID found, add the player to the table
+                teamModel.addRow(new Object[]{player[1]});  // Add player's codename to the table
+            } else {
+                // Player ID not found, prompt to add a new player
+                String newCodename = JOptionPane.showInputDialog(frame, "ID not found. Enter new player's name:");
+
+                if (newCodename != null && !newCodename.trim().isEmpty()) {
+                    // Add the new player to the list and database
+                    playerService.addNewPlayer(inputId, newCodename);
+
+                    // Add the new player to the table
+                    teamModel.addRow(new Object[]{newCodename});
+                }
+            }
         }
+    }
+
+    // Helper method to find a player by ID
+    private String[] findPlayerById(String id) {
+        for (String[] player : players) {
+            if (player[0].equals(id)) {
+                return player;  // Return the player if ID matches
+            }
+        }
+        return null;  // Return null if player not found
     }
 
     // Helper method to customize the JTable
     private void customizeTable(JTable table, Color bgColor, Color selectionColor) {
-        table.setBackground(bgColor);  
-        table.setForeground(Color.BLACK);               
-        table.setSelectionBackground(selectionColor);  
-        table.setSelectionForeground(Color.WHITE); 
+        table.setBackground(bgColor);
+        table.setForeground(Color.BLACK);
+        table.setSelectionBackground(selectionColor);
+        table.setSelectionForeground(Color.WHITE);
 
         // Set custom font for the table content and headers
         Font tableFont = new Font("SansSerif", Font.PLAIN, 16);  // Table content font
