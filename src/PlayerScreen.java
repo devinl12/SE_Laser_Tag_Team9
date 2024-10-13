@@ -24,8 +24,7 @@ public class PlayerScreen implements KeyListener{
 
         frame.addKeyListener(this);
         frame.setFocusable(true);
-        frame.requestFocusInWindow(); 
-
+        frame.requestFocusInWindow();
     }
 
     // Graphics for the player screen
@@ -42,6 +41,8 @@ public class PlayerScreen implements KeyListener{
         JScrollPane team1ScrollPane = new JScrollPane(team1Table);
         leftPanel.add(team1ScrollPane, BorderLayout.CENTER);
         customizeTable(team1Table, new Color(250, 128, 114), new Color(255, 182, 193));
+      
+
 
         // Add Player Button for Pink Team
         JButton addTeam1PlayerButton = new JButton("Add Player to Pink Team");
@@ -65,7 +66,7 @@ public class PlayerScreen implements KeyListener{
         customizeTable(team2Table, new Color(152, 251, 152), new Color(144, 238, 144));
 
         // Add Player Button for Green Table
-        JButton addTeam2PlayerButton = new JButton("Add Player to Green Team");
+         JButton addTeam2PlayerButton = new JButton("Add Player to Green Team");
         addTeam2PlayerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -135,14 +136,39 @@ public class PlayerScreen implements KeyListener{
     }
     }
 
+    //Switch to game display
+    private void switchDisplay()
+    {
+        frame.getContentPane().removeAll();
+        frame.setLayout(new BorderLayout());
+
+        JPanel gameScreen = new JPanel();
+        JLabel gameLabel = new JLabel("Game Started", SwingConstants.CENTER);
+        gameLabel.setForeground(Color.WHITE); 
+        gameLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
+
+        gameScreen.setBackground(new Color(0,0,139));
+        gameScreen.add(gameLabel);
+        
+
+        frame.add(gameScreen);
+        frame.revalidate();
+        frame.repaint();
+    }
+
     //Key listener 
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_F12) {
+            //clear player entries when F12 pressed
             clearPlayerEntries((DefaultTableModel) team1Table.getModel());
             clearPlayerEntries((DefaultTableModel) team2Table.getModel());
             frame.revalidate();
             frame.repaint();
+        }
+        else if(e.getKeyCode() == KeyEvent.VK_F5) { 
+            //switch to game display when F5 press
+            switchDisplay();
         }
     }
 
