@@ -5,7 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class PlayerScreen {
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
+
+public class PlayerScreen implements KeyListener{
 
     private JFrame frame;
     private PlayerService playerService;
@@ -18,6 +21,11 @@ public class PlayerScreen {
         this.frame = frame;
         this.playerService = new PlayerService();
         this.players = playerService.getPlayers(); 
+
+        frame.addKeyListener(this);
+        frame.setFocusable(true);
+        frame.requestFocusInWindow(); 
+
     }
 
     // Graphics for the player screen
@@ -74,9 +82,9 @@ public class PlayerScreen {
     }
 
     // Method to add a player based on ID input from the user
-    private void addPlayerToTeam(DefaultTableModel teamModel) {
+        private void addPlayerToTeam(DefaultTableModel teamModel) {
         // Prompt the user to input the player's ID
-        String inputId = JOptionPane.showInputDialog(frame, "Enter Player ID:");
+        String inputId = JOptionPane.showInputDialog(frame, "Input Player ID:");
 
         if (inputId != null && !inputId.trim().isEmpty()) {
             String[] player = findPlayerById(inputId);
@@ -87,7 +95,6 @@ public class PlayerScreen {
             } else {
                 // Player ID not found, prompt to add a new player
                 String newCodename = JOptionPane.showInputDialog(frame, "ID not found. Enter new player's name:");
-
                 if (newCodename != null && !newCodename.trim().isEmpty()) {
                     // Add the new player to the list and database
                     playerService.addNewPlayer(inputId, newCodename);
@@ -95,7 +102,7 @@ public class PlayerScreen {
                 }
             }
         }
-    }
+    } 
 
     // Method to find a player by ID
     private String[] findPlayerById(String id) {
@@ -119,4 +126,30 @@ public class PlayerScreen {
         table.setFont(tableFont);                                
         table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 18));  
     }
-}
+
+    //Method for clearing player entries
+    private void clearPlayerEntries(DefaultTableModel teamModel) {
+    int rowCount = teamModel.getRowCount();
+    for (int i = rowCount - 1; i >= 0; i--) {
+        teamModel.removeRow(i); 
+    }
+    }
+
+    //Key listener 
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_F12) {
+            clearPlayerEntries((DefaultTableModel) team1Table.getModel());
+            clearPlayerEntries((DefaultTableModel) team2Table.getModel());
+            frame.revalidate();
+            frame.repaint();
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e)  {}
+
+    @Override
+    public void keyTyped(KeyEvent e) {}
+
+} 
