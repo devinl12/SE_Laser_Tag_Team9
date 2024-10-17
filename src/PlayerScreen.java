@@ -115,7 +115,7 @@ public class PlayerScreen implements KeyListener{
                 }
             }
         }
-    }
+    
 
     // Method to find a player by ID
     private String[] findPlayerById(String id) {
