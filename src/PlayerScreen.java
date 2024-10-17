@@ -82,8 +82,7 @@ public class PlayerScreen implements KeyListener{
         frame.repaint();
     }
 
-    // Method to add a player based on ID input from the user
-        private void addPlayerToTeam(DefaultTableModel teamModel) {
+    private void addPlayerToTeam(DefaultTableModel teamModel) {
         // Prompt the user to input the player's ID
         String inputId = JOptionPane.showInputDialog(frame, "Input Player ID:");
 
@@ -92,7 +91,14 @@ public class PlayerScreen implements KeyListener{
 
             if (player != null) {
                 // Player ID found, add the player to the table
-                teamModel.addRow(new Object[]{player[1]});  
+                teamModel.addRow(new Object[]{player[1]});
+
+                // Prompt for the equipment code
+                Int equipmentCode = JOptionPane.showInputDialog(frame, "Enter Equipment Code for " + player[1] + ":");
+                if (equipmentCode != null && !equipmentCode.trim().isEmpty()) {
+                    // Transmit the equipment code via UDP
+                    UDPTransmit.transmitEquipmentCode(equipmentCode);
+                }
             } else {
                 // Player ID not found, prompt to add a new player
                 String newCodename = JOptionPane.showInputDialog(frame, "ID not found. Enter new player's name:");
@@ -100,10 +106,16 @@ public class PlayerScreen implements KeyListener{
                     // Add the new player to the list and database
                     playerService.addNewPlayer(inputId, newCodename);
                     teamModel.addRow(new Object[]{newCodename});
+
+                    // Prompt for the equipment code
+                    Int equipmentCode = JOptionPane.showInputDialog(frame, "Enter Equipment Code for " + newCodename + ":");
+                        // Transmit the equipment code via UDP
+                        UDPTransmit.transmitEquipmentCode(equipmentCode);
+                    }
                 }
             }
         }
-    } 
+    }
 
     // Method to find a player by ID
     private String[] findPlayerById(String id) {

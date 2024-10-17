@@ -54,10 +54,7 @@ public class PlayerService {
             // Also add the new player to the in-memory list
             players.add(new String[]{id, codename});
 
-            int equipmentId = Integer.parseInt(id);
-            UDPTransmit.transmitEquipmentCode(equipmentId);  // Transmit the new player's equipment code
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-}
