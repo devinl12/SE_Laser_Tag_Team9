@@ -3,31 +3,38 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ImageCountdown extends JFrame {
-	private final String[] countdownImages = {"10.jpg", "9.jpg", "8.jpg", "7.jpg", "6.jpg", "5.jpg", "4.jpg", "3.jpg", "2.jpg", "1.jpg"};
+public class ImageCountdown extends JPanel {
+	private final String[] countdownImages = {
+		"10.jpg", "9.jpg", "8.jpg", "7.jpg", "6.jpg",
+		 "5.jpg", "4.jpg", "3.jpg", "2.jpg", "1.jpg", "0.jpg"
+	};
 	private final JLabel imageLabel = new JLabel();
 	private int currentIndex = 0;
-	private final Timer timer;
+	private Timer timer;
 	private final String backgroundImagePath = "assets/images/countdown_images/background.jpg";
 
 	public ImageCountdown() {
-	setTitle("Image Countdown");
-	setSize(600, 600);
-	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	//setLayout(new BorderLayout());
+	setLayout(new BorderLayout());
 
 	BackgroundPanel backgroundPanel = new BackgroundPanel();
 	backgroundPanel.setLayout(new BorderLayout());
 
+	JPanel imagePanel = new JPanel(new BorderLayout());
+	imagePanel.setOpaque(false);
+	imagePanel.setBorder(BorderFactory.createEmptyBorder(100,0,0,0));
+
 	imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
 	imageLabel.setVerticalAlignment(SwingConstants.CENTER);
-	backgroundPanel.add(imageLabel, BorderLayout.CENTER);
 
+	imagePanel.add(imageLabel, BorderLayout.CENTER);
+	backgroundPanel.add(imagePanel, BorderLayout.CENTER);
 	add(backgroundPanel);
+	}
 
-	timer = new Timer(1000, new CountdownAction());
-	timer.start();
-	setVisible(true);
+	public void startCountdown() {
+		currentIndex = 0;
+		timer = new Timer(1000, new CountdownAction());
+		timer.start();
 	}
 
 	private class CountdownAction implements ActionListener {
@@ -59,10 +66,6 @@ public class ImageCountdown extends JFrame {
 
 			g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 		}
-	}
-
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(ImageCountdown::new);
 	}
 }
 
