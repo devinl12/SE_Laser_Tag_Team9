@@ -16,7 +16,6 @@ public class Main {
             // Remove splash screen and show the player screen
             PlayerScreen playerScreen = new PlayerScreen(frame);
             playerScreen.showPlayerScreen();
-
             // Make the main frame visible after the splash screen
             frame.setVisible(true);
         });
