@@ -83,7 +83,7 @@ public class PlayerScreen implements KeyListener{
     }
 
     private void addPlayerToTeam(DefaultTableModel teamModel) {
-        // Prompt the user to input the player's ID
+    // Prompt the user to input the player's ID
         String inputId = JOptionPane.showInputDialog(frame, "Input Player ID:");
 
         if (inputId != null && !inputId.trim().isEmpty()) {
@@ -93,11 +93,16 @@ public class PlayerScreen implements KeyListener{
                 // Player ID found, add the player to the table
                 teamModel.addRow(new Object[]{player[1]});
 
-                // Prompt for the equipment code
-                Int equipmentCode = JOptionPane.showInputDialog(frame, "Enter Equipment Code for " + player[1] + ":");
-                if (equipmentCode != null && !equipmentCode.trim().isEmpty()) {
-                    // Transmit the equipment code via UDP
-                    UDPTransmit.transmitEquipmentCode(equipmentCode);
+            // Prompt for the equipment code
+                String equipmentCodeInput = JOptionPane.showInputDialog(frame, "Enter Equipment Code for " + player[1] + ":");
+                if (equipmentCodeInput != null) {
+                    try {
+                        int equipmentCode = Integer.parseInt(equipmentCodeInput);
+                        // Transmit the equipment code via UDP
+                        UDPTransmit.transmitEquipmentCode(equipmentCode);
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(frame, "Invalid Equipment Code. Please enter a valid number.");
+                    }
                 }
             } else {
                 // Player ID not found, prompt to add a new player
@@ -108,14 +113,21 @@ public class PlayerScreen implements KeyListener{
                     teamModel.addRow(new Object[]{newCodename});
 
                     // Prompt for the equipment code
-                    Int equipmentCode = JOptionPane.showInputDialog(frame, "Enter Equipment Code for " + newCodename + ":");
-                        // Transmit the equipment code via UDP
-                        UDPTransmit.transmitEquipmentCode(equipmentCode);
+                    String equipmentCodeInput = JOptionPane.showInputDialog(frame, "Enter Equipment Code for " + newCodename + ":");
+                    if (equipmentCodeInput != null) {
+                        try {
+                            int equipmentCode = Integer.parseInt(equipmentCodeInput);
+                            // Transmit the equipment code via UDP
+                            UDPTransmit.transmitEquipmentCode(equipmentCode);
+                        } catch (NumberFormatException e) {
+                            JOptionPane.showMessageDialog(frame, "Invalid Equipment Code. Please enter a valid number.");
+                        }
                     }
                 }
             }
         }
-    
+    }
+
 
     // Method to find a player by ID
     private String[] findPlayerById(String id) {
