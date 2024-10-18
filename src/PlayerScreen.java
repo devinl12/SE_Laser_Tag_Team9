@@ -60,13 +60,13 @@ public class PlayerScreen implements KeyListener{
 
        // Green Team Table
        JPanel rightPanel = new JPanel();
-       rightPanel.setBackground(new Color(152, 251, 152));
        rightPanel.setLayout(new BorderLayout());
        String[] team2Columns = {"Team Green Players"};
        DefaultTableModel team2Model = new DefaultTableModel(team2Columns, 0);
        team2Table = new JTable(team2Model);
        JScrollPane team2ScrollPane = new JScrollPane(team2Table);
        rightPanel.add(team2ScrollPane, BorderLayout.CENTER);
+       customizeTable(team2Table, new Color(119, 221, 119), new Color(144, 238, 144));
 
 
        // Add Player Button for Green Table
