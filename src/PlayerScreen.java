@@ -171,24 +171,8 @@ public class PlayerScreen implements KeyListener{
 
    private void switchDisplay()
    {
-       frame.getContentPane().removeAll();
-       frame.setLayout(new BorderLayout());
-
-
-       JPanel gameScreen = new JPanel();
-       JLabel gameLabel = new JLabel("Game Started", SwingConstants.CENTER);
-       gameLabel.setForeground(Color.WHITE);
-       gameLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
-
-
-       gameScreen.setBackground(new Color(0,0,139));
-       gameScreen.add(gameLabel);
-      
-
-
-       frame.add(gameScreen);
-       frame.revalidate();
-       frame.repaint();
+       ImageCountdown countdown = new ImageCountdown();
+       countdown.startCountdown(frame);
    }
 
     //Key listener
