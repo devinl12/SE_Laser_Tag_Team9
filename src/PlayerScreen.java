@@ -90,7 +90,7 @@ public class PlayerScreen implements KeyListener{
    private void addPlayerToTeam(DefaultTableModel teamModel) {
    // Prompt the user to input the player's ID
        String inputId = JOptionPane.showInputDialog(frame, "Input Player ID:");
-
+       frame.requestFocusInWindow();
 
        if (inputId != null && !inputId.trim().isEmpty()) {
            String[] player = findPlayerById(inputId);
@@ -161,7 +161,7 @@ public class PlayerScreen implements KeyListener{
        table.setFont(tableFont);                               
        table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 18)); 
    }
-    //Method for clearing player entries
+    //function for clearing player entries
    private void clearPlayerEntries(DefaultTableModel teamModel) {
    int rowCount = teamModel.getRowCount();
    for (int i = rowCount - 1; i >= 0; i--) {
@@ -195,7 +195,7 @@ public class PlayerScreen implements KeyListener{
    @Override
    public void keyPressed(KeyEvent e) {
        if (e.getKeyCode() == KeyEvent.VK_F12) {
-           //clear player entries when F12 pressed
+           //clear player entries when F12cpressed
            clearPlayerEntries((DefaultTableModel) team1Table.getModel());
            clearPlayerEntries((DefaultTableModel) team2Table.getModel());
            frame.revalidate();
