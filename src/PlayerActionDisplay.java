@@ -23,6 +23,7 @@ public class PlayerActionDisplay {
         greenTeamLabel = new JLabel("Green Team: 0", JLabel.CENTER);
         redTeamLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         greenTeamLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
+        //
 
         topPanel.add(redTeamLabel);
         topPanel.add(greenTeamLabel);

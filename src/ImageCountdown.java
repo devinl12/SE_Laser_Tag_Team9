@@ -50,6 +50,7 @@ public class ImageCountdown extends JPanel {
 				ImageIcon icon = new ImageIcon("assets/images/countdown_images/" + countdownImages[currentIndex]);
 				imageLabel.setIcon(icon);
 				currentIndex++;
+				//
 			} else {
 				timer.stop();
 				imageLabel.setText("");
