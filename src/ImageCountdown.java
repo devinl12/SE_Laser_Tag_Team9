@@ -57,8 +57,13 @@ public class ImageCountdown extends JPanel {
 				imageLabel.setIcon(null);
 
 				// Switch to PlayerActionDisplay after the countdown ends
-				PlayerActionDisplay actionDisplay = new PlayerActionDisplay((JFrame) SwingUtilities.getWindowAncestor(ImageCountdown.this));
+				JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(ImageCountdown.this);
+				PlayerActionDisplay actionDisplay = new PlayerActionDisplay(parentFrame);
 				actionDisplay.showActionDisplay();
+				
+				// Force the frame to refresh
+				parentFrame.revalidate();
+				parentFrame.repaint();
 			}
 		}
 	}
