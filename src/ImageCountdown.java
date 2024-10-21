@@ -76,7 +76,6 @@ public class ImageCountdown extends JPanel {
 				// Assuming redTeamPlayers and greenTeamPlayers are lists with player data collected earlier
                 actionDisplay.populateTeams(redTeamPlayers, greenTeamPlayers);
 				
-				// Force the frame to refresh
 				parentFrame.revalidate();
 				parentFrame.repaint();
 			}
