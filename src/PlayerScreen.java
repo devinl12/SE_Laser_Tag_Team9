@@ -181,30 +181,28 @@ public class PlayerScreen implements KeyListener{
        countdown.startCountdown(frame);
    }
 
-   private List<String[]> getRedTeamPlayers() {
-       // Implement logic to fetch players for the Red Team (e.g., from the JTable or PlayerService)
-       // For demonstration, you might get data directly from your JTable like this:
-       List<String[]> redTeamPlayers = new ArrayList<>();
-       DefaultTableModel model = (DefaultTableModel) team1Table.getModel();
-       for (int i = 0; i < model.getRowCount(); i++) {
-           String id = model.getValueAt(i, 0).toString();
-           String codename = model.getValueAt(i, 1).toString(); // Assuming there is a second column for codename
-           redTeamPlayers.add(new String[]{id, codename});
-       }
-       return redTeamPlayers;
-   }
 
-   private List<String[]> getGreenTeamPlayers() {
-       // Implement logic to fetch players for the Green Team (similar to above)
-       List<String[]> greenTeamPlayers = new ArrayList<>();
-       DefaultTableModel model = (DefaultTableModel) team2Table.getModel();
-       for (int i = 0; i < model.getRowCount(); i++) {
-           String id = model.getValueAt(i, 0).toString();
-           String codename = model.getValueAt(i, 1).toString(); // Assuming there is a second column for codename
-           greenTeamPlayers.add(new String[]{id, codename});
-       }
-       return greenTeamPlayers;
-   }
+   private List<String[]> getRedTeamPlayers() {
+    // Get players for the Red Team directly from the JTable
+    List<String[]> redTeamPlayers = new ArrayList<>();
+    DefaultTableModel model = (DefaultTableModel) team1Table.getModel();
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String codename = model.getValueAt(i, 0).toString(); // Use column index 0 since there's only one column
+        redTeamPlayers.add(new String[]{String.valueOf(i), codename}); // Assuming 'i' as a placeholder ID for now
+    }
+    return redTeamPlayers;
+}
+
+private List<String[]> getGreenTeamPlayers() {
+    // Get players for the Green Team directly from the JTable
+    List<String[]> greenTeamPlayers = new ArrayList<>();
+    DefaultTableModel model = (DefaultTableModel) team2Table.getModel();
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String codename = model.getValueAt(i, 0).toString(); // Use column index 0 since there's only one column
+        greenTeamPlayers.add(new String[]{String.valueOf(i), codename}); // Assuming 'i' as a placeholder ID for now
+    }
+    return greenTeamPlayers;
+}
 
 
     //Key listener
