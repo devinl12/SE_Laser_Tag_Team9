@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
 import java.awt.*;
 
 public class PlayerActionDisplay {
@@ -7,6 +9,10 @@ public class PlayerActionDisplay {
     private JLabel greenTeamLabel;
     private JTextArea actionLog;
     private JLabel timerLabel;
+    private JTable redTeamTable;
+    private JTable greenTeamTable;
+    private DefaultTableModel redTeamModel;
+    private DefaultTableModel greenTeamModel;
 
     public PlayerActionDisplay(JFrame frame) {
         this.frame = frame;
@@ -29,23 +35,60 @@ public class PlayerActionDisplay {
         topPanel.add(greenTeamLabel);
         frame.add(topPanel, BorderLayout.NORTH);
 
-        // Center panel for game action log
+        // Center panel for the teams' player tables
+        JPanel centerPanel = new JPanel(new GridLayout(1, 2));
+
+        // Red Team Table
+        String[] redTeamColumns = {"Red Team Players"};
+        redTeamModel = new DefaultTableModel(redTeamColumns, 0);
+        redTeamTable = new JTable(redTeamModel);
+        JScrollPane redTeamScrollPane = new JScrollPane(redTeamTable);
+        centerPanel.add(redTeamScrollPane);
+
+        // Green Team Table
+        String[] greenTeamColumns = {"Green Team Players"};
+        greenTeamModel = new DefaultTableModel(greenTeamColumns, 0);
+        greenTeamTable = new JTable(greenTeamModel);
+        JScrollPane greenTeamScrollPane = new JScrollPane(greenTeamTable);
+        centerPanel.add(greenTeamScrollPane);
+
+        frame.add(centerPanel, BorderLayout.CENTER);
+
+        // Bottom panel for the countdown timer and action log
+        JPanel bottomPanel = new JPanel(new BorderLayout());
+        timerLabel = new JLabel("Time Remaining: 6:00", JLabel.CENTER);
+        timerLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
+
         actionLog = new JTextArea();
         actionLog.setEditable(false);
         actionLog.setFont(new Font("SansSerif", Font.PLAIN, 16));
         JScrollPane actionLogScrollPane = new JScrollPane(actionLog);
-        frame.add(actionLogScrollPane, BorderLayout.CENTER);
 
-        // Bottom panel for the countdown timer
-        JPanel bottomPanel = new JPanel();
-        timerLabel = new JLabel("Time Remaining: 6:00", JLabel.CENTER);
-        timerLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
-        bottomPanel.add(timerLabel);
+        bottomPanel.add(timerLabel, BorderLayout.NORTH);
+        bottomPanel.add(actionLogScrollPane, BorderLayout.CENTER);
 
         frame.add(bottomPanel, BorderLayout.SOUTH);
 
         frame.revalidate();
         frame.repaint();
+    }
+
+
+    // Method to populate the team tables
+    public void populateTeams (List<String[]> redTeam, List<String[]> greenTeam) {
+        // Clear existing data
+        redTeamModel.setRowCount(0);
+        greenTeamModel.setRowCount(0);
+    
+        // Add players to the Red Team table
+        for (String[] player : redTeam) {
+            redTeamModel.addRow(new Object[]{player[1]});
+        }
+    
+        // Add players to the Green Team table
+        for (String[] player : greenTeam) {
+            greenTeamModel.addRow(new Object[]{player[1]});
+        }
     }
 
     // Method to update the scores

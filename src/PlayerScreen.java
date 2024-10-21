@@ -3,6 +3,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
@@ -169,11 +170,42 @@ public class PlayerScreen implements KeyListener{
    }
    }
 
+
    private void switchDisplay()
    {
-       ImageCountdown countdown = new ImageCountdown();
+       // Retrieve the player lists for the red and green teams
+       List<String[]> redTeamPlayers = getRedTeamPlayers();
+       List<String[]> greenTeamPlayers = getGreenTeamPlayers();
+
+       ImageCountdown countdown = new ImageCountdown(redTeamPlayers, greenTeamPlayers);
        countdown.startCountdown(frame);
    }
+
+   private List<String[]> getRedTeamPlayers() {
+       // Implement logic to fetch players for the Red Team (e.g., from the JTable or PlayerService)
+       // For demonstration, you might get data directly from your JTable like this:
+       List<String[]> redTeamPlayers = new ArrayList<>();
+       DefaultTableModel model = (DefaultTableModel) team1Table.getModel();
+       for (int i = 0; i < model.getRowCount(); i++) {
+           String id = model.getValueAt(i, 0).toString();
+           String codename = model.getValueAt(i, 1).toString(); // Assuming there is a second column for codename
+           redTeamPlayers.add(new String[]{id, codename});
+       }
+       return redTeamPlayers;
+   }
+
+   private List<String[]> getGreenTeamPlayers() {
+       // Implement logic to fetch players for the Green Team (similar to above)
+       List<String[]> greenTeamPlayers = new ArrayList<>();
+       DefaultTableModel model = (DefaultTableModel) team2Table.getModel();
+       for (int i = 0; i < model.getRowCount(); i++) {
+           String id = model.getValueAt(i, 0).toString();
+           String codename = model.getValueAt(i, 1).toString(); // Assuming there is a second column for codename
+           greenTeamPlayers.add(new String[]{id, codename});
+       }
+       return greenTeamPlayers;
+   }
+
 
     //Key listener
    @Override

@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class ImageCountdown extends JPanel {
 	private final String[] countdownImages = {
@@ -17,22 +18,29 @@ public class ImageCountdown extends JPanel {
 	private Timer timer;
 	private final String backgroundImagePath = "assets/images/countdown_images/background.jpg";
 
-	public ImageCountdown() {
-	setLayout(new BorderLayout());
+	// Fields to hold the player lists
+	private List<String[]> redTeamPlayers;
+	private List<String[]> greenTeamPlayers;
 
-	BackgroundPanel backgroundPanel = new BackgroundPanel();
-	backgroundPanel.setLayout(new BorderLayout());
+	public ImageCountdown(List<String[]> redTeamPlayers, List<String[]> greenTeamPlayers) {
+	   this.redTeamPlayers = redTeamPlayers;
+	   this.greenTeamPlayers = greenTeamPlayers;
 
-	JPanel imagePanel = new JPanel(new BorderLayout());
-	imagePanel.setOpaque(false);
-	imagePanel.setBorder(BorderFactory.createEmptyBorder(100,0,0,0));
+	   setLayout(new BorderLayout());
 
-	imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-	imageLabel.setVerticalAlignment(SwingConstants.CENTER);
+	   BackgroundPanel backgroundPanel = new BackgroundPanel();
+	   backgroundPanel.setLayout(new BorderLayout());
 
-	imagePanel.add(imageLabel, BorderLayout.CENTER);
-	backgroundPanel.add(imagePanel, BorderLayout.CENTER);
-	add(backgroundPanel);
+	   JPanel imagePanel = new JPanel(new BorderLayout());
+	   imagePanel.setOpaque(false);
+	   imagePanel.setBorder(BorderFactory.createEmptyBorder(100,0,0,0));
+
+	   imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+	   imageLabel.setVerticalAlignment(SwingConstants.CENTER);
+ 
+	   imagePanel.add(imageLabel, BorderLayout.CENTER);
+	   backgroundPanel.add(imagePanel, BorderLayout.CENTER);
+	   add(backgroundPanel);
 	}
 
 	public void startCountdown(JFrame frame) {
@@ -64,6 +72,9 @@ public class ImageCountdown extends JPanel {
 				JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(ImageCountdown.this);
 				PlayerActionDisplay actionDisplay = new PlayerActionDisplay(parentFrame);
 				actionDisplay.showActionDisplay();
+
+				// Assuming redTeamPlayers and greenTeamPlayers are lists with player data collected earlier
+                actionDisplay.populateTeams(redTeamPlayers, greenTeamPlayers);
 				
 				// Force the frame to refresh
 				parentFrame.revalidate();
