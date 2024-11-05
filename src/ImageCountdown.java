@@ -17,10 +17,14 @@ public class ImageCountdown extends JPanel {
 	private int currentIndex = 0;
 	private Timer timer;
 	private final String backgroundImagePath = "assets/images/countdown_images/background.jpg";
+	private Music music;
 
-	// Fields to hold the player lists
+
+	// Fields to hold the player lists 
 	private List<String[]> redTeamPlayers;
 	private List<String[]> greenTeamPlayers;
+
+
 
 	public ImageCountdown(List<String[]> redTeamPlayers, List<String[]> greenTeamPlayers) {
 	   this.redTeamPlayers = redTeamPlayers;
@@ -41,6 +45,8 @@ public class ImageCountdown extends JPanel {
 	   imagePanel.add(imageLabel, BorderLayout.CENTER);
 	   backgroundPanel.add(imagePanel, BorderLayout.CENTER);
 	   add(backgroundPanel);
+
+	   music = new Music();
 	}
 
 	public void startCountdown(JFrame frame) {
@@ -50,6 +56,13 @@ public class ImageCountdown extends JPanel {
 		currentIndex = 0;
 		timer = new Timer(1000, new CountdownAction());
 		timer.start();
+
+		List<String> mp3Files = List.of(
+            "src/assets/sounds/Track01.mp3", "src/assets/sounds/Track02.mp3", "src/assets/sounds/Track03.mp3",
+			"src/assets/sounds/Track04.mp3", "src/assets/sounds/Track05.mp3", "src/assets/sounds/Track06.mp3",
+			"src/assets/sounds/Track07.mp3", "src/assets/sounds/Track08.mp3"
+        );
+		music.playMusic(mp3Files);
 
 		frame.revalidate();
 		frame.repaint();
