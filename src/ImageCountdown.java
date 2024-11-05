@@ -58,9 +58,9 @@ public class ImageCountdown extends JPanel {
 		timer.start();
 
 		List<String> mp3Files = List.of(
-            "src/assets/sounds/Track01.mp3", "src/assets/sounds/Track02.mp3", "src/assets/sounds/Track03.mp3",
-			"src/assets/sounds/Track04.mp3", "src/assets/sounds/Track05.mp3", "src/assets/sounds/Track06.mp3",
-			"src/assets/sounds/Track07.mp3", "src/assets/sounds/Track08.mp3"
+            "src/assets/sounds/Track01.wav", "src/assets/sounds/Track02.wav", "src/assets/sounds/Track03.wav",
+			"src/assets/sounds/Track04.wav", "src/assets/sounds/Track05.wav", "src/assets/sounds/Track06.wav",
+			"src/assets/sounds/Track07.wav", "src/assets/sounds/Track08.wav"
         );
 		music.playMusic(mp3Files);
 
