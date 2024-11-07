@@ -1,5 +1,7 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.*;
 
@@ -13,6 +15,8 @@ public class PlayerActionDisplay {
     private JTable greenTeamTable;
     private DefaultTableModel redTeamModel;
     private DefaultTableModel greenTeamModel;
+    private Timer timer;
+    private int gameLength = 360;
 
     public PlayerActionDisplay(JFrame frame) {
         this.frame = frame;
@@ -71,8 +75,23 @@ public class PlayerActionDisplay {
 
         frame.revalidate();
         frame.repaint();
+
+        timer = new Timer(1000, new CountdownAction());
+        timer.start();
     }
 
+    private class CountdownAction implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (gameLength > 0) {
+                updateTimer();
+                gameLength--;
+            } else {
+                timer.stop();
+		timerLabel.setText("Game Complete!");
+            }
+        }
+    }
 
     // Method to populate the team tables
     public void populateTeams (List<String[]> redTeam, List<String[]> greenTeam) {
@@ -103,7 +122,15 @@ public class PlayerActionDisplay {
     }
 
     // Method to update the countdown timer display
-    public void updateTimer(String timeRemaining) {
-        timerLabel.setText("Time Remaining: " + timeRemaining);
+    public void updateTimer() {
+        int minutes = this.gameLength / 60;
+	int seconds = this.gameLength % 60;
+	String minuteString = Integer.toString(minutes);
+        String secondString = Integer.toString(seconds);
+        if (secondString.length() < 2) {
+            secondString = "0" + secondString;
+        }
+        timerLabel.setText("Time Remaining: " + minuteString + ":" + secondString );
     }
 }
+

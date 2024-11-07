@@ -13,9 +13,9 @@ public class Music {
                 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(musicFile);
                 clip = AudioSystem.getClip();
                 clip.open(audioInputStream);
-                clip.loop(Clip.LOOP_CONTINUously); 
+                clip.loop(Clip.LOOP_CONTINUOUSLY); 
                 clip.start();
-            }catch (IOException e) {
+            }catch (Exception e) {
                 System.err.println("Error playing audio file: " + filePath);
             } 
         }
