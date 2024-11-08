@@ -63,8 +63,8 @@ public class ImageCountdown extends JPanel {
 			"assets/sounds/Track07.wav", "assets/sounds/Track08.wav"
         );
 		
-		//delays start of music for 18 seconds
-		Timer musicTimer = new Timer(18000, new ActionListener() {
+		//delays start of music for 13 seconds
+		Timer musicTimer = new Timer(13000, new ActionListener() {
     			@Override
     			public void actionPerformed(ActionEvent e) {
        			 music.playMusic(mp3Files);
