@@ -231,5 +231,4 @@ public class PlayerScreen implements KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {}
 
-    // Main method to run the PlayerScreen
-    public static void main(String[] args)
+ 
