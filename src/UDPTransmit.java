@@ -19,7 +19,7 @@ public class UDPTransmit {
             socket.send(packet);
 
             //for debugging
-            System.out.println("Equipment ID: " + equipmentId);
+            //System.out.println("Equipment ID: " + equipmentId);
             
             socket.close();
         } catch (Exception e) {
