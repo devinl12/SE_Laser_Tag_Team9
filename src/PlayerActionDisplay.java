@@ -16,7 +16,7 @@ public class PlayerActionDisplay {
     private DefaultTableModel redTeamModel;
     private DefaultTableModel greenTeamModel;
     private Timer timer;
-    private int gameLength = 360;
+    private int gameLength = 20;
 
     public PlayerActionDisplay(JFrame frame) {
         this.frame = frame;
@@ -89,6 +89,10 @@ public class PlayerActionDisplay {
             } else {
                 timer.stop();
 		timerLabel.setText("Game Complete!");
+		PlayerScreen nextGame = new PlayerScreen(frame);
+		nextGame.showPlayerScreen();
+
+		frame.setVisible(true);
             }
         }
     }
