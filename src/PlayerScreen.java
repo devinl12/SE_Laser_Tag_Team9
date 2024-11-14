@@ -34,12 +34,14 @@ public class PlayerScreen implements KeyListener{
    // Graphics for the player screen
    public void showPlayerScreen() {
        frame.getContentPane().removeAll();
-       frame.setLayout(new GridLayout(1, 2));
+       frame.setLayout(new BorderLayout());
+
+       //main panel for teams
+       JPanel mainPanel = new JPanel(new GridLayout(1,2));
 
 
        // Pink Team table
-       JPanel leftPanel = new JPanel();
-       leftPanel.setLayout(new BorderLayout());
+       JPanel leftPanel = new JPanel(new BorderLayout());
        String[] team1Columns = {"Team Pink Players"};
        DefaultTableModel team1Model = new DefaultTableModel(team1Columns, 0);
        team1Table = new JTable(team1Model);
@@ -60,8 +62,7 @@ public class PlayerScreen implements KeyListener{
 
 
        // Green Team Table
-       JPanel rightPanel = new JPanel();
-       rightPanel.setLayout(new BorderLayout());
+       JPanel rightPanel = new JPanel(new BorderLayout());
        String[] team2Columns = {"Team Green Players"};
        DefaultTableModel team2Model = new DefaultTableModel(team2Columns, 0);
        team2Table = new JTable(team2Model);
@@ -84,6 +85,27 @@ public class PlayerScreen implements KeyListener{
        // Add the two panels to the frame
        frame.add(leftPanel);
        frame.add(rightPanel);
+
+       JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 10));
+
+       JLabel f5Label = new JLabel("Press F5 to start game");
+       f5Label.setFont(new Font("SansSerif", Font.BOLD, 16));
+       f5Label.setForeground(Color.BLUE);
+
+       JLabel f12Label = new JLabel("Press F12 to clear players");
+       f12Label.setFont(new Font("SansSerif", Font.BOLD, 16));
+       f12Label.setForeground(Color.RED);
+
+       bottomPanel.add(f5Label);
+       bottomPanel.add(f12Label);
+
+       // Add main panel and bottom panel to the frame
+       frame.add(mainPanel, BorderLayout.CENTER);
+       frame.add(bottomPanel, BorderLayout.SOUTH);
+
+
+       //This goes after everything
        frame.revalidate();
        frame.repaint();
    }
