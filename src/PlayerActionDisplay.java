@@ -107,21 +107,26 @@ public class PlayerActionDisplay {
     }
 
     public void processEvent(String event) {
+        System.out.println("Processing event: " + event); // Debug line
+
         String[] parts = event.split(":");
         if (parts.length < 2) return;
 
         String attackerId = parts[0];
         String targetId = parts[1];
 
-        if (targetId.equals("43")) { // Green base hit
+        if (targetId.equals("43")) {
             addBaseHit(attackerId, "red");
             addEvent("Red player " + attackerId + " hit the Green base!");
-        } else if (targetId.equals("53")) { // Red base hit
+        } else if (targetId.equals("53")) {
             addBaseHit(attackerId, "green");
             addEvent("Green player " + attackerId + " hit the Red base!");
         } else {
             addEvent("Player " + attackerId + " tagged player " + targetId);
         }
+
+        // Debug acknowledgment
+        System.out.println("Acknowledging event: " + event);
 
         // Send acknowledgment back to Python
         try {
@@ -137,6 +142,7 @@ public class PlayerActionDisplay {
             ex.printStackTrace();
         }
     }
+
 
     // Add "B" to player who hit the base
     private void addBaseHit(String attackerId, String team) {
