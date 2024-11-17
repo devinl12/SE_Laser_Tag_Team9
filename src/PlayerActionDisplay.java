@@ -18,7 +18,7 @@ public class PlayerActionDisplay {
     private DefaultTableModel redTeamModel;
     private DefaultTableModel greenTeamModel;
     private Timer timer;
-    private int gameLength = 20;
+    private int gameLength = 200;
     private DefaultListModel<String> eventLogModel;
 
     public PlayerActionDisplay(JFrame frame) {
