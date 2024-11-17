@@ -21,6 +21,7 @@ public class PlayerActionDisplay {
     private Timer timer;
     private int gameLength = 200;
     private DefaultListModel<String> eventLogModel;
+    private DatagramSocket acknowledgmentSocket;
 
     public PlayerActionDisplay(JFrame frame) {
         this.frame = frame;
