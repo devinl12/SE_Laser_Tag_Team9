@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 
 public class PlayerActionDisplay {
     private JFrame frame;
@@ -30,11 +32,11 @@ public class PlayerActionDisplay {
         // Top panel for team scores
         JPanel topPanel = new JPanel(new GridLayout(1, 2));
         redTeamLabel = new JLabel("Red Team: 0", JLabel.CENTER);
+        redTeamLabel.setForeground(Color.RED); 
         greenTeamLabel = new JLabel("Green Team: 0", JLabel.CENTER);
+        greenTeamLabel.setForeground(Color.GREEN); 
         redTeamLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         greenTeamLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
-        //
-
         topPanel.add(redTeamLabel);
         topPanel.add(greenTeamLabel);
         frame.add(topPanel, BorderLayout.NORTH);
@@ -56,7 +58,20 @@ public class PlayerActionDisplay {
         JScrollPane greenTeamScrollPane = new JScrollPane(greenTeamTable);
         centerPanel.add(greenTeamScrollPane);
 
-        frame.add(centerPanel, BorderLayout.CENTER);
+        // Add the event log panel
+        JPanel eventLogPanel = new JPanel(new BorderLayout());
+        DefaultListModel<String> eventLogModel = new DefaultListModel<>();
+        JList<String> eventLogList = new JList<>(eventLogModel);
+        JScrollPane eventLogScrollPane = new JScrollPane(eventLogList);
+        eventLogPanel.add(new JLabel("Events"), BorderLayout.NORTH);
+        eventLogPanel.add(eventLogScrollPane, BorderLayout.CENTER);
+
+        // Adjust center panel layout to include the event log
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.add(centerPanel, BorderLayout.CENTER);
+        mainPanel.add(eventLogPanel, BorderLayout.EAST);
+
+        frame.add(mainPanel, BorderLayout.CENTER);
 
         // Bottom panel for the countdown timer and action log
         JPanel bottomPanel = new JPanel(new BorderLayout());
@@ -79,6 +94,46 @@ public class PlayerActionDisplay {
         timer = new Timer(1000, new CountdownAction());
         timer.start();
     }
+
+        // Method to add event to the log
+    public void addEvent(String event) {
+        eventLogModel.addElement(event);
+        if (eventLogModel.size() > 50) { // Keep only the latest 50 events
+            eventLogModel.remove(0);
+        }
+    }
+
+    public void processEvent(String event) {
+        String[] parts = event.split(":");
+        if (parts.length < 2) return;
+
+        String attackerId = parts[0];
+        String targetId = parts[1];
+
+        if (targetId.equals("43")) { // Green base hit
+            addBaseHit(attackerId, "red");
+            addEvent("Red player " + attackerId + " hit the Green base!");
+        } else if (targetId.equals("53")) { // Red base hit
+            addBaseHit(attackerId, "green");
+            addEvent("Green player " + attackerId + " hit the Red base!");
+        } else {
+            addEvent("Player " + attackerId + " tagged player " + targetId);
+        }
+    }
+
+    // Add "B" to player who hit the base
+    private void addBaseHit(String attackerId, String team) {
+        DefaultTableModel model = team.equals("red") ? redTeamModel : greenTeamModel;
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String playerId = model.getValueAt(i, 0).toString();
+            if (playerId.equals(attackerId)) {
+                model.setValueAt("B " + model.getValueAt(i, 0), i, 0);
+                break;
+            }
+        }
+    }
+
+
 
     private class CountdownAction implements ActionListener {
         @Override
@@ -136,5 +191,6 @@ public class PlayerActionDisplay {
         }
         timerLabel.setText("Time Remaining: " + minuteString + ":" + secondString );
     }
+
 }
 

@@ -11,12 +11,31 @@ public class Main {
         // Show splash screen
         Splash.showSplashScreen(frame);
 
-        // Timer to remove splash screen after 5 secs
+        // Timer to remove splash screen after 5 seconds
         Timer timer = new Timer(5000, e -> {
-            // Remove splash screen and show the player screen
+            // Create PlayerScreen
             PlayerScreen playerScreen = new PlayerScreen(frame);
+
+            // Create PlayerActionDisplay
+            PlayerActionDisplay actionDisplay = new PlayerActionDisplay(frame);
+
+            // Set the game start callback
+            playerScreen.setOnGameStart(() -> {
+                // Switch to PlayerActionDisplay when game starts
+                actionDisplay.showActionDisplay();
+
+                // Start listening for UDP events
+                new Thread(() -> {
+                    UDPReceive.listenForHits(event -> {
+                        SwingUtilities.invokeLater(() -> {
+                            actionDisplay.processEvent(event);
+                        });
+                    });
+                }).start();
+            });
+
+            // Show the player screen
             playerScreen.showPlayerScreen();
-            // Make the main frame visible after the splash screen
             frame.setVisible(true);
         });
         timer.setRepeats(false);
