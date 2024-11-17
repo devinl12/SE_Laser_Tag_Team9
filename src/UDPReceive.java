@@ -4,12 +4,8 @@ import java.util.function.Consumer;
 
 public class UDPReceive {
     public static void listenForHits(Consumer<String> eventHandler) {
-        DatagramSocket socket = null;
         try {
-            // Attempt to bind the socket to port 7501
-            socket = new DatagramSocket(7501); // Listening on port 7501
-            System.out.println("DatagramSocket successfully bound to port 7501."); // Debug line
-
+            DatagramSocket socket = new DatagramSocket(7501); // Listening on port 7501
             byte[] buffer = new byte[256];
 
             while (true) {
@@ -21,13 +17,7 @@ public class UDPReceive {
                 eventHandler.accept(receivedMessage); // Pass the event to the handler
             }
         } catch (Exception e) {
-            System.out.println("Failed to bind DatagramSocket to port 7501.");
             e.printStackTrace();
-        } finally {
-            if (socket != null && !socket.isClosed()) {
-                socket.close();
-                System.out.println("DatagramSocket closed."); // Debug line
-            }
         }
     }
 
