@@ -24,6 +24,11 @@ public class PlayerActionDisplay {
 
     public PlayerActionDisplay(JFrame frame) {
         this.frame = frame;
+        try {
+            acknowledgmentSocket = new DatagramSocket(); // Reuse this socket for acknowledgments
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void showActionDisplay() {
@@ -108,6 +113,7 @@ public class PlayerActionDisplay {
 
     public void processEvent(String event) {
         System.out.println("Processing event: " + event); // Debug line
+
         if (event == null || event.isEmpty()) {
             System.out.println("Received an empty event, skipping...");
             return;
@@ -132,18 +138,13 @@ public class PlayerActionDisplay {
             addEvent("Player " + attackerId + " tagged player " + targetId);
         }
 
-        // Debug acknowledgment
-        System.out.println("Acknowledging event: " + event);
-
         // Send acknowledgment back to Python
         try {
-            DatagramSocket socket = new DatagramSocket();
             InetAddress address = InetAddress.getByName("127.0.0.1");
             String ackMessage = "Acknowledged: " + event;
             byte[] buffer = ackMessage.getBytes();
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
-            socket.send(packet);
-            socket.close(); // Close the socket
+            acknowledgmentSocket.send(packet);
             System.out.println("Sent acknowledgment: " + ackMessage);
         } catch (Exception ex) {
             ex.printStackTrace();
