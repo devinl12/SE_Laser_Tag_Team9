@@ -9,6 +9,7 @@ public class UDPReceive {
             byte[] buffer = new byte[256];
 
             while (true) {
+                System.out.println("Listening for UDP packets..."); // Debug line
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 socket.receive(packet);
                 String receivedMessage = new String(packet.getData(), 0, packet.getLength());

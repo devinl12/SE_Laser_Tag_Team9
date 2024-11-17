@@ -44,9 +44,13 @@ public class Main {
                 }
 
                 // Start listening for UDP events
+                // Start listening for UDP events
                 new Thread(() -> {
+                    System.out.println("Starting UDP listener..."); // Debug line
                     UDPReceive.listenForHits(event -> {
+                        System.out.println("Received event: " + event); // Debug line
                         SwingUtilities.invokeLater(() -> {
+                            System.out.println("Processing event on Swing thread: " + event); // Debug line
                             actionDisplay.processEvent(event);
                         });
                     });

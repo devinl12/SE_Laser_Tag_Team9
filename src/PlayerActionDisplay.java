@@ -108,9 +108,16 @@ public class PlayerActionDisplay {
 
     public void processEvent(String event) {
         System.out.println("Processing event: " + event); // Debug line
+        if (event == null || event.isEmpty()) {
+            System.out.println("Received an empty event, skipping...");
+            return;
+        }
 
         String[] parts = event.split(":");
-        if (parts.length < 2) return;
+        if (parts.length < 2) {
+            System.out.println("Malformed event: " + event);
+            return;
+        }
 
         String attackerId = parts[0];
         String targetId = parts[1];
@@ -142,6 +149,7 @@ public class PlayerActionDisplay {
             ex.printStackTrace();
         }
     }
+
 
 
     // Add "B" to player who hit the base
