@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.function.Consumer;
+import java.net.InetAddress;
 
 
 public class Main {
