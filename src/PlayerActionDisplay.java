@@ -6,6 +6,7 @@ import java.util.List;
 import java.awt.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 
 public class PlayerActionDisplay {
     private JFrame frame;
@@ -120,6 +121,20 @@ public class PlayerActionDisplay {
             addEvent("Green player " + attackerId + " hit the Red base!");
         } else {
             addEvent("Player " + attackerId + " tagged player " + targetId);
+        }
+
+        // Send acknowledgment back to Python
+        try {
+            DatagramSocket socket = new DatagramSocket();
+            InetAddress address = InetAddress.getByName("127.0.0.1");
+            String ackMessage = "Acknowledged: " + event;
+            byte[] buffer = ackMessage.getBytes();
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
+            socket.send(packet);
+            socket.close(); // Close the socket
+            System.out.println("Sent acknowledgment: " + ackMessage);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
