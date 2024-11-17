@@ -15,6 +15,8 @@ public class PlayerScreen implements KeyListener {
     private JTable team1Table;
     private JTable team2Table;
     private List<String[]> players;  // List of players from the database
+    private Runnable onGameStart;
+
 
     // Constructor
     public PlayerScreen(JFrame frame) {
@@ -210,18 +212,22 @@ public class PlayerScreen implements KeyListener {
         return greenTeamPlayers;
     }
 
+    public void setOnGameStart(Runnable onGameStart) {
+        this.onGameStart = onGameStart;
+    }
+
     // Key listener
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_F12) {
-            // Clear player entries when F12 pressed
             clearPlayerEntries((DefaultTableModel) team1Table.getModel());
             clearPlayerEntries((DefaultTableModel) team2Table.getModel());
             frame.revalidate();
             frame.repaint();
         } else if (e.getKeyCode() == KeyEvent.VK_F5) {
-            // Switch to game display when F5 pressed
-            switchDisplay();
+            if (onGameStart != null) {
+                onGameStart.run();
+            }
         }
     }
 

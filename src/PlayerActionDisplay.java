@@ -19,6 +19,7 @@ public class PlayerActionDisplay {
     private DefaultTableModel greenTeamModel;
     private Timer timer;
     private int gameLength = 20;
+    private DefaultListModel<String> eventLogModel;
 
     public PlayerActionDisplay(JFrame frame) {
         this.frame = frame;
@@ -58,10 +59,10 @@ public class PlayerActionDisplay {
         JScrollPane greenTeamScrollPane = new JScrollPane(greenTeamTable);
         centerPanel.add(greenTeamScrollPane);
 
-        // Add the event log panel
-        JPanel eventLogPanel = new JPanel(new BorderLayout());
-        DefaultListModel<String> eventLogModel = new DefaultListModel<>();
+        // Initialize event log panel
+        eventLogModel = new DefaultListModel<>(); // Move this to class-level if not already there
         JList<String> eventLogList = new JList<>(eventLogModel);
+        JPanel eventLogPanel = new JPanel(new BorderLayout());
         JScrollPane eventLogScrollPane = new JScrollPane(eventLogList);
         eventLogPanel.add(new JLabel("Events"), BorderLayout.NORTH);
         eventLogPanel.add(eventLogScrollPane, BorderLayout.CENTER);
@@ -94,6 +95,7 @@ public class PlayerActionDisplay {
         timer = new Timer(1000, new CountdownAction());
         timer.start();
     }
+
 
         // Method to add event to the log
     public void addEvent(String event) {
