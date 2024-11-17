@@ -46,15 +46,21 @@ public class Main {
                 // Start listening for UDP events
                 // Start listening for UDP events
                 new Thread(() -> {
-                    System.out.println("Starting UDP listener..."); // Debug line
-                    UDPReceive.listenForHits(event -> {
-                        System.out.println("Received event: " + event); // Debug line
-                        SwingUtilities.invokeLater(() -> {
-                            System.out.println("Processing event on Swing thread: " + event); // Debug line
-                            actionDisplay.processEvent(event);
+                    try {
+                        System.out.println("Attempting to start UDP listener thread...");
+                        UDPReceive.listenForHits(event -> {
+                            System.out.println("Received event: " + event);
+                            SwingUtilities.invokeLater(() -> {
+                                System.out.println("Processing event on Swing thread: " + event);
+                                actionDisplay.processEvent(event);
+                            });
                         });
-                    });
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }).start();
+                System.out.println("UDP listener thread started."); // Debug line
+
             });
 
             // Show the player screen
