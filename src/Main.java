@@ -24,6 +24,20 @@ public class Main {
                 // Switch to PlayerActionDisplay when game starts
                 actionDisplay.showActionDisplay();
 
+                // Send the "202" start signal to the Python traffic generator
+                try {
+                    DatagramSocket socket = new DatagramSocket();
+                    InetAddress address = InetAddress.getByName("127.0.0.1");
+                    String startMessage = "202";
+                    byte[] buffer = startMessage.getBytes();
+                    DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
+                    socket.send(packet);
+                    System.out.println("Sent start signal: " + startMessage);
+                    socket.close(); // Close socket after sending
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
                 // Start listening for UDP events
                 new Thread(() -> {
                     UDPReceive.listenForHits(event -> {
@@ -42,3 +56,4 @@ public class Main {
         timer.start();
     }
 }
+
