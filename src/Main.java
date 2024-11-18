@@ -4,81 +4,73 @@ import java.net.DatagramSocket;
 import java.util.function.Consumer;
 import java.net.InetAddress;
 
-
 public class Main {
-    public static void main(String[] args) {
-        // Create main screen
-        JFrame frame = new JFrame("Photon Laser Tag System");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
-        frame.setLocationRelativeTo(null);
+   public static void main(String[] args) {
+       // Create main screen
+       JFrame frame = new JFrame("Photon Laser Tag System");
+       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       frame.setSize(800, 600);
+       frame.setLocationRelativeTo(null);
 
-        // Show splash screen
-        Splash.showSplashScreen(frame);
 
-        // Timer to remove splash screen after 5 seconds
-        Timer timer = new Timer(5000, e -> {
-            // Create PlayerScreen
-            PlayerScreen playerScreen = new PlayerScreen(frame);
+       // Show splash screen
+       Splash.showSplashScreen(frame);
 
-            // Create PlayerActionDisplay
-            PlayerActionDisplay actionDisplay = new PlayerActionDisplay(frame);
 
-            // Set the game start callback
-            playerScreen.setOnGameStart(() -> {
-    // Switch to PlayerActionDisplay when game starts
-            actionDisplay.showActionDisplay();
+       // Timer to remove splash screen after 5 seconds
+       Timer timer = new Timer(5000, e -> {
+           // Create PlayerScreen
+           PlayerScreen playerScreen = new PlayerScreen(frame);
 
-    // Populate teams
-            List<String[]> redTeam = List.of(
-                new String[] {"1", "Red1"},
-                new String[] {"2", "Red2"}
-            );
-            List<String[]> greenTeam = List.of(
-                new String[] {"3", "Green1"},
-                new String[] {"4", "Green2"}
-            );
-            actionDisplay.populateTeams(redTeam, greenTeam);
 
-            // Generate dummy events
-            actionDisplay.generateDummyEvents();
+           // Create PlayerActionDisplay
+           PlayerActionDisplay actionDisplay = new PlayerActionDisplay(frame);
 
-                // Send the "202" start signal to the Python traffic generator
-                try {
-                    DatagramSocket socket = new DatagramSocket();
-                    InetAddress address = InetAddress.getByName("127.0.0.1");
-                    String startMessage = "202";
-                    byte[] buffer = startMessage.getBytes();
-                    DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
-                    socket.send(packet);
-                    System.out.println("Sent start signal: " + startMessage);
-                    socket.close(); // Close socket after sending
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
 
-                // Start listening for UDP events
-                // Start listening for UDP events
-                new Thread(() -> {
-                    System.out.println("Starting UDP listener..."); // Debug line
-                    UDPReceive.listenForHits(event -> {
-                        System.out.println("Received event: " + event); // Debug line
-                        SwingUtilities.invokeLater(() -> {
-                            System.out.println("Processing event on Swing thread: " + event); // Debug line
-                            actionDisplay.processEvent(event);
-                        });
-                    });
-                }).start();
-                System.out.println("UDP listener thread started."); // Debug line
+           // Set the game start callback
+           playerScreen.setOnGameStart(() -> {
+               // Switch to PlayerActionDisplay when game starts
+               actionDisplay.showActionDisplay();
 
-            });
 
-            // Show the player screen
-            playerScreen.showPlayerScreen();
-            frame.setVisible(true);
-        });
-        timer.setRepeats(false);
-        timer.start();
-    }
+               // Send the "202" start signal to the Python traffic generator
+               try {
+                   DatagramSocket socket = new DatagramSocket();
+                   InetAddress address = InetAddress.getByName("127.0.0.1");
+                   String startMessage = "202";
+                   byte[] buffer = startMessage.getBytes();
+                   DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
+                   socket.send(packet);
+                   System.out.println("Sent start signal: " + startMessage);
+                   socket.close(); // Close socket after sending
+               } catch (Exception ex) {
+                   ex.printStackTrace();
+               }
+
+
+               // Start listening for UDP events
+               // Start listening for UDP events
+               new Thread(() -> {
+                   System.out.println("Starting UDP listener..."); // Debug line
+                   UDPReceive.listenForHits(event -> {
+                       System.out.println("Received event: " + event); // Debug line
+                       SwingUtilities.invokeLater(() -> {
+                           System.out.println("Processing event on Swing thread: " + event); // Debug line
+                           actionDisplay.processEvent(event);
+                       });
+                   });
+               }).start();
+               System.out.println("UDP listener thread started."); // Debug line
+
+
+           });
+
+
+           // Show the player screen
+           playerScreen.showPlayerScreen();
+           frame.setVisible(true);
+       });
+       timer.setRepeats(false);
+       timer.start();
+   }
 }
-
