@@ -33,6 +33,7 @@ public class Main {
                } catch (Exception ex) {
                    ex.printStackTrace();
                }
+               PlayerActionDisplay actionDisplay = new PlayerActionDisplay(frame);
                // Start listening for UDP events
                new Thread(() -> {
                    System.out.println("Starting UDP listener..."); // Debug line
@@ -51,7 +52,7 @@ public class Main {
 
 
            // Create PlayerActionDisplay
-           PlayerActionDisplay actionDisplay = new PlayerActionDisplay(frame);
+           //PlayerActionDisplay actionDisplay = new PlayerActionDisplay(frame);
 
 
            // Set the game start callback
