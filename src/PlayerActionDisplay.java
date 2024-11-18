@@ -157,7 +157,7 @@ public class PlayerActionDisplay {
         String attackerId = parts[0];
         String targetId = parts[1];
 
-        System.out.println("Attacker ID: " + attackerId + ", Target ID: " + targetId);
+        //System.out.println("Attacker ID: " + attackerId + ", Target ID: " + targetId);
 
         if (targetId.equals("43")) { // Green team hits Red base
             if (isPlayerInTeam(attackerId, greenTeamModel)) {
@@ -207,7 +207,10 @@ public class PlayerActionDisplay {
     }
 
     private void addBaseHit(String attackerId, String team) {
-        System.out.println(attackerId);
+        System.out.println("Base Hit of " + attackerId);
+        for (String[] player : players) {
+            System.out.println(player[2])
+        }
     // Iterate through players to find the matching equipmentId
     for (String[] player : players) {
         if (player[2].equals(attackerId)) { // Match attackerId with equipmentId
