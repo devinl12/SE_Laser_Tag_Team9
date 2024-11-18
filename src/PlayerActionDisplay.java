@@ -33,6 +33,7 @@ public class PlayerActionDisplay {
 
     public PlayerActionDisplay(JFrame frame, PlayerService playerService) {
         this.frame = frame;
+        this.playerService = playerService
         playerScores = new HashMap<>(); // Initialize player scores
         redTeamScore = 0;
         greenTeamScore = 0;
