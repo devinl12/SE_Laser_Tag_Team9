@@ -162,6 +162,25 @@ public class PlayerScreen implements KeyListener {
         return null;
     }
 
+    private List<String[]> getRedTeamPlayers() {
+        List<String[]> redTeamPlayers = new ArrayList<>();
+        DefaultTableModel model = (DefaultTableModel) team1Table.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String codename = model.getValueAt(i, 0).toString();
+            redTeamPlayers.add(new String[]{String.valueOf(i), codename});
+        }
+        return redTeamPlayers;
+    }
+    private List<String[]> getGreenTeamPlayers() {
+        List<String[]> greenTeamPlayers = new ArrayList<>();
+        DefaultTableModel model = (DefaultTableModel) team2Table.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String codename = model.getValueAt(i, 0).toString();
+            greenTeamPlayers.add(new String[]{String.valueOf(i), codename});
+        }
+        return greenTeamPlayers;
+    }
+
     // Method to customize the JTable
     private void customizeTable(JTable table, Color bgColor, Color selectionColor) {
         table.setBackground(bgColor);
@@ -186,7 +205,7 @@ public class PlayerScreen implements KeyListener {
 
     private void switchDisplay() {
 
-        ImageCountdown countdown = new ImageCountdown();
+        ImageCountdown countdown = new ImageCountdown(redTeamPlayers, greenTeamPlayers);
         countdown.startCountdown(frame);
     }
 
