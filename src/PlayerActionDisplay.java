@@ -209,11 +209,11 @@ public class PlayerActionDisplay {
     private void addBaseHit(String attackerId, String team) {
         System.out.println("Base Hit of " + attackerId);
         for (String[] player : players) {
-            System.out.println(player[2]);
+            System.out.println(player[0]);
         }
     // Iterate through players to find the matching equipmentId
     for (String[] player : players) {
-        if (player[2].equals(attackerId)) { // Match attackerId with equipmentId
+        if (Integer.parseInt(player[0]) == attackerId)  { // Match attackerId with equipmentId
             String playerName = player[1]; // Get player's name
             
             // Determine the team model to update
