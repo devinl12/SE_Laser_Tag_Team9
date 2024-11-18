@@ -23,10 +23,7 @@ public class Main {
           PlayerScreen playerScreen = new PlayerScreen(frame);
           PlayerActionDisplay actionDisplay = new PlayerActionDisplay(frame);
 
-
-          // Set the game start callback
-          playerScreen.setOnGameStart(() -> {
-            // Start listening for UDP events
+          // Start listening for UDP events
               new Thread(() -> {
                   System.out.println("Starting UDP listener..."); // Debug line
                   UDPReceive.listenForHits(event -> {
@@ -38,6 +35,11 @@ public class Main {
                   });
               }).start();
               System.out.println("UDP listener thread started MAIN.");
+
+
+          // Set the game start callback
+          playerScreen.setOnGameStart(() -> {
+            
               actionDisplay.showActionDisplay();
           });
 
