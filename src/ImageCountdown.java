@@ -54,6 +54,30 @@ public class ImageCountdown extends JPanel {
 	   music = new Music();
 	}
 
+	public ImageCountdown(PlayerActionDisplay actionDisplay) {
+        this.actionDisplay = actionDisplay;
+		this.redTeamPlayers = redTeamPlayers;
+	   this.greenTeamPlayers = greenTeamPlayers;
+
+	   setLayout(new BorderLayout());
+
+	   BackgroundPanel backgroundPanel = new BackgroundPanel();
+	   backgroundPanel.setLayout(new BorderLayout());
+
+	   JPanel imagePanel = new JPanel(new BorderLayout());
+	   imagePanel.setOpaque(false);
+	   imagePanel.setBorder(BorderFactory.createEmptyBorder(100,0,0,0));
+
+	   imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+	   imageLabel.setVerticalAlignment(SwingConstants.CENTER);
+ 
+	   imagePanel.add(imageLabel, BorderLayout.CENTER);
+	   backgroundPanel.add(imagePanel, BorderLayout.CENTER);
+	   add(backgroundPanel);
+
+	   music = new Music();
+    }
+
 	public void startCountdown(JFrame frame) {
 		frame.getContentPane().removeAll();
 		frame.add(this);
@@ -112,19 +136,6 @@ public class ImageCountdown extends JPanel {
 
 				// Switch to PlayerActionDisplay after the countdown ends
 				JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(ImageCountdown.this);
-				PlayerActionDisplay actionDisplay = new PlayerActionDisplay(parentFrame);
-				          // Start listening for UDP events
-				new Thread(() -> {
-					System.out.println("IC Starting UDP listener..."); // Debug line
-					UDPReceive.listenForHits(event -> {
-						System.out.println("IC Received event: " + event); // Debug line
-						SwingUtilities.invokeLater(() -> {
-							System.out.println("IC Processing event on Swing thread: " + event); // Debug line
-							actionDisplay.processEvent(event);
-						});
-					});
-				}).start();
-				System.out.println("UDP listener thread started IC.");
 				actionDisplay.showActionDisplay();
 
 				// Assuming redTeamPlayers and greenTeamPlayers are lists with player data collected earlier
@@ -151,5 +162,6 @@ public class ImageCountdown extends JPanel {
 			g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 		}
 	}
+
 }
 

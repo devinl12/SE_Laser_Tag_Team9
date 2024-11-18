@@ -16,12 +16,14 @@ public class Main {
       // Show splash screen
       Splash.showSplashScreen(frame);
 
-      // Timer to remove splash screen after 5 seconds
+    // Timer to remove splash screen after 5 seconds
       Timer timer = new Timer(5000, e -> {
 
-          // Create PlayerScreen
-          PlayerScreen playerScreen = new PlayerScreen(frame);
-          PlayerActionDisplay actionDisplay = new PlayerActionDisplay(frame);
+    // Create PlayerScreen
+       PlayerScreen playerScreen = new PlayerScreen(frame);
+       PlayerActionDisplay actionDisplay = new PlayerActionDisplay(frame);
+          // Pass the shared instance to ImageCountdown
+        ImageCountdown countdown = new ImageCountdown(actionDisplay); //NEW
 
           // Start listening for UDP events
               new Thread(() -> {
@@ -36,11 +38,10 @@ public class Main {
               }).start();
               System.out.println("UDP listener thread started MAIN.");
 
-
           // Set the game start callback
           playerScreen.setOnGameStart(() -> {
-            
-              actionDisplay.showActionDisplay();
+            countdown.startCountdown(frame); //NEW
+            actionDisplay.showActionDisplay();
           });
 
           // Show the player screen
