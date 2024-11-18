@@ -161,12 +161,12 @@ public class PlayerActionDisplay {
 
         if (targetId.equals("43")) { // Green team hits Red base
             if (isPlayerInTeam(attackerId, greenTeamModel)) {
-                addBaseHit(attackerId, "red"); // Update player display
+                addBaseHit(attackerId, "green"); // Update player display
                 greenTeamScore += 100; // Add 100 points to Green Team score
                 addEvent("Green player " + attackerId + " hit the Red base!");}
             } else if (targetId.equals("53")) { // Red team hits Green base
             if (isPlayerInTeam(attackerId, redTeamModel)) {
-                addBaseHit(attackerId, "green"); // Update player display
+                addBaseHit(attackerId, "red"); // Update player display
                 redTeamScore += 100; // Add 100 points to Red Team score
                 addEvent("Red player " + attackerId + " hit the Green base!");
             }
@@ -207,8 +207,25 @@ public class PlayerActionDisplay {
     }
 
     private void addBaseHit(String attackerId, String team) {
-    
+    // Iterate through players to find the matching equipmentId
+    for (String[] player : players) {
+        if (player[2].equals(attackerId)) { // Match attackerId with equipmentId
+            String playerName = player[1]; // Get player's name
+            
+            // Determine the team model to update
+            DefaultTableModel teamModel = team.equals("red") ? redTeamModel : greenTeamModel;
+
+            // Iterate through the team table to find the player's name
+            for (int i = 0; i < teamModel.getRowCount(); i++) {
+                if (teamModel.getValueAt(i, 0).equals(playerName)) {
+                    // Update the player's name with an italicized "B"
+                    teamModel.setValueAt("<html>" + playerName + " <i>B</i></html>", i, 0);
+                    return; // Exit after updating
+                }
+            }
+        }
     }
+}
 
     private boolean isPlayerInTeam(String playerId, DefaultTableModel teamModel) {
     for (int i = 0; i < teamModel.getRowCount(); i++) {
