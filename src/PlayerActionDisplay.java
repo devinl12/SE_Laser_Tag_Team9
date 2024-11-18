@@ -167,7 +167,14 @@ public class PlayerActionDisplay {
                 addEvent("Red player " + attackerId + " hit the Green base!");
             }
         } else {
-            addEvent("Player " + attackerId + " tagged player " + targetId);}
+            addEvent("Player " + attackerId + " tagged player " + targetId);
+            if (attackerId >= 2){
+                redTeamScore += 10;
+            }
+            if (attackerId < 2){
+                greenTeamScore += 10;
+            }
+            }
     // Update displayed scores
     updateTeamScores(redTeamScore, greenTeamScore);
 
@@ -202,14 +209,18 @@ public class PlayerActionDisplay {
     }
 
     private void addBaseHit(String attackerId, String team) {
-    DefaultTableModel model = team.equals("red") ? redTeamModel : greenTeamModel;
-        for (int i = 0; i < model.getRowCount(); i++) {
-            String playerName = model.getValueAt(i, 0).toString();
-            if (playerName.equals(attackerId)) {
-                model.setValueAt("B " + playerName, i, 0);
-                break;
+        if (team == 'red'){
+            for (String[] player : redTeam) {
+                eqiptID = player[2]
+            if (eqiptID.equals(attackerId)){
+                String playerName = redTeamModel.getValueAt(i, 1).toString(); // Column 0 for name
+                redTeamModel.setValueAt("<html><i>B</i> " + playerName + "</html>", i, 0);
+
             }
         }
+
+        }
+    
     }
 
     private boolean isPlayerInTeam(String playerId, DefaultTableModel teamModel) {
@@ -221,25 +232,6 @@ public class PlayerActionDisplay {
     return true;
 }
 
-    private String getAttackerTeam(String attackerId) {
-    // Check red team
-    for (int i = 0; i < redTeamModel.getRowCount(); i++) {
-        String equipmentId = redTeamModel.getValueAt(i, 2).toString(); // Assuming column 2 is the equipment ID
-        if (equipmentId.equals(attackerId)) {
-            return "red";
-        }
-    }
-
-    // Check green team
-    for (int i = 0; i < greenTeamModel.getRowCount(); i++) {
-        String equipmentId = greenTeamModel.getValueAt(i, 2).toString(); // Assuming column 2 is the equipment ID
-        if (equipmentId.equals(attackerId)) {
-            return "green";
-        }
-    }
-
-    return null; // Return null if no match is found
-}
 
     private void sendGameEndSignal() {
     try {

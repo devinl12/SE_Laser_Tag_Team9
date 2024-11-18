@@ -34,7 +34,7 @@ public class Main {
                       });
                   });
               }).start();
-              System.out.println("UDP listener thread started MAIN.");
+              System.out.println("UDP listener thread started.");
 
           // Set the game start callback
           playerScreen.setOnGameStart(() -> {
