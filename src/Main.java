@@ -23,24 +23,12 @@ public class Main {
           PlayerScreen playerScreen = new PlayerScreen(frame);
           PlayerActionDisplay actionDisplay = new PlayerActionDisplay(frame);
 
-          // Start listening for UDP events
-              new Thread(() -> {
-                  System.out.println("Starting UDP listener..."); // Debug line
-                  UDPReceive.listenForHits(event -> {
-                      System.out.println("Received event: " + event); // Debug line
-                      SwingUtilities.invokeLater(() -> {
-                          System.out.println("Processing event on Swing thread: " + event); // Debug line
-                          actionDisplay.processEvent(event);
-                      });
-                  });
-              }).start();
-              System.out.println("UDP listener thread started MAIN.");
 
           // Set the game start callback
-          playerScreen.setOnGameStart(() -> {
-              actionDisplay.showActionDisplay();
+          //playerScreen.setOnGameStart(() -> {
+              //actionDisplay.showActionDisplay();
 
-          });
+          //});
 
           // Show the player screen
           playerScreen.showPlayerScreen();
