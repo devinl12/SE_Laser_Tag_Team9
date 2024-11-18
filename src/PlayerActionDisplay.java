@@ -66,8 +66,8 @@ public class PlayerActionDisplay {
         String[] greenTeamColumns = {"Green Team Players"};
         greenTeamModel = new DefaultTableModel(greenTeamColumns, 0);
         greenTeamTable = new JTable(greenTeamModel);
-        redTeamModel.addRow(new Object[]{"Player 3"});
-        redTeamModel.addRow(new Object[]{"Player 4"});
+        greenTeamModel.addRow(new Object[]{"Player 3"});
+        greenTeamModel.addRow(new Object[]{"Player 4"});
         JScrollPane greenTeamScrollPane = new JScrollPane(greenTeamTable);
         centerPanel.add(greenTeamScrollPane);
 
@@ -241,7 +241,7 @@ public class PlayerActionDisplay {
 
         if (i == 5) {
             processEvent(attacker + ":43"); // Red hits Green base
-        } else if (i == 15) {
+        } else if (i == 8) {
             processEvent(attacker + ":53"); // Green hits Red base
         } else {
             processEvent(attacker + ":" + target); // Regular tagging event
