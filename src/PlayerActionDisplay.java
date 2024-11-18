@@ -201,6 +201,17 @@ public class PlayerActionDisplay {
         actionLog.append(entry + "\n");
     }
 
+    private void addBaseHit(String attackerId, String team) {
+    DefaultTableModel model = team.equals("red") ? redTeamModel : greenTeamModel;
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String playerName = model.getValueAt(i, 0).toString();
+            if (playerName.equals(attackerId)) {
+                model.setValueAt("B " + playerName, i, 0);
+                break;
+            }
+        }
+    }
+
     private void sendGameEndSignal() {
     try {
         DatagramSocket socket = new DatagramSocket();
