@@ -26,7 +26,7 @@ public class Main {
                   byte[] buffer = startMessage.getBytes();
                   DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
                   socket.send(packet);
-                  System.out.println("Sent start signal: " + startMessage);
+                  System.out.println("Sent start signal MAin: " + startMessage);
                   socket.close(); // Close socket after sending
               } catch (Exception ex) {
                   ex.printStackTrace();
