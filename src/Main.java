@@ -25,10 +25,10 @@ public class Main {
 
 
           // Set the game start callback
-          //playerScreen.setOnGameStart(() -> {
-              //actionDisplay.showActionDisplay();
+          playerScreen.setOnGameStart(() -> {
+              actionDisplay.showActionDisplay();
 
-          //});
+          });
 
           // Show the player screen
           playerScreen.showPlayerScreen();
