@@ -230,7 +230,7 @@ public class PlayerScreen implements KeyListener {
         } else if (e.getKeyCode() == KeyEvent.VK_F5) {
             if (onGameStart != null) {
                 switchDisplay();
-                onGameStart.run();
+                //onGameStart.run();
             }
         }
     }
