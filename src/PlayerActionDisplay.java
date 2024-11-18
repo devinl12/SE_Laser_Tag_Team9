@@ -206,13 +206,13 @@ public class PlayerActionDisplay {
         actionLog.append(entry + "\n");
     }
 
-    private void addBaseHit(String attackerIdStr, String team) {
-        int attackerId = Integer.parseInt(attackerIdStr);
+    private void addBaseHit(String attackerId, String team) {
         
     // Iterate through players to find the matching equipmentId
     for (String[] player : players) {
-        if (Integer.parseInt(player[2]) == attackerId)  { // Match attackerId with equipmentId
+        if (player[2].equals(attackerId))  { // Match attackerId with equipmentId
             String playerName = player[1]; // Get player's name
+            
             
             // Determine the team model to update
             DefaultTableModel teamModel = team.equals("red") ? redTeamModel : greenTeamModel;
