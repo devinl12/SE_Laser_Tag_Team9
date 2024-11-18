@@ -13,12 +13,26 @@ public class Main {
        frame.setLocationRelativeTo(null);
 
 
+
        // Show splash screen
        Splash.showSplashScreen(frame);
 
 
        // Timer to remove splash screen after 5 seconds
        Timer timer = new Timer(5000, e -> {
+        // Send the "202" start signal to the Python traffic generator
+               try {
+                   DatagramSocket socket = new DatagramSocket();
+                   InetAddress address = InetAddress.getByName("127.0.0.1");
+                   String startMessage = "202";
+                   byte[] buffer = startMessage.getBytes();
+                   DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
+                   socket.send(packet);
+                   System.out.println("Sent start signal: " + startMessage);
+                   socket.close(); // Close socket after sending
+               } catch (Exception ex) {
+                   ex.printStackTrace();
+               }
            // Create PlayerScreen
            PlayerScreen playerScreen = new PlayerScreen(frame);
 
@@ -33,19 +47,7 @@ public class Main {
                actionDisplay.showActionDisplay();
 
 
-               // Send the "202" start signal to the Python traffic generator
-               try {
-                   DatagramSocket socket = new DatagramSocket();
-                   InetAddress address = InetAddress.getByName("127.0.0.1");
-                   String startMessage = "202";
-                   byte[] buffer = startMessage.getBytes();
-                   DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
-                   socket.send(packet);
-                   System.out.println("Sent start signal: " + startMessage);
-                   socket.close(); // Close socket after sending
-               } catch (Exception ex) {
-                   ex.printStackTrace();
-               }
+               //WENT HERE
 
 
                // Start listening for UDP events
