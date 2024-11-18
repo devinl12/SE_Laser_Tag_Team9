@@ -168,12 +168,6 @@ public class PlayerActionDisplay {
             }
         } else {
             addEvent("Player " + attackerId + " tagged player " + targetId);
-            if (attackerId >= 2){
-                redTeamScore += 10;
-            }
-            if (attackerId < 2){
-                greenTeamScore += 10;
-            }
             }
     // Update displayed scores
     updateTeamScores(redTeamScore, greenTeamScore);
