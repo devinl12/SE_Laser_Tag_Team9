@@ -183,6 +183,26 @@ public class PlayerScreen implements KeyListener {
         }
     }
 
+    public List<String[]> getTeam1Players() {
+    List<String[]> team1Players = new ArrayList<>();
+    DefaultTableModel model = (DefaultTableModel) team1Table.getModel();
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String playerName = model.getValueAt(i, 0).toString();
+        team1Players.add(new String[]{String.valueOf(i), playerName});
+    }
+    return team1Players;
+}
+
+public List<String[]> getTeam2Players() {
+    List<String[]> team2Players = new ArrayList<>();
+    DefaultTableModel model = (DefaultTableModel) team2Table.getModel();
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String playerName = model.getValueAt(i, 0).toString();
+        team2Players.add(new String[]{String.valueOf(i), playerName});
+    }
+    return team2Players;
+}
+
     private void switchDisplay() {
         // Retrieve the player lists for the red and green teams
         List<String[]> redTeamPlayers = getRedTeamPlayers();

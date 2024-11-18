@@ -18,7 +18,6 @@ public class PlayerActionDisplay {
     private JTable greenTeamTable;
     private DefaultTableModel redTeamModel;
     private DefaultTableModel greenTeamModel;
-    private List<String[]> players;
     private Timer timer;
     private int gameLength = 360;
     private DefaultListModel<String> eventLogModel;
@@ -41,9 +40,9 @@ public class PlayerActionDisplay {
         // Top panel for team scores
         JPanel topPanel = new JPanel(new GridLayout(1, 2));
         redTeamLabel = new JLabel("Red Team: 0", JLabel.CENTER);
-        redTeamLabel.setForeground(Color.RED); 
+        redTeamLabel.setForeground(Color.RED);
         greenTeamLabel = new JLabel("Green Team: 0", JLabel.CENTER);
-        greenTeamLabel.setForeground(Color.GREEN); 
+        greenTeamLabel.setForeground(Color.GREEN);
         redTeamLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         greenTeamLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         topPanel.add(redTeamLabel);
@@ -64,12 +63,11 @@ public class PlayerActionDisplay {
         String[] greenTeamColumns = {"Green Team Players"};
         greenTeamModel = new DefaultTableModel(greenTeamColumns, 0);
         greenTeamTable = new JTable(greenTeamModel);
-    
         JScrollPane greenTeamScrollPane = new JScrollPane(greenTeamTable);
         centerPanel.add(greenTeamScrollPane);
 
         // Initialize event log panel
-        eventLogModel = new DefaultListModel<>(); // Move this to class-level if not already there
+        eventLogModel = new DefaultListModel<>();
         JList<String> eventLogList = new JList<>(eventLogModel);
         JPanel eventLogPanel = new JPanel(new BorderLayout());
         JScrollPane eventLogScrollPane = new JScrollPane(eventLogList);
@@ -105,17 +103,36 @@ public class PlayerActionDisplay {
         timer.start();
     }
 
+    public void populateTeams(List<String[]> redTeam, List<String[]> greenTeam) {
+        // Clear existing data
+        redTeamModel.setRowCount(0);
+        greenTeamModel.setRowCount(0);
 
-        // Method to add event to the log
+        // Populate Red Team Table
+        for (String[] player : redTeam) {
+            redTeamModel.addRow(new Object[]{player[1]});
+        }
+
+        // Populate Green Team Table
+        for (String[] player : greenTeam) {
+            greenTeamModel.addRow(new Object[]{player[1]});
+        }
+    }
+
+    public void updateTeamScores(int redTeamScore, int greenTeamScore) {
+        redTeamLabel.setText("Red Team: " + redTeamScore);
+        greenTeamLabel.setText("Green Team: " + greenTeamScore);
+    }
+
     public void addEvent(String event) {
         eventLogModel.addElement(event);
-        if (eventLogModel.size() > 50) { // Keep only the latest 50 events
+        if (eventLogModel.size() > 50) {
             eventLogModel.remove(0);
         }
     }
 
     public void processEvent(String event) {
-        System.out.println("Processing event: " + event); // Debug line
+        System.out.println("Processing event: " + event);
 
         if (event == null || event.isEmpty()) {
             System.out.println("Received an empty event, skipping...");
@@ -141,7 +158,6 @@ public class PlayerActionDisplay {
             addEvent("Player " + attackerId + " tagged player " + targetId);
         }
 
-        // Send acknowledgment back to Python
         try {
             InetAddress address = InetAddress.getByName("127.0.0.1");
             String ackMessage = "Acknowledged: " + event;
@@ -154,9 +170,6 @@ public class PlayerActionDisplay {
         }
     }
 
-
-
-    // Add "B" to player who hit the base
     private void addBaseHit(String attackerId, String team) {
         DefaultTableModel model = team.equals("red") ? redTeamModel : greenTeamModel;
         for (int i = 0; i < model.getRowCount(); i++) {
@@ -168,8 +181,6 @@ public class PlayerActionDisplay {
         }
     }
 
-
-
     private class CountdownAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -178,56 +189,23 @@ public class PlayerActionDisplay {
                 gameLength--;
             } else {
                 timer.stop();
-		timerLabel.setText("Game Complete!");
-		PlayerScreen nextGame = new PlayerScreen(frame);
-		nextGame.showPlayerScreen();
-
-		frame.setVisible(true);
+                timerLabel.setText("Game Complete!");
+                PlayerScreen nextGame = new PlayerScreen(frame);
+                nextGame.showPlayerScreen();
+                frame.setVisible(true);
             }
         }
     }
 
-    // Method to populate the team tables
-    public void populateTeams (List<String[]> redTeam, List<String[]> greenTeam) {
-        // Clear existing data
-        redTeamModel.setRowCount(0);
-        greenTeamModel.setRowCount(0);
-    
-        // Add players to the Red Team table
-        for (String[] player : redTeam) {
-            redTeamModel.addRow(new Object[]{player[1]});
-        }
-    
-        // Add players to the Green Team table
-        for (String[] player : greenTeam) {
-            greenTeamModel.addRow(new Object[]{player[1]});
-        }
+    public void updateTimer() {
+        int minutes = gameLength / 60;
+        int seconds = gameLength % 60;
+        String minuteString = String.valueOf(minutes);
+        String secondString = String.format("%02d", seconds);
+        timerLabel.setText("Time Remaining: " + minuteString + ":" + secondString);
     }
 
-    // Method to update the scores
-    public void updateTeamScores(int redTeamScore, int greenTeamScore) {
-        redTeamLabel.setText("Red Team: " + redTeamScore);
-        greenTeamLabel.setText("Green Team: " + greenTeamScore);
-    }
-
-    // Method to add a new log entry
     public void addActionLogEntry(String entry) {
         actionLog.append(entry + "\n");
     }
-
-    // Method to update the countdown timer display
-    public void updateTimer() {
-        int minutes = this.gameLength / 60;
-	int seconds = this.gameLength % 60;
-	String minuteString = Integer.toString(minutes);
-        String secondString = Integer.toString(seconds);
-        if (secondString.length() < 2) {
-            secondString = "0" + secondString;
-        }
-        timerLabel.setText("Time Remaining: " + minuteString + ":" + secondString );
-    }
-
-    
-
 }
-
