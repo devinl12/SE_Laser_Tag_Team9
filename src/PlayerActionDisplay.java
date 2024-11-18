@@ -153,6 +153,8 @@ public class PlayerActionDisplay {
         String attackerId = parts[0];
         String targetId = parts[1];
 
+        System.out.println("Attacker ID: " + attackerId + ", Target ID: " + targetId);
+
         if (targetId.equals("43")) { // Green team hits Red base
             if (isPlayerInTeam(attackerId, greenTeamModel)) {
                 addBaseHit(attackerId, "red"); // Update player display
@@ -186,10 +188,10 @@ public class PlayerActionDisplay {
     private boolean isPlayerInTeam(String playerId, DefaultTableModel teamModel) {
     for (int i = 0; i < teamModel.getRowCount(); i++) {
         if (teamModel.getValueAt(i, 0).equals(playerId)) {
-            return true;
+            return false;
         }
     }
-    return false;
+    return true;
 }
 
     public void updateTimer() {
