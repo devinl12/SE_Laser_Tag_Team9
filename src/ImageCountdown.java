@@ -113,6 +113,18 @@ public class ImageCountdown extends JPanel {
 				// Switch to PlayerActionDisplay after the countdown ends
 				JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(ImageCountdown.this);
 				PlayerActionDisplay actionDisplay = new PlayerActionDisplay(parentFrame);
+				          // Start listening for UDP events
+				new Thread(() -> {
+					System.out.println("Starting UDP listener..."); // Debug line
+					UDPReceive.listenForHits(event -> {
+						System.out.println("Received event: " + event); // Debug line
+						SwingUtilities.invokeLater(() -> {
+							System.out.println("Processing event on Swing thread: " + event); // Debug line
+							actionDisplay.processEvent(event);
+						});
+					});
+				}).start();
+				System.out.println("UDP listener thread started.");
 				actionDisplay.showActionDisplay();
 
 				// Assuming redTeamPlayers and greenTeamPlayers are lists with player data collected earlier

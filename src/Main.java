@@ -18,21 +18,12 @@ public class Main {
 
       // Timer to remove splash screen after 5 seconds
       Timer timer = new Timer(5000, e -> {
-       // Send the "202" start signal to the Python traffic generator
-              try {
-                  DatagramSocket socket = new DatagramSocket();
-                  InetAddress address = InetAddress.getByName("127.0.0.1");
-                  String startMessage = "202";
-                  byte[] buffer = startMessage.getBytes();
-                  DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
-                  socket.send(packet);
-                  System.out.println("Sent start signal MAin: " + startMessage);
-                  socket.close(); // Close socket after sending
-              } catch (Exception ex) {
-                  ex.printStackTrace();
-              }
-              PlayerActionDisplay actionDisplay = new PlayerActionDisplay(frame);
-              // Start listening for UDP events
+
+          // Create PlayerScreen
+          PlayerScreen playerScreen = new PlayerScreen(frame);
+          PlayerActionDisplay actionDisplay = new PlayerActionDisplay(frame);
+
+          // Start listening for UDP events
               new Thread(() -> {
                   System.out.println("Starting UDP listener..."); // Debug line
                   UDPReceive.listenForHits(event -> {
@@ -43,11 +34,7 @@ public class Main {
                       });
                   });
               }).start();
-              System.out.println("UDP listener thread started."); // Debug line
-
-
-          // Create PlayerScreen
-          PlayerScreen playerScreen = new PlayerScreen(frame);
+              System.out.println("UDP listener thread started.");
 
           // Set the game start callback
           playerScreen.setOnGameStart(() -> {
