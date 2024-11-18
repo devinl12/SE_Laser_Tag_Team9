@@ -183,54 +183,14 @@ public class PlayerScreen implements KeyListener {
         }
     }
 
-    public List<String[]> getTeam1Players() {
-    List<String[]> team1Players = new ArrayList<>();
-    DefaultTableModel model = (DefaultTableModel) team1Table.getModel();
-    for (int i = 0; i < model.getRowCount(); i++) {
-        String playerName = model.getValueAt(i, 0).toString();
-        team1Players.add(new String[]{String.valueOf(i), playerName});
-    }
-    return team1Players;
-}
-
-public List<String[]> getTeam2Players() {
-    List<String[]> team2Players = new ArrayList<>();
-    DefaultTableModel model = (DefaultTableModel) team2Table.getModel();
-    for (int i = 0; i < model.getRowCount(); i++) {
-        String playerName = model.getValueAt(i, 0).toString();
-        team2Players.add(new String[]{String.valueOf(i), playerName});
-    }
-    return team2Players;
-}
 
     private void switchDisplay() {
-        // Retrieve the player lists for the red and green teams
-        List<String[]> redTeamPlayers = getRedTeamPlayers();
-        List<String[]> greenTeamPlayers = getGreenTeamPlayers();
 
-        ImageCountdown countdown = new ImageCountdown(redTeamPlayers, greenTeamPlayers);
+        ImageCountdown countdown = new ImageCountdown();
         countdown.startCountdown(frame);
     }
 
-    private List<String[]> getRedTeamPlayers() {
-        List<String[]> redTeamPlayers = new ArrayList<>();
-        DefaultTableModel model = (DefaultTableModel) team1Table.getModel();
-        for (int i = 0; i < model.getRowCount(); i++) {
-            String codename = model.getValueAt(i, 0).toString();
-            redTeamPlayers.add(new String[]{String.valueOf(i), codename});
-        }
-        return redTeamPlayers;
-    }
-
-    private List<String[]> getGreenTeamPlayers() {
-        List<String[]> greenTeamPlayers = new ArrayList<>();
-        DefaultTableModel model = (DefaultTableModel) team2Table.getModel();
-        for (int i = 0; i < model.getRowCount(); i++) {
-            String codename = model.getValueAt(i, 0).toString();
-            greenTeamPlayers.add(new String[]{String.valueOf(i), codename});
-        }
-        return greenTeamPlayers;
-    }
+   
 
     public void setOnGameStart(Runnable onGameStart) {
         this.onGameStart = onGameStart;
@@ -246,6 +206,7 @@ public List<String[]> getTeam2Players() {
             frame.repaint();
         } else if (e.getKeyCode() == KeyEvent.VK_F5) {
             if (onGameStart != null) {
+                switchDisplay();
                 onGameStart.run();
             }
         }
