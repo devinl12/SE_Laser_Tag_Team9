@@ -36,7 +36,7 @@ public class Main {
             PlayerScreen playerScreen = new PlayerScreen(frame);
 
             // Set the game start callback
-            playerScreen.setOnGameStart((redTeamPlayers, greenTeamPlayers) -> {
+            playerScreen.setOnGameStart(() -> {
                 // Switch to ImageCountdown with player data
                 ImageCountdown countdown = new ImageCountdown(redTeamPlayers, greenTeamPlayers);
                 countdown.startCountdown(frame);
