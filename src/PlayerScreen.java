@@ -12,6 +12,7 @@ public class PlayerScreen implements KeyListener {
 
     private JFrame frame;
     private PlayerService playerService;
+    private final PlayerActionDisplay actionDisplay;
     private JTable team1Table;
     private JTable team2Table;
     private List<String[]> players;  // List of players from the database
@@ -19,8 +20,9 @@ public class PlayerScreen implements KeyListener {
 
 
     // Constructor
-    public PlayerScreen(JFrame frame) {
+    public PlayerScreen(JFrame frame, PlayerActionDisplay actionDisplay) {
         this.frame = frame;
+        this.actionDisplay = actionDisplay;
         this.playerService = new PlayerService();
         this.players = playerService.getPlayers();
 
@@ -209,7 +211,7 @@ public class PlayerScreen implements KeyListener {
     List<String[]> greenTeamPlayers = getGreenTeamPlayers();
 
     // Start the countdown
-    ImageCountdown countdown = new ImageCountdown(redTeamPlayers, greenTeamPlayers);
+    ImageCountdown countdown = new ImageCountdown(redTeamPlayers, greenTeamPlayers, actionDisplay);
     countdown.startCountdown(frame);
 }
 

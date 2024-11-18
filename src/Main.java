@@ -20,10 +20,8 @@ public class Main {
       Timer timer = new Timer(5000, e -> {
 
     // Create PlayerScreen
-       PlayerScreen playerScreen = new PlayerScreen(frame);
        PlayerActionDisplay actionDisplay = new PlayerActionDisplay(frame);
-          // Pass the shared instance to ImageCountdown
-        ImageCountdown countdown = new ImageCountdown(actionDisplay); //NEW
+       PlayerScreen playerScreen = new PlayerScreen(frame, actionDisplay);
 
           // Start listening for UDP events
               new Thread(() -> {

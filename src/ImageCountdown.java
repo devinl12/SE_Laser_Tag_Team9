@@ -31,7 +31,7 @@ public class ImageCountdown extends JPanel {
 
 
 
-	public ImageCountdown(List<String[]> redTeamPlayers, List<String[]> greenTeamPlayers) {
+	public ImageCountdown(List<String[]> redTeamPlayers, List<String[]> greenTeamPlayers, PlayerActionDisplay actionDisplay) {
 	   this.redTeamPlayers = redTeamPlayers;
 	   this.greenTeamPlayers = greenTeamPlayers;
 
@@ -54,29 +54,6 @@ public class ImageCountdown extends JPanel {
 	   music = new Music();
 	}
 
-	public ImageCountdown(PlayerActionDisplay actionDisplay) {
-        this.actionDisplay = actionDisplay;
-		this.redTeamPlayers = redTeamPlayers;
-	   this.greenTeamPlayers = greenTeamPlayers;
-
-	   setLayout(new BorderLayout());
-
-	   BackgroundPanel backgroundPanel = new BackgroundPanel();
-	   backgroundPanel.setLayout(new BorderLayout());
-
-	   JPanel imagePanel = new JPanel(new BorderLayout());
-	   imagePanel.setOpaque(false);
-	   imagePanel.setBorder(BorderFactory.createEmptyBorder(100,0,0,0));
-
-	   imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-	   imageLabel.setVerticalAlignment(SwingConstants.CENTER);
- 
-	   imagePanel.add(imageLabel, BorderLayout.CENTER);
-	   backgroundPanel.add(imagePanel, BorderLayout.CENTER);
-	   add(backgroundPanel);
-
-	   music = new Music();
-    }
 
 	public void startCountdown(JFrame frame) {
 		frame.getContentPane().removeAll();
