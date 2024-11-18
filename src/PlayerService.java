@@ -26,9 +26,8 @@ public class PlayerService {
             while (rs.next()) {
                 String id = String.valueOf(rs.getInt("id"));
                 String codename = rs.getString("codename");
-                players.add(new String[]{id, codename});
-
                 int equipmentId = rs.getInt("id");
+                players.add(new String[]{id, codename, equipmentId}); //Added equiptID
                 UDPTransmit.transmitEquipmentCode(equipmentId);  // Transmit the player's equipment code
             }
         } catch (SQLException e) {
