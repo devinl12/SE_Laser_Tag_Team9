@@ -141,7 +141,7 @@ public class PlayerActionDisplay {
     }
 
     public void processEvent(String event) {
-        System.out.println("Processing event: " + event);
+        //System.out.println("Processing event: " + event);
 
         if (event == null || event.isEmpty()) {
             System.out.println("Received an empty event, skipping...");
@@ -178,11 +178,11 @@ public class PlayerActionDisplay {
 
         try {
             InetAddress address = InetAddress.getByName("127.0.0.1");
-            String ackMessage = "Acknowledged: " + event;
+            //String ackMessage = "Acknowledged: " + event;
             byte[] buffer = ackMessage.getBytes();
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
             acknowledgmentSocket.send(packet);
-            System.out.println("Sent acknowledgment: " + ackMessage);
+            //System.out.println("Sent acknowledgment: " + ackMessage);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -208,13 +208,10 @@ public class PlayerActionDisplay {
 
     private void addBaseHit(String attackerIdStr, String team) {
         int attackerId = Integer.parseInt(attackerIdStr);
-        System.out.println("Base Hit of " + attackerId);
-        for (String[] player : players) {
-            System.out.println(player[0]);
-        }
+        
     // Iterate through players to find the matching equipmentId
     for (String[] player : players) {
-        if (Integer.parseInt(player[0]) == attackerId)  { // Match attackerId with equipmentId
+        if (Integer.parseInt(player[2]) == attackerId)  { // Match attackerId with equipmentId
             String playerName = player[1]; // Get player's name
             
             // Determine the team model to update
