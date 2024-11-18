@@ -19,9 +19,11 @@ public class Main {
     // Timer to remove splash screen after 5 seconds
       Timer timer = new Timer(5000, e -> {
 
-    // Create PlayerScreen
-       PlayerActionDisplay actionDisplay = new PlayerActionDisplay(frame);
-       PlayerScreen playerScreen = new PlayerScreen(frame, actionDisplay);
+    // Create Variables
+    PlayerService playerService = new PlayerService();
+    PlayerActionDisplay actionDisplay = new PlayerActionDisplay(frame, playerService);
+    PlayerScreen playerScreen = new PlayerScreen(frame, actionDisplay, playerService);
+    
 
           // Start listening for UDP events
               new Thread(() -> {

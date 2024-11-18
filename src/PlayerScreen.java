@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
 public class PlayerScreen implements KeyListener {
 
     private JFrame frame;
-    private PlayerService playerService;
+    private final PlayerService playerService;
     private final PlayerActionDisplay actionDisplay;
     private JTable team1Table;
     private JTable team2Table;
@@ -20,10 +20,10 @@ public class PlayerScreen implements KeyListener {
 
 
     // Constructor
-    public PlayerScreen(JFrame frame, PlayerActionDisplay actionDisplay) {
+    public PlayerScreen(JFrame frame, PlayerActionDisplay actionDisplay, PlayerService playerService) {
         this.frame = frame;
         this.actionDisplay = actionDisplay;
-        this.playerService = new PlayerService();
+        this.playerService = playerService;
         this.players = playerService.getPlayers();
 
         frame.addKeyListener(this);
@@ -233,7 +233,6 @@ public class PlayerScreen implements KeyListener {
         } else if (e.getKeyCode() == KeyEvent.VK_F5) {
             if (onGameStart != null) {
                 switchDisplay();
-                //onGameStart.run();
             }
         }
     }

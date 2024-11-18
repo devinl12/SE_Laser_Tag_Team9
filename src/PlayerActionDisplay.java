@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 public class PlayerActionDisplay {
     private JFrame frame;
+    private final PlayerService playerService;
     private JLabel redTeamLabel;
     private JLabel greenTeamLabel;
     private JTextArea actionLog;
@@ -27,13 +28,15 @@ public class PlayerActionDisplay {
     private Map<String, Integer> playerScores; // To store player scores
     private int redTeamScore;
     private int greenTeamScore;
+    private List<String[]> players;
     
 
-    public PlayerActionDisplay(JFrame frame) {
+    public PlayerActionDisplay(JFrame frame, PlayerService playerService) {
         this.frame = frame;
         playerScores = new HashMap<>(); // Initialize player scores
         redTeamScore = 0;
         greenTeamScore = 0;
+        this.players = playerService.getPlayers();
         try {
             acknowledgmentSocket = new DatagramSocket(); // Reuse this socket for acknowledgments
         } catch (Exception ex) {
