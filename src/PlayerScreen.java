@@ -41,17 +41,17 @@ public class PlayerScreen implements KeyListener {
         // Main panel for teams
         JPanel mainPanel = new JPanel(new GridLayout(1, 2));
 
-        // Pink Team table
+        // Red Team table
         JPanel leftPanel = new JPanel(new BorderLayout());
-        String[] team1Columns = {"Team Pink Players"};
+        String[] team1Columns = {"Team Red Players"};
         DefaultTableModel team1Model = new DefaultTableModel(team1Columns, 0);
         team1Table = new JTable(team1Model);
         JScrollPane team1ScrollPane = new JScrollPane(team1Table);
         leftPanel.add(team1ScrollPane, BorderLayout.CENTER);
-        customizeTable(team1Table, new Color(250, 128, 114), new Color(255, 182, 193));
+        customizeTable(team1Table, new Color(255, 69, 0), new Color(220, 20, 60));
 
-        // Add Player Button for Pink Team
-        JButton addTeam1PlayerButton = new JButton("Add Player to Pink Team");
+        // Add Player Button for Red Team
+        JButton addTeam1PlayerButton = new JButton("Add Player to Red Team");
         addTeam1PlayerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
