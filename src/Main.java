@@ -46,10 +46,6 @@ public class Main {
                // Switch to PlayerActionDisplay when game starts
                actionDisplay.showActionDisplay();
 
-
-               //WENT HERE
-
-
                // Start listening for UDP events
                // Start listening for UDP events
                new Thread(() -> {
