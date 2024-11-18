@@ -204,10 +204,14 @@ public class PlayerScreen implements KeyListener {
 
 
     private void switchDisplay() {
+    // Retrieve red and green team players
+    List<String[]> redTeamPlayers = getRedTeamPlayers();
+    List<String[]> greenTeamPlayers = getGreenTeamPlayers();
 
-        ImageCountdown countdown = new ImageCountdown(redTeamPlayers, greenTeamPlayers);
-        countdown.startCountdown(frame);
-    }
+    // Start the countdown
+    ImageCountdown countdown = new ImageCountdown(redTeamPlayers, greenTeamPlayers);
+    countdown.startCountdown(frame);
+}
 
    
 
