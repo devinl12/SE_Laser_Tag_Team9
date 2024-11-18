@@ -154,7 +154,7 @@ public class PlayerActionDisplay {
             return;
         }
 
-        int attackerId = parts[0];
+        String attackerId = parts[0];
         String targetId = parts[1];
 
         //System.out.println("Attacker ID: " + attackerId + ", Target ID: " + targetId);
@@ -206,7 +206,8 @@ public class PlayerActionDisplay {
         actionLog.append(entry + "\n");
     }
 
-    private void addBaseHit(int attackerId, String team) {
+    private void addBaseHit(String attackerIdStr, String team) {
+        int attackerId = Integer.parseInt(attackerIdStr);
         System.out.println("Base Hit of " + attackerId);
         for (String[] player : players) {
             System.out.println(player[0]);
