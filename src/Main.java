@@ -13,16 +13,8 @@ public class Main {
       frame.setSize(800, 600);
       frame.setLocationRelativeTo(null);
 
-
-
-
-
-
       // Show splash screen
       Splash.showSplashScreen(frame);
-
-
-
 
       // Timer to remove splash screen after 5 seconds
       Timer timer = new Timer(5000, e -> {
@@ -57,31 +49,11 @@ public class Main {
           // Create PlayerScreen
           PlayerScreen playerScreen = new PlayerScreen(frame);
 
-
-
-
-          // Create PlayerActionDisplay
-          //PlayerActionDisplay actionDisplay = new PlayerActionDisplay(frame);
-
-
-
-
           // Set the game start callback
           playerScreen.setOnGameStart(() -> {
               actionDisplay.showActionDisplay();
 
-
-              // Start listening for UDP events
-              // Start listening for UDP events
-              //Thread was here
-
-
-
-
           });
-
-
-
 
           // Show the player screen
           playerScreen.showPlayerScreen();
