@@ -67,9 +67,8 @@ public class Main {
 
 
           // Set the game start callback
-          playerScreen.setOnGameStart(() -> {
-              // Switch to PlayerActionDisplay when game starts
-              actionDisplay.showActionDisplay();
+          //playerScreen.setOnGameStart(() -> {
+              //actionDisplay.showActionDisplay();
 
 
               // Start listening for UDP events
