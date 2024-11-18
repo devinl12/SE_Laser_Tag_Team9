@@ -207,6 +207,7 @@ public class PlayerActionDisplay {
     }
 
     private void addBaseHit(String attackerId, String team) {
+        System.out.println(attackerId);
     // Iterate through players to find the matching equipmentId
     for (String[] player : players) {
         if (player[2].equals(attackerId)) { // Match attackerId with equipmentId
@@ -223,6 +224,9 @@ public class PlayerActionDisplay {
                     return; // Exit after updating
                 }
             }
+        }
+        else{
+            System.out.println("Player ID not matched")
         }
     }
 }
