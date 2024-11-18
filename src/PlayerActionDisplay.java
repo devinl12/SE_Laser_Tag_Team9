@@ -159,11 +159,12 @@ public class PlayerActionDisplay {
                 greenTeamScore += 100; // Add 100 points to Green Team score
                 addEvent("Green player " + attackerId + " hit the Red base!");
         }
-        } else if (targetId.equals("53")) {
+        } else if (targetId.equals("53")) { // Red team hits Green base
             if (isPlayerInTeam(attackerId, redTeamModel)) {
                 addBaseHit(attackerId, "green"); // Update player display
                 redTeamScore += 100; // Add 100 points to Red Team score
                 addEvent("Red player " + attackerId + " hit the Green base!");
+            }
         } else {
             addEvent("Player " + attackerId + " tagged player " + targetId);
         }
@@ -221,7 +222,6 @@ public class PlayerActionDisplay {
 
     private void sendGameEndSignal() {
     try {
-        DatagramSocket socket = new DatagramSocket();
         InetAddress address = InetAddress.getByName("127.0.0.1");
         String endMessage = "221";
         byte[] buffer = endMessage.getBytes();
@@ -229,15 +229,15 @@ public class PlayerActionDisplay {
         // Send the signal three times
         for (int i = 0; i < 3; i++) {
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
-            socket.send(packet);
+            acknowledgmentSocket.send(packet);
         }
-        socket.close();
         System.out.println("Sent game end signal: 221");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+    } catch (Exception ex) {
+        ex.printStackTrace();
+    }
     }
 }
+
 
 private class CountdownAction implements ActionListener {
         @Override
