@@ -90,6 +90,21 @@ public class ImageCountdown extends JPanel {
 				imageLabel.setText("");
 				imageLabel.setIcon(null);
 
+				// Send the "202" start signal
+		// Send the "202" start signal
+		try {
+			DatagramSocket socket = new DatagramSocket();
+			InetAddress address = InetAddress.getByName("127.0.0.1");
+			String startMessage = "202";
+			byte[] buffer = startMessage.getBytes();
+			DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
+			socket.send(packet);
+			socket.close();
+			System.out.println("Sent start signal: " + startMessage);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
 				// Switch to PlayerActionDisplay after the countdown ends
 				JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(ImageCountdown.this);
 				PlayerActionDisplay actionDisplay = new PlayerActionDisplay(parentFrame);
