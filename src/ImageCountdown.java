@@ -23,6 +23,7 @@ public class ImageCountdown extends JPanel {
 	private Timer timer;
 	private final String backgroundImagePath = "assets/images/countdown_images/background.jpg";
 	private Music music;
+	private final PlayerActionDisplay actionDisplay;
 
 
 	// Fields to hold the player lists 
@@ -34,6 +35,7 @@ public class ImageCountdown extends JPanel {
 	public ImageCountdown(List<String[]> redTeamPlayers, List<String[]> greenTeamPlayers, PlayerActionDisplay actionDisplay) {
 	   this.redTeamPlayers = redTeamPlayers;
 	   this.greenTeamPlayers = greenTeamPlayers;
+	   this.actionDisplay = actionDisplay;
 
 	   setLayout(new BorderLayout());
 

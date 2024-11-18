@@ -38,7 +38,6 @@ public class Main {
 
           // Set the game start callback
           playerScreen.setOnGameStart(() -> {
-            countdown.startCountdown(frame); //NEW
             actionDisplay.showActionDisplay();
           });
 
