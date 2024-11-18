@@ -209,7 +209,7 @@ public class PlayerActionDisplay {
     private void addBaseHit(String attackerId, String team) {
         System.out.println("Base Hit of " + attackerId);
         for (String[] player : players) {
-            System.out.println(player[2])
+            System.out.println(player[2]);
         }
     // Iterate through players to find the matching equipmentId
     for (String[] player : players) {
