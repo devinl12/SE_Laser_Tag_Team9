@@ -226,7 +226,7 @@ public class PlayerActionDisplay {
             }
         }
         else{
-            System.out.println("Player ID not matched")
+            System.out.println("Player ID not matched");
         }
     }
 }
