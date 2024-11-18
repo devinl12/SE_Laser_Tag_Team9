@@ -28,6 +28,11 @@ public class Main {
             playerScreen.setOnGameStart(() -> {
                 // Switch to PlayerActionDisplay when game starts
                 actionDisplay.showActionDisplay();
+                // Populate teams
+                List<String> redTeamPlayers = Arrays.asList("Red1", "Red2");
+                List<String> greenTeamPlayers = Arrays.asList("Green1", "Green2");
+                actionDisplay.populateTeams(redTeamPlayers, greenTeamPlayers);
+                actionDisplay.generateDummyEvents();
 
                 // Send the "202" start signal to the Python traffic generator
                 try {

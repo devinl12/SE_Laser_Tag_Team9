@@ -39,9 +39,9 @@ public class PlayerActionDisplay {
 
         // Top panel for team scores
         JPanel topPanel = new JPanel(new GridLayout(1, 2));
-        redTeamLabel = new JLabel("Red Team: 0", JLabel.CENTER);
+        redTeamLabel = new JLabel("Red Team: 20", JLabel.CENTER);
         redTeamLabel.setForeground(Color.RED); 
-        greenTeamLabel = new JLabel("Green Team: 0", JLabel.CENTER);
+        greenTeamLabel = new JLabel("Green Team: 10", JLabel.CENTER);
         greenTeamLabel.setForeground(Color.GREEN); 
         redTeamLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         greenTeamLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
@@ -224,6 +224,25 @@ public class PlayerActionDisplay {
         }
         timerLabel.setText("Time Remaining: " + minuteString + ":" + secondString );
     }
+
+    public void generateDummyEvents() {
+    // Simulate dummy events quickly
+    String[] redTeam = {"Red1", "Red2"};
+    String[] greenTeam = {"Green1", "Green2"};
+
+    for (int i = 0; i < 20; i++) { // Generate 20 dummy events
+        String attacker = (i % 2 == 0) ? redTeam[i % 2] : greenTeam[i % 2];
+        String target = (i % 2 == 0) ? greenTeam[i % 2] : redTeam[i % 2];
+
+        if (i == 5) {
+            processEvent(attacker + ":43"); // Red hits Green base
+        } else if (i == 15) {
+            processEvent(attacker + ":53"); // Green hits Red base
+        } else {
+            processEvent(attacker + ":" + target); // Regular tagging event
+        }
+    }
+}
 
 }
 
