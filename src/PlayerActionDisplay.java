@@ -22,10 +22,16 @@ public class PlayerActionDisplay {
     private int gameLength = 360;
     private DefaultListModel<String> eventLogModel;
     private DatagramSocket acknowledgmentSocket;
+    private Map<String, Integer> playerScores; // To store player scores
+    private int redTeamScore;
+    private int greenTeamScore;
     
 
     public PlayerActionDisplay(JFrame frame) {
         this.frame = frame;
+        playerScores = new HashMap<>(); // Initialize player scores
+        redTeamScore = 0;
+        greenTeamScore = 0;
         try {
             acknowledgmentSocket = new DatagramSocket(); // Reuse this socket for acknowledgments
         } catch (Exception ex) {
@@ -149,15 +155,22 @@ public class PlayerActionDisplay {
         String attackerId = parts[0];
         String targetId = parts[1];
 
-        if (targetId.equals("43")) {
-            addBaseHit(attackerId, "red");
-            addEvent("Red player " + attackerId + " hit the Green base!");
+        if (targetId.equals("43")) { // Green team hits Red base
+            if (isPlayerInTeam(attackerId, greenTeamModel)) {
+                addBaseHit(attackerId, "red"); // Update player display
+                greenTeamScore += 100; // Add 100 points to Green Team score
+                addEvent("Green player " + attackerId + " hit the Red base!");
+        }
         } else if (targetId.equals("53")) {
-            addBaseHit(attackerId, "green");
-            addEvent("Green player " + attackerId + " hit the Red base!");
+            if (isPlayerInTeam(attackerId, redTeamModel)) {
+                addBaseHit(attackerId, "green"); // Update player display
+                redTeamScore += 100; // Add 100 points to Red Team score
+                addEvent("Red player " + attackerId + " hit the Green base!");
         } else {
             addEvent("Player " + attackerId + " tagged player " + targetId);
         }
+          // Update displayed scores
+        updateTeamScores(redTeamScore, greenTeamScore);
 
         try {
             InetAddress address = InetAddress.getByName("127.0.0.1");
@@ -189,6 +202,15 @@ public class PlayerActionDisplay {
         }
     }
 
+    private boolean isPlayerInTeam(String playerId, DefaultTableModel teamModel) {
+    for (int i = 0; i < teamModel.getRowCount(); i++) {
+        if (teamModel.getValueAt(i, 0).equals(playerId)) {
+            return true;
+        }
+    }
+    return false;
+}
+
     public void updateTimer() {
         int minutes = gameLength / 60;
         int seconds = gameLength % 60;
@@ -196,6 +218,11 @@ public class PlayerActionDisplay {
         String secondString = String.format("%02d", seconds);
         timerLabel.setText("Time Remaining: " + minuteString + ":" + secondString);
     }
+
+    private void updateTeamScores(int redTeamScore, int greenTeamScore) {
+    redTeamLabel.setText("Red Team: " + redTeamScore);
+    greenTeamLabel.setText("Green Team: " + greenTeamScore);
+}
 
     public void addActionLogEntry(String entry) {
         actionLog.append(entry + "\n");
