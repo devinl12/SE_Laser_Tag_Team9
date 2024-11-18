@@ -246,7 +246,7 @@ private class CountdownAction implements ActionListener {
                 timer.stop();
                 timerLabel.setText("Game Complete!");
                 sendGameEndSignal();
-                PlayerScreen nextGame = new PlayerScreen(frame, PlayerActionDisplay.this);
+                PlayerScreen nextGame = new PlayerScreen(frame, PlayerActionDisplay.this, playerService);
                 nextGame.showPlayerScreen();
                 frame.setVisible(true);
             }
