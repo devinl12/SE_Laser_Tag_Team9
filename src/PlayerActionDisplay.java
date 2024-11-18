@@ -7,6 +7,8 @@ import java.awt.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.Map;
+import java.util.HashMap;
 
 public class PlayerActionDisplay {
     private JFrame frame;
@@ -195,7 +197,7 @@ public class PlayerActionDisplay {
                 timer.stop();
                 timerLabel.setText("Game Complete!");
                 sendGameEndSignal();
-                PlayerScreen nextGame = new PlayerScreen(frame);
+                PlayerScreen nextGame = new PlayerScreen(frame, this);
                 nextGame.showPlayerScreen();
                 frame.setVisible(true);
             }

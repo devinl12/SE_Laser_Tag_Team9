@@ -18,8 +18,6 @@ public class UDPTransmit {
             DatagramPacket packet = new DatagramPacket(packetBytes, packetBytes.length, castAddress, 7500);
             socket.send(packet);
 
-            //for debugging
-            //System.out.println("Equipment ID: " + equipmentId);
             
             socket.close();
         } catch (Exception e) {

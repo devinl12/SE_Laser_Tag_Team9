@@ -33,6 +33,7 @@ public class PlayerScreen implements KeyListener {
         frame.setSize(800, 600); // Set an appropriate frame size
     }
 
+
     // Graphics for the player screen
     public void showPlayerScreen() {
         frame.getContentPane().removeAll();
