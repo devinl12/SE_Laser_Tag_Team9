@@ -237,24 +237,6 @@ public class PlayerActionDisplay {
     }
     }
 
-    private class CountdownAction implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (gameLength > 0) {
-                updateTimer();
-                gameLength--;
-            } else {
-                timer.stop();
-                timerLabel.setText("Game Complete!");
-                sendGameEndSignal();
-                PlayerScreen nextGame = new PlayerScreen(frame, PlayerActionDisplay.this);
-                nextGame.showPlayerScreen();
-                frame.setVisible(true);
-            }
-        }
-}
-
-
 private class CountdownAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
