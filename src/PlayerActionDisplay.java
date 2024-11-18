@@ -154,7 +154,7 @@ public class PlayerActionDisplay {
             return;
         }
 
-        String attackerId = parts[0];
+        int attackerId = parts[0];
         String targetId = parts[1];
 
         //System.out.println("Attacker ID: " + attackerId + ", Target ID: " + targetId);
