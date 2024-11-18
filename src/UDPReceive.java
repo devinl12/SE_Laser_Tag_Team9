@@ -17,6 +17,12 @@ public class UDPReceive {
                 System.out.println("Listening for UDP packets..."); // Debug line
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 socket.receive(packet);
+                
+                // Log packet details
+                System.out.println("Packet received:");
+                System.out.println("  From: " + packet.getAddress() + ":" + packet.getPort());
+                System.out.println("  Length: " + packet.getLength());
+
                 String receivedMessage = new String(packet.getData(), 0, packet.getLength());
                 System.out.println("Received message: " + receivedMessage); // Debug line
                 eventHandler.accept(receivedMessage); // Pass the event to the handler
@@ -32,4 +38,5 @@ public class UDPReceive {
         }
     }
 }
+
 
