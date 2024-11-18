@@ -20,7 +20,7 @@ public class PlayerActionDisplay {
     private DefaultTableModel greenTeamModel;
     private List<String[]> players;
     private Timer timer;
-    private int gameLength = 200;
+    private int gameLength = 360;
     private DefaultListModel<String> eventLogModel;
     private DatagramSocket acknowledgmentSocket;
 
@@ -40,9 +40,9 @@ public class PlayerActionDisplay {
 
         // Top panel for team scores
         JPanel topPanel = new JPanel(new GridLayout(1, 2));
-        redTeamLabel = new JLabel("Red Team: 20", JLabel.CENTER);
+        redTeamLabel = new JLabel("Red Team: 0", JLabel.CENTER);
         redTeamLabel.setForeground(Color.RED); 
-        greenTeamLabel = new JLabel("Green Team: 10", JLabel.CENTER);
+        greenTeamLabel = new JLabel("Green Team: 0", JLabel.CENTER);
         greenTeamLabel.setForeground(Color.GREEN); 
         redTeamLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         greenTeamLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
