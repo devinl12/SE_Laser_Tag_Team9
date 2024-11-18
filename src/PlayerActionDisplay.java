@@ -209,17 +209,6 @@ public class PlayerActionDisplay {
     }
 
     private void addBaseHit(String attackerId, String team) {
-        if (team == 'red'){
-            for (String[] player : redTeam) {
-                eqiptID = player[2]
-            if (eqiptID.equals(attackerId)){
-                String playerName = redTeamModel.getValueAt(i, 1).toString(); // Column 0 for name
-                redTeamModel.setValueAt("<html><i>B</i> " + playerName + "</html>", i, 0);
-
-            }
-        }
-
-        }
     
     }
 
