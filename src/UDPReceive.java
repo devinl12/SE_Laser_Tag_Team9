@@ -11,6 +11,8 @@ public class UDPReceive {
             socket = new DatagramSocket(7501, InetAddress.getByName("127.0.0.1")); // Listening on port 7501
             System.out.println("DatagramSocket successfully bound to port 7501.");
             System.out.println("Socket bound to address: " + socket.getLocalAddress() + " on port: " + socket.getLocalPort());
+            // Add this line to log the local address and port
+            System.out.println("Expecting packets at: " + socket.getLocalAddress() + ":" + socket.getLocalPort());
 
             byte[] buffer = new byte[256];
 
