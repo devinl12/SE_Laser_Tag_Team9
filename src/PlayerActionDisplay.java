@@ -18,6 +18,7 @@ public class PlayerActionDisplay {
     private JTable greenTeamTable;
     private DefaultTableModel redTeamModel;
     private DefaultTableModel greenTeamModel;
+    private List<String[]> players;
     private Timer timer;
     private int gameLength = 200;
     private DefaultListModel<String> eventLogModel;
@@ -56,6 +57,8 @@ public class PlayerActionDisplay {
         String[] redTeamColumns = {"Red Team Players"};
         redTeamModel = new DefaultTableModel(redTeamColumns, 0);
         redTeamTable = new JTable(redTeamModel);
+        redTeamModel.addRow(new Object[]{"Player 1"});
+        redTeamModel.addRow(new Object[]{"Player 2"});
         JScrollPane redTeamScrollPane = new JScrollPane(redTeamTable);
         centerPanel.add(redTeamScrollPane);
 
@@ -63,6 +66,8 @@ public class PlayerActionDisplay {
         String[] greenTeamColumns = {"Green Team Players"};
         greenTeamModel = new DefaultTableModel(greenTeamColumns, 0);
         greenTeamTable = new JTable(greenTeamModel);
+        redTeamModel.addRow(new Object[]{"Player 3"});
+        redTeamModel.addRow(new Object[]{"Player 4"});
         JScrollPane greenTeamScrollPane = new JScrollPane(greenTeamTable);
         centerPanel.add(greenTeamScrollPane);
 
@@ -230,7 +235,7 @@ public class PlayerActionDisplay {
     String[] redTeam = {"Red1", "Red2"};
     String[] greenTeam = {"Green1", "Green2"};
 
-    for (int i = 0; i < 20; i++) { // Generate 20 dummy events
+    for (int i = 0; i < 5; i++) { // Generate 20 dummy events
         String attacker = (i % 2 == 0) ? redTeam[i % 2] : greenTeam[i % 2];
         String target = (i % 2 == 0) ? greenTeam[i % 2] : redTeam[i % 2];
 
