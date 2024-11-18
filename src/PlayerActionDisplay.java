@@ -22,7 +22,7 @@ public class PlayerActionDisplay {
     private int gameLength = 360;
     private DefaultListModel<String> eventLogModel;
     private DatagramSocket acknowledgmentSocket;
-    private Map<String, Integer> playerScores = new HashMap<>();
+    
 
     public PlayerActionDisplay(JFrame frame) {
         this.frame = frame;
@@ -171,16 +171,6 @@ public class PlayerActionDisplay {
         }
     }
 
-    private void addBaseHit(String attackerId, String team) {
-        DefaultTableModel model = team.equals("red") ? redTeamModel : greenTeamModel;
-        for (int i = 0; i < model.getRowCount(); i++) {
-            String playerId = model.getValueAt(i, 0).toString();
-            if (playerId.equals(attackerId)) {
-                model.setValueAt("B " + model.getValueAt(i, 0), i, 0);
-                break;
-            }
-        }
-    }
 
     private class CountdownAction implements ActionListener {
         @Override
@@ -229,52 +219,4 @@ public class PlayerActionDisplay {
             ex.printStackTrace();
         }
     }
-
-    private void addBaseHit(String attackerId, String team) {
-    DefaultTableModel model = team.equals("red") ? redTeamModel : greenTeamModel;
-        for (int i = 0; i < model.getRowCount(); i++) {
-            String playerName = model.getValueAt(i, 0).toString();
-            if (playerName.equals(attackerId)) {
-                model.setValueAt("B " + playerName, i, 0);
-                break;
-            }
-        }
-    }
-
-    private void updatePlayerScore(String playerId, int scoreChange) {
-    playerScores.put(playerId, playerScores.getOrDefault(playerId, 0) + scoreChange);
-    refreshPlayerTable();
-}
-
-private void refreshPlayerTable() {
-    // Refresh tables to sort players by score
-    refreshTable(redTeamModel);
-    refreshTable(greenTeamModel);
-}
-
-private void refreshTable(DefaultTableModel model) {
-    List<String[]> rows = new ArrayList<>();
-    for (int i = 0; i < model.getRowCount(); i++) {
-        rows.add(new String[]{
-            model.getValueAt(i, 0).toString(),
-            playerScores.getOrDefault(model.getValueAt(i, 0).toString(), 0).toString()
-        });
-    }
-
-    rows.sort((a, b) -> Integer.compare(Integer.parseInt(b[1]), Integer.parseInt(a[1])));
-    model.setRowCount(0);
-    for (String[] row : rows) {
-        model.addRow(new Object[]{row[0]});
-    }
-}
-
-private void flashHighScoreTeam() {
-    if (redTeamScore > greenTeamScore) {
-        redTeamLabel.setForeground(Color.YELLOW);
-        greenTeamLabel.setForeground(Color.GREEN);
-    } else if (greenTeamScore > redTeamScore) {
-        greenTeamLabel.setForeground(Color.YELLOW);
-        redTeamLabel.setForeground(Color.RED);
-    }
-}
 }
