@@ -128,10 +128,6 @@ public class PlayerActionDisplay {
         }
     }
 
-    public void updateTeamScores(int redTeamScore, int greenTeamScore) {
-        redTeamLabel.setText("Red Team: " + redTeamScore);
-        greenTeamLabel.setText("Green Team: " + greenTeamScore);
-    }
 
     public void addEvent(String event) {
         eventLogModel.addElement(event);
@@ -183,24 +179,6 @@ public class PlayerActionDisplay {
             System.out.println("Sent acknowledgment: " + ackMessage);
         } catch (Exception ex) {
             ex.printStackTrace();
-        }
-    }
-
-
-    private class CountdownAction implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (gameLength > 0) {
-                updateTimer();
-                gameLength--;
-            } else {
-                timer.stop();
-                timerLabel.setText("Game Complete!");
-                sendGameEndSignal();
-                PlayerScreen nextGame = new PlayerScreen(frame, this);
-                nextGame.showPlayerScreen();
-                frame.setVisible(true);
-            }
         }
     }
 
@@ -260,3 +238,20 @@ public class PlayerActionDisplay {
         }
     }
 }
+
+private class CountdownAction implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (gameLength > 0) {
+                updateTimer();
+                gameLength--;
+            } else {
+                timer.stop();
+                timerLabel.setText("Game Complete!");
+                sendGameEndSignal();
+                PlayerScreen nextGame = new PlayerScreen(frame, PlayerActionDisplay.this);
+                nextGame.showPlayerScreen();
+                frame.setVisible(true);
+            }
+        }
+    }
