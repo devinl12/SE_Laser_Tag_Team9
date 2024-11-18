@@ -155,24 +155,32 @@ public class PlayerActionDisplay {
 
         System.out.println("Attacker ID: " + attackerId + ", Target ID: " + targetId);
 
-        if (targetId.equals("43")) { // Green team hits Red base
-            if (isPlayerInTeam(attackerId, greenTeamModel)) {
-                addBaseHit(attackerId, "red"); // Update player display
-                greenTeamScore += 100; // Add 100 points to Green Team score
-                addEvent("Green player " + attackerId + " hit the Red base!");
-        }
-        } else if (targetId.equals("53")) { // Red team hits Green base
-            if (isPlayerInTeam(attackerId, redTeamModel)) {
-                addBaseHit(attackerId, "green"); // Update player display
-                redTeamScore += 100; // Add 100 points to Red Team score
-                addEvent("Red player " + attackerId + " hit the Green base!");
-            }
-        } else {
-            addEvent("Player " + attackerId + " tagged player " + targetId);
-        }
-          // Update displayed scores
-        updateTeamScores(redTeamScore, greenTeamScore);
+        String attackerTeam = getAttackerTeam(attackerId);
+    if (attackerTeam == null) {
+        System.out.println("Could not find the attacker in any team.");
+        return;
+    }
 
+    System.out.println("Attacker belongs to: " + attackerTeam);
+
+    if (targetId.equals("43")) { // Green team hits Red base
+        if (attackerTeam.equals("green")) {
+            addBaseHit(attackerId, "red");
+            greenTeamScore += 100;
+            addEvent("Green player " + attackerId + " hit the Red base!");
+        }
+    } else if (targetId.equals("53")) { // Red team hits Green base
+        if (attackerTeam.equals("red")) {
+            addBaseHit(attackerId, "green");
+            redTeamScore += 100;
+            addEvent("Red player " + attackerId + " hit the Green base!");
+        }
+    } else {
+        addEvent("Player " + attackerId + " tagged player " + targetId);
+    }
+
+    // Update displayed scores
+    updateTeamScores(redTeamScore, greenTeamScore);
         try {
             InetAddress address = InetAddress.getByName("127.0.0.1");
             String ackMessage = "Acknowledged: " + event;
@@ -185,14 +193,6 @@ public class PlayerActionDisplay {
         }
     }
 
-    private boolean isPlayerInTeam(String playerId, DefaultTableModel teamModel) {
-    for (int i = 0; i < teamModel.getRowCount(); i++) {
-        if (teamModel.getValueAt(i, 0).equals(playerId)) {
-            return false;
-        }
-    }
-    return true;
-}
 
     public void updateTimer() {
         int minutes = gameLength / 60;
@@ -205,7 +205,7 @@ public class PlayerActionDisplay {
     private void updateTeamScores(int redTeamScore, int greenTeamScore) {
     redTeamLabel.setText("Red Team: " + redTeamScore);
     greenTeamLabel.setText("Green Team: " + greenTeamScore);
-}
+    }
 
     public void addActionLogEntry(String entry) {
         actionLog.append(entry + "\n");
@@ -221,6 +221,26 @@ public class PlayerActionDisplay {
             }
         }
     }
+
+    private String getAttackerTeam(String attackerId) {
+    // Check red team
+    for (int i = 0; i < redTeamModel.getRowCount(); i++) {
+        String equipmentId = redTeamModel.getValueAt(i, 2).toString(); // Assuming column 2 is the equipment ID
+        if (equipmentId.equals(attackerId)) {
+            return "red";
+        }
+    }
+
+    // Check green team
+    for (int i = 0; i < greenTeamModel.getRowCount(); i++) {
+        String equipmentId = greenTeamModel.getValueAt(i, 2).toString(); // Assuming column 2 is the equipment ID
+        if (equipmentId.equals(attackerId)) {
+            return "green";
+        }
+    }
+
+    return null; // Return null if no match is found
+}
 
     private void sendGameEndSignal() {
     try {
