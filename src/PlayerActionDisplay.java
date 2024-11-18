@@ -206,7 +206,7 @@ public class PlayerActionDisplay {
         actionLog.append(entry + "\n");
     }
 
-    private void addBaseHit(String attackerId, String team) {
+    private void addBaseHit(int attackerId, String team) {
         System.out.println("Base Hit of " + attackerId);
         for (String[] player : players) {
             System.out.println(player[0]);
