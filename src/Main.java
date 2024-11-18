@@ -26,13 +26,22 @@ public class Main {
 
             // Set the game start callback
             playerScreen.setOnGameStart(() -> {
-                // Switch to PlayerActionDisplay when game starts
-                actionDisplay.showActionDisplay();
-                // Populate teams
-                List<String> redTeamPlayers = Arrays.asList("Red1", "Red2");
-                List<String> greenTeamPlayers = Arrays.asList("Green1", "Green2");
-                actionDisplay.populateTeams(redTeamPlayers, greenTeamPlayers);
-                actionDisplay.generateDummyEvents();
+    // Switch to PlayerActionDisplay when game starts
+            actionDisplay.showActionDisplay();
+
+    // Populate teams
+            List<String[]> redTeam = List.of(
+                new String[] {"1", "Red1"},
+                new String[] {"2", "Red2"}
+            );
+            List<String[]> greenTeam = List.of(
+                new String[] {"3", "Green1"},
+                new String[] {"4", "Green2"}
+            );
+            actionDisplay.populateTeams(redTeam, greenTeam);
+
+            // Generate dummy events
+            actionDisplay.generateDummyEvents();
 
                 // Send the "202" start signal to the Python traffic generator
                 try {
