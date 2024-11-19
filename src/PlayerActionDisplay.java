@@ -208,11 +208,12 @@ public class PlayerActionDisplay {
     updateTeamScores(redTeamScore, greenTeamScore);
 
     try {
-        InetAddress address = InetAddress.getByName("127.0.0.1");
-        String ackMessage = "Acknowledged: " + event;
-        byte[] buffer = ackMessage.getBytes();
-        DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
-        acknowledgmentSocket.send(packet);
+        UDPTransmit.transmitEquipmentCode(event);
+        //InetAddress address = InetAddress.getByName("127.0.0.1");
+        //String ackMessage = "Acknowledged: " + event;
+        //byte[] buffer = ackMessage.getBytes();
+        //DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
+        //acknowledgmentSocket.send(packet);
     } catch (Exception ex) {
         ex.printStackTrace();
     }

@@ -98,18 +98,9 @@ public class ImageCountdown extends JPanel {
 				imageLabel.setText("");
 				imageLabel.setIcon(null);
 
-				// Send the "202" start signal
-		// Send the "202" start signal
+				/
 		try {
-			//DatagramSocket socket = new DatagramSocket(); THIS
-			//InetAddress address = InetAddress.getByName("127.0.0.1"); THIS
-			//String startMessage = "202";
-			//byte[] buffer = startMessage.getBytes();
-			//DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
-			//socket.send(packet);
-			//socket.close();
 			UDPTransmit.transmitEquipmentCode(202);
-			System.out.println("Sent start signal IC");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
