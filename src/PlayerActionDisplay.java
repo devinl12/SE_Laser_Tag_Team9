@@ -172,18 +172,18 @@ public class PlayerActionDisplay {
             }
         } else {
             addEvent("Player " + attackerId + " tagged player " + targetId);
-            String points = choosingScoreToAdd(attackerId, targetId)
-            if (points.equals('SameRed')){
+            String points = choosingScoreToAdd(attackerId, targetId);
+            if (points.equals("SameRed")){
                 redTeamScore -= 10;
             }
-            if (points.equals('SameGreen')) {
+            if (points.equals("SameGreen")) {
                 greenTeamScore -=10;
 
             }
-            if (points.equals('RedGreen')) {
+            if (points.equals("RedGreen")) {
                 redTeamScore += 10;
             }
-            if (points.equals('GreenRed')) {
+            if (points.equals("GreenRed")) {
                 greenTeamScore += 10;
             }
             }
@@ -250,10 +250,10 @@ public String choosingScoreToAdd(String attackerId, String targetId) {
     //Figure out which team they both are on
     for (String[] player : players) {
             if (player[2].equals(attackerId)) {
-                String attackerName = player[1]
+                String attackerName = player[1];
             }
             if (player[2].equals(targetId)) {
-                String hitName = player[1]
+                String hitName = player[1];
             }
     }
 
