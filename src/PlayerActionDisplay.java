@@ -180,6 +180,7 @@ public class PlayerActionDisplay {
     if (targetId.equals("43")) { // Green team hits Red base
         if (isPlayerInTeam(attackerId, greenTeamModel)) {
             addBaseHit(attackerId, "green");
+            addPlayerScore(attackerId, 100);
             greenTeamScore += 100;
             addPlayerScore(attackerId, 100); // Update individual score
             addEvent("Green player " + attackerId + " hit the Red base!");
@@ -187,6 +188,7 @@ public class PlayerActionDisplay {
     } else if (targetId.equals("53")) { // Red team hits Green base
         if (isPlayerInTeam(attackerId, redTeamModel)) {
             addBaseHit(attackerId, "red");
+            addPlayerScore(attackerId, 100);
             redTeamScore += 100;
             addPlayerScore(attackerId, 100); // Update individual score
             addEvent("Red player " + attackerId + " hit the Green base!");
