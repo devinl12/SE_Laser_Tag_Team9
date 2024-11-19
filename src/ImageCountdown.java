@@ -103,11 +103,12 @@ public class ImageCountdown extends JPanel {
 		try {
 			//DatagramSocket socket = new DatagramSocket(); THIS
 			//InetAddress address = InetAddress.getByName("127.0.0.1"); THIS
-			String startMessage = "202";
-			byte[] buffer = startMessage.getBytes();
-			DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
-			socket.send(packet);
-			socket.close();
+			//String startMessage = "202";
+			//byte[] buffer = startMessage.getBytes();
+			//DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
+			//socket.send(packet);
+			//socket.close();
+			UDPTransmit.transmitEquipmentCode(202)
 			System.out.println("Sent start signal IC: " + startMessage);
 		} catch (Exception ex) {
 			ex.printStackTrace();
