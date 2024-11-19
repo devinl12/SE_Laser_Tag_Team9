@@ -294,10 +294,22 @@ public String choosingScoreToAdd(String attackerId, String targetId) {
         return "GreenHitsRed"; // Green hits red
     } else if ("green".equals(hitTeam) && "red".equals(attackTeam)) {
         return "RedHitsGreen";
+    }
 
     // Default case (if needed)
     return "RedHitsGreen";
 }
+
+private boolean isPlayerInTeam(String playerId, DefaultTableModel teamModel) {
+    for (int i = 0; i < teamModel.getRowCount(); i++) {
+        if (teamModel.getValueAt(i, 0).equals(playerId)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
 
 
 
