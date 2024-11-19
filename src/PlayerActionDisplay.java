@@ -38,11 +38,11 @@ public class PlayerActionDisplay {
         redTeamScore = 0;
         greenTeamScore = 0;
         this.players = playerService.getPlayers();
-        //try {
-            //acknowledgmentSocket = new DatagramSocket(); // Reuse this socket for acknowledgments
-        //} catch (Exception ex) {
-            //ex.printStackTrace();
-        //}
+        try {
+            acknowledgmentSocket = new DatagramSocket(); // Reuse this socket for acknowledgments
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void showActionDisplay() {
