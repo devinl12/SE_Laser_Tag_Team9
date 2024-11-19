@@ -38,11 +38,11 @@ public class PlayerActionDisplay {
         redTeamScore = 0;
         greenTeamScore = 0;
         this.players = playerService.getPlayers();
-        try {
-            acknowledgmentSocket = new DatagramSocket(); // Reuse this socket for acknowledgments
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        //try {
+            //acknowledgmentSocket = new DatagramSocket(); // Reuse this socket for acknowledgments
+        //} catch (Exception ex) {
+            //ex.printStackTrace();
+        //}
     }
 
     public void showActionDisplay() {
@@ -186,6 +186,12 @@ public class PlayerActionDisplay {
             if (points.equals("GreenHitsRed")) {
                 greenTeamScore += 10;
             }
+            if (points.equals("GreenHitsRed")) {
+                greenTeamScore += 10;
+            }
+            if (points.equals("NoHit")) {
+                greenTeamScore += 0;
+            }         
             }
     // Update displayed scores
     updateTeamScores(redTeamScore, greenTeamScore);
@@ -297,7 +303,7 @@ public String choosingScoreToAdd(String attackerId, String targetId) {
     }
 
     // Default case (if needed)
-    return "RedHitsGreen";
+    return "NoHit";
 }
 
 private boolean isPlayerInTeam(String playerId, DefaultTableModel teamModel) {
