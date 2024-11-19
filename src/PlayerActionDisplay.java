@@ -326,14 +326,14 @@ private void addPlayerScore(String playerId, int scoreChange) {
 
     // Update the score in the appropriate table
     for (int i = 0; i < redTeamModel.getRowCount(); i++) {
-        if (playerId.equals(players.get(i)[2])) { // Match player ID
+        if (playerId.equals(players.get(i)[0])) { // Match player ID
             redTeamModel.setValueAt(newScore, i, 1); // Update the "Score" column
             return;
         }
     }
 
     for (int i = 0; i < greenTeamModel.getRowCount(); i++) {
-        if (playerId.equals(players.get(i)[2])) { // Match player ID
+        if (playerId.equals(players.get(i)[0])) { // Match player ID
             greenTeamModel.setValueAt(newScore, i, 1); // Update the "Score" column
             return;
         }
