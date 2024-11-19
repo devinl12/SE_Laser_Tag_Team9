@@ -248,14 +248,17 @@ public class PlayerActionDisplay {
 
 public String choosingScoreToAdd(String attackerId, String targetId) {
     String attackTeam = "none";
-    String hitTeam;
+    String hitTeam = "none";
+    String attackerName = "none";
+    String hitName = "none";
+
     //Figure out which team they both are on
     for (String[] player : players) {
             if (player[2].equals(attackerId)) {
-                String attackerName = player[1];
+                attackerName = player[1];
             }
             if (player[2].equals(targetId)) {
-                String hitName = player[1];
+                hitName = player[1];
             }
     }
 
@@ -293,19 +296,9 @@ public String choosingScoreToAdd(String attackerId, String targetId) {
         return "RedHitsGreen";
 
     // Default case (if needed)
-    return "SameRed";
+    return "RedHitsGreen";
 }
 
-
-
-    private boolean isPlayerInTeam(String playerId, DefaultTableModel teamModel) {
-    for (int i = 0; i < teamModel.getRowCount(); i++) {
-        if (teamModel.getValueAt(i, 0).equals(playerId)) {
-            return false;
-        }
-    }
-    return true;
-}
 
 
     private void sendGameEndSignal() {
