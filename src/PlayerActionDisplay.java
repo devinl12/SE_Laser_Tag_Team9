@@ -17,6 +17,7 @@ public class PlayerActionDisplay {
     private JLabel greenTeamLabel;
     private JTextArea actionLog;
     private JLabel timerLabel;
+    private String lastProcessedEvent = null;
     private JTable redTeamTable;
     private JTable greenTeamTable;
     private DefaultTableModel redTeamModel;
@@ -147,6 +148,12 @@ public class PlayerActionDisplay {
     }
 
     public void processEvent(String event) {
+
+    if (event.equals(lastProcessedEvent)) {
+        return; // Skip if this event is the same as the last one
+    }
+    lastProcessedEvent = event; // Update the last processed event
+
     if (event == null || event.isEmpty()) {
         System.out.println("Received an empty event, skipping...");
         return;
