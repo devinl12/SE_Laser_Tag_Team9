@@ -150,6 +150,15 @@ public class PlayerActionDisplay {
     public void processEvent(String event) {
 
     if (event.equals(lastProcessedEvent)) {
+        try {
+        InetAddress address = InetAddress.getByName("127.0.0.1");
+        String ackMessage = "Acknowledged: " + event;
+        byte[] buffer = ackMessage.getBytes();
+        DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
+        acknowledgmentSocket.send(packet);
+    } catch (Exception ex) {
+        ex.printStackTrace();
+    }
         return; // Skip if this event is the same as the last one
     }
     lastProcessedEvent = event; // Update the last processed event
@@ -208,12 +217,11 @@ public class PlayerActionDisplay {
     updateTeamScores(redTeamScore, greenTeamScore);
 
     try {
-        UDPTransmit.transmitEquipmentCode(event);
-        //InetAddress address = InetAddress.getByName("127.0.0.1");
-        //String ackMessage = "Acknowledged: " + event;
-        //byte[] buffer = ackMessage.getBytes();
-        //DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
-        //acknowledgmentSocket.send(packet);
+        InetAddress address = InetAddress.getByName("127.0.0.1");
+        String ackMessage = "Acknowledged: " + event;
+        byte[] buffer = ackMessage.getBytes();
+        DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
+        acknowledgmentSocket.send(packet);
     } catch (Exception ex) {
         ex.printStackTrace();
     }
