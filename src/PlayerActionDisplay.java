@@ -117,20 +117,26 @@ public class PlayerActionDisplay {
     }
 
     public void populateTeams(List<String[]> redTeam, List<String[]> greenTeam) {
-        // Clear existing data
-        redTeamModel.setRowCount(0);
-        greenTeamModel.setRowCount(0);
+    // Clear existing data
+    redTeamModel.setRowCount(0);
+    greenTeamModel.setRowCount(0);
 
-        // Populate Red Team Table
-        for (String[] player : redTeam) {
-            redTeamModel.addRow(new Object[]{player[1]});
-        }
+    // Add the "Score" column
+    redTeamModel.setColumnIdentifiers(new String[]{"Red Team Players", "Score"});
+    greenTeamModel.setColumnIdentifiers(new String[]{"Green Team Players", "Score"});
 
-        // Populate Green Team Table
-        for (String[] player : greenTeam) {
-            greenTeamModel.addRow(new Object[]{player[1]});
-        }
+    // Populate Red Team Table
+    for (String[] player : redTeam) {
+        playerScores.put(player[2], 0); // Initialize scores for each player
+        redTeamModel.addRow(new Object[]{player[1], 0});
     }
+
+    // Populate Green Team Table
+    for (String[] player : greenTeam) {
+        playerScores.put(player[2], 0); // Initialize scores for each player
+        greenTeamModel.addRow(new Object[]{player[1], 0});
+    }
+}
 
 
     public void addEvent(String event) {
