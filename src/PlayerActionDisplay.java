@@ -180,10 +180,10 @@ public class PlayerActionDisplay {
                 greenTeamScore -=10;
 
             }
-            if (points.equals("RedGreen")) {
+            if (points.equals("RedHitsGreen")) {
                 redTeamScore += 10;
             }
-            if (points.equals("GreenRed")) {
+            if (points.equals("GreenHitsRed")) {
                 greenTeamScore += 10;
             }
             }
@@ -247,6 +247,8 @@ public class PlayerActionDisplay {
 }
 
 public String choosingScoreToAdd(String attackerId, String targetId) {
+    String attackTeam = "none";
+    String hitTeam;
     //Figure out which team they both are on
     for (String[] player : players) {
             if (player[2].equals(attackerId)) {
@@ -257,9 +259,44 @@ public String choosingScoreToAdd(String attackerId, String targetId) {
             }
     }
 
+    for (int i = 0; i < redTeamModel.getRowCount(); i++) {
+        if (redTeamModel.getValueAt(i, 0).equals(attackerName)) {
+            attackTeam = "red"; // Player is in the red team
+        }
+    }
+
+    // Check in greenTeamModel
+    for (int i = 0; i < greenTeamModel.getRowCount(); i++) {
+        if (greenTeamModel.getValueAt(i, 0).equals(attackerName)) {
+            attackTeam = "green"; // Player is in the green team
+        }
+    }
+
+    for (int i = 0; i < redTeamModel.getRowCount(); i++) {
+        if (redTeamModel.getValueAt(i, 0).equals(hitName)) {
+            hitTeam = "red"; // Player is in the red team
+        }
+    }
+
+    for (int i = 0; i < greenTeamModel.getRowCount(); i++) {
+        if (greenTeamModel.getValueAt(i, 0).equals(hitName)) {
+            hitTeam = "green"; // Player is in the green team
+        }
+    }
+    if ("red".equals(hitTeam) && "red".equals(attackTeam)) {
+        return "SameRed"; // Both teams are red
+    } else if ("green".equals(hitTeam) && "green".equals(attackTeam)) {
+        return "SameGreen"; // Both teams are green
+    } else if ("red".equals(hitTeam) && "green".equals(attackTeam)) {
+        return "GreenHitsRed"; // Green hits red
+    } else if ("green".equals(hitTeam) && "red".equals(attackTeam)) {
+        return "RedHitsGreen";
+
     // Default case (if needed)
     return "SameRed";
 }
+
+
 
     private boolean isPlayerInTeam(String playerId, DefaultTableModel teamModel) {
     for (int i = 0; i < teamModel.getRowCount(); i++) {
