@@ -252,7 +252,7 @@ public class PlayerActionDisplay {
         
     // Iterate through players to find the matching equipmentId
     for (String[] player : players) {
-        if (player[2].equals(attackerId))  { // Match attackerId with equipmentId
+        if (player[0].equals(attackerId))  { // Match attackerId with equipmentId
             String playerName = player[1]; // Get player's name
 
             
@@ -357,10 +357,6 @@ private void addPlayerScore(String playerId, int scoreChange) {
         }
     }
 }
-
-
-
-
 
     private void sendGameEndSignal() {
     try {
