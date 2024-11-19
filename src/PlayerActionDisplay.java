@@ -123,12 +123,12 @@ public class PlayerActionDisplay {
 
         // Populate Red Team Table
         for (String[] player : redTeam) {
-            redTeamModel.addRow(new Object[]{player[1], player[2]});
+            redTeamModel.addRow(new Object[]{player[1]});
         }
 
         // Populate Green Team Table
         for (String[] player : greenTeam) {
-            greenTeamModel.addRow(new Object[]{player[1], player[2]});
+            greenTeamModel.addRow(new Object[]{player[1]});
         }
     }
 
