@@ -172,6 +172,20 @@ public class PlayerActionDisplay {
             }
         } else {
             addEvent("Player " + attackerId + " tagged player " + targetId);
+            String points = choosingScoreToAdd(attackerId, targetId)
+            if (points.equals('SameRed')){
+                redTeamScore -= 10;
+            }
+            if (points.equals('SameGreen')) {
+                greenTeamScore -=10;
+
+            }
+            if (points.equals('RedGreen')) {
+                redTeamScore += 10;
+            }
+            if (points.equals('GreenRed')) {
+                greenTeamScore += 10;
+            }
             }
     // Update displayed scores
     updateTeamScores(redTeamScore, greenTeamScore);
@@ -212,7 +226,7 @@ public class PlayerActionDisplay {
     for (String[] player : players) {
         if (player[2].equals(attackerId))  { // Match attackerId with equipmentId
             String playerName = player[1]; // Get player's name
-            
+
             
             // Determine the team model to update
             DefaultTableModel teamModel = team.equals("red") ? redTeamModel : greenTeamModel;
@@ -230,6 +244,21 @@ public class PlayerActionDisplay {
             System.out.println("Player ID not matched");
         }
     }
+}
+
+public String choosingScoreToAdd(String attackerId, String targetId) {
+    //Figure out which team they both are on
+    for (String[] player : players) {
+            if (player[2].equals(attackerId)) {
+                String attackerName = player[1]
+            }
+            if (player[2].equals(targetId)) {
+                String hitName = player[1]
+            }
+    }
+
+    // Default case (if needed)
+    return "SameRed";
 }
 
     private boolean isPlayerInTeam(String playerId, DefaultTableModel teamModel) {
