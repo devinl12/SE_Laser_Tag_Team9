@@ -98,7 +98,6 @@ public class ImageCountdown extends JPanel {
 				imageLabel.setText("");
 				imageLabel.setIcon(null);
 
-				/
 		try {
 			UDPTransmit.transmitEquipmentCode(202);
 		} catch (Exception ex) {
