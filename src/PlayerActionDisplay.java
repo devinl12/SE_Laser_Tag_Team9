@@ -127,13 +127,13 @@ public class PlayerActionDisplay {
 
     // Populate Red Team Table
     for (String[] player : redTeam) {
-        playerScores.put(player[2], 0); // Initialize scores for each player
+        playerScores.put(player[0], 0); // Initialize scores for each player
         redTeamModel.addRow(new Object[]{player[1], 0});
     }
 
     // Populate Green Team Table
     for (String[] player : greenTeam) {
-        playerScores.put(player[2], 0); // Initialize scores for each player
+        playerScores.put(player[0], 0); // Initialize scores for each player
         greenTeamModel.addRow(new Object[]{player[1], 0});
     }
 }
@@ -264,10 +264,10 @@ public String choosingScoreToAdd(String attackerId, String targetId) {
 
     //Figure out which team they both are on
     for (String[] player : players) {
-            if (player[2].equals(attackerId)) {
+            if (player[0].equals(attackerId)) { //change from 2
                 attackerName = player[1];
             }
-            if (player[2].equals(targetId)) {
+            if (player[0].equals(targetId)) { //change from 2
                 hitName = player[1];
             }
     }
