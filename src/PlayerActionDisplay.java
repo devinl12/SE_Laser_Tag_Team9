@@ -179,18 +179,16 @@ public class PlayerActionDisplay {
 
     if (targetId.equals("43")) { // Green team hits Red base
         if (isPlayerInTeam(attackerId, greenTeamModel)) {
-            addBaseHit(attackerId, "green");
+            AddingB(greenTeamModel, attackerId);
             addPlayerScore(attackerId, 100);
             greenTeamScore += 100;
-            addPlayerScore(attackerId, 100); // Update individual score
             addEvent("Green player " + attackerId + " hit the Red base!");
         }
     } else if (targetId.equals("53")) { // Red team hits Green base
         if (isPlayerInTeam(attackerId, redTeamModel)) {
-            addBaseHit(attackerId, "red");
+            AddingB(redTeamModel, attackerId);
             addPlayerScore(attackerId, 100);
             redTeamScore += 100;
-            addPlayerScore(attackerId, 100); // Update individual score
             addEvent("Red player " + attackerId + " hit the Green base!");
         }
     } else {
@@ -328,13 +326,36 @@ public String choosingScoreToAdd(String attackerId, String targetId) {
     return "NoHit";
 }
 
+public void AddingB(DefaultTableModel model, String attackerID) {
+    String attackerName = "null";
+
+    for (String[] player : players) {
+            if (player[0].equals(attackerID)) { //change from 2
+                attackerName = player[1];
+            }
+    }
+
+    String newName = "<html>" + attackerName + " <i>B</i></html>";
+
+    for (int row = 0; row < model.getRowCount(); row++) {
+            if (model.getValueAt(row, 0).equals(attackerName)) { // Check if name matches
+                model.setValueAt(newName, row, 0); // Update name in the first column
+                System.out.println("Updated " + attackerName + " to " + newName + " at row " + row);
+                break;
+            }
+        }
+    }
+
+    
+
+
 private boolean isPlayerInTeam(String playerId, DefaultTableModel teamModel) {
     for (int i = 0; i < teamModel.getRowCount(); i++) {
         if (teamModel.getValueAt(i, 0).equals(playerId)) {
-            return false;
+            return true;
         }
     }
-    return true;
+    return false;
 }
 
 private void addPlayerScore(String playerId, int scoreChange) {
@@ -351,18 +372,11 @@ private void addPlayerScore(String playerId, int scoreChange) {
     }
 
     for (int i = 0; i < greenTeamModel.getRowCount(); i++) {
-        if (greenTeamModel.getValueAt(i, 0).equals(playerId)) {
-            greenTeamModel.setValueAt(newScore, i, 1); 
-            return; 
-        }
-    }
-
-    for (int i = 0; i < greenTeamModel.getRowCount(); i++) {
         if (playerId.equals(players.get(i)[0])) { // Match player ID
             greenTeamModel.setValueAt(newScore, i, 1); // Update the "Score" column
             return;
         }
-    }
+    }   
 }
 
     private void sendGameEndSignal() {
