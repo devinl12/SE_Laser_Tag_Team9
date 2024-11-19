@@ -127,13 +127,13 @@ public class PlayerActionDisplay {
 
     // Populate Red Team Table
     for (String[] player : redTeam) {
-        playerScores.put(player[0], 0); // Initialize scores for each player
+        playerScores.put(player[2], 0); // Initialize scores for each player
         redTeamModel.addRow(new Object[]{player[1], 0});
     }
 
     // Populate Green Team Table
     for (String[] player : greenTeam) {
-        playerScores.put(player[0], 0); // Initialize scores for each player
+        playerScores.put(player[2], 0); // Initialize scores for each player
         greenTeamModel.addRow(new Object[]{player[1], 0});
     }
 }
