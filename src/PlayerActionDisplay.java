@@ -351,6 +351,13 @@ private void addPlayerScore(String playerId, int scoreChange) {
     }
 
     for (int i = 0; i < greenTeamModel.getRowCount(); i++) {
+        if (greenTeamModel.getValueAt(i, 0).equals(playerId)) {
+            greenTeamModel.setValueAt(newScore, i, 1); 
+            return; 
+        }
+    }
+
+    for (int i = 0; i < greenTeamModel.getRowCount(); i++) {
         if (playerId.equals(players.get(i)[0])) { // Match player ID
             greenTeamModel.setValueAt(newScore, i, 1); // Update the "Score" column
             return;
