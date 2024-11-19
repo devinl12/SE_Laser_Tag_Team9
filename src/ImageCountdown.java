@@ -108,7 +108,7 @@ public class ImageCountdown extends JPanel {
 			//DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
 			//socket.send(packet);
 			//socket.close();
-			UDPTransmit.transmitEquipmentCode(202)
+			UDPTransmit.transmitEquipmentCode(202);
 			System.out.println("Sent start signal IC: " + startMessage);
 		} catch (Exception ex) {
 			ex.printStackTrace();
