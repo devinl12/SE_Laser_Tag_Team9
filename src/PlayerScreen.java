@@ -197,7 +197,7 @@ public class PlayerScreen implements KeyListener {
         String codename = model.getValueAt(i, 0).toString();
         String equipmentCode = model.getValueAt(i, 1).toString(); // Second column
         redTeamPlayers.add(new String[]{codename, equipmentCode});
-        System.out.print("Codename: " + codename + " Equiptment ID: " + equipmentCode);
+        System.out.println(" RED Codename: " + codename + " Equiptment ID: " + equipmentCode);
     }
 
     return redTeamPlayers;
@@ -211,7 +211,7 @@ private List<String[]> getGreenTeamPlayers() {
         String codename = model.getValueAt(i, 0).toString();
         String equipmentCode = model.getValueAt(i, 1).toString(); // Second column
         greenTeamPlayers.add(new String[]{codename, equipmentCode});
-        System.out.print("Codename: " + codename + " Equiptment ID: " + equipmentCode);
+        System.out.println(" GREEN Codename: " + codename + " Equiptment ID: " + equipmentCode);
     }
 
     return greenTeamPlayers;
