@@ -32,6 +32,8 @@ public class PlayerActionDisplay {
     private int redTeamScore;
     private int greenTeamScore;
     private List<String[]> players;
+    private Timer flashingTimer; // Timer for flashing effect
+    private JLabel flashingLabel; // The label that is currently flashing
     
 
     public PlayerActionDisplay(JFrame frame, PlayerService playerService) {
@@ -257,6 +259,48 @@ public class PlayerActionDisplay {
     private void updateTeamScores(int redTeamScore, int greenTeamScore) {
         redTeamLabel.setText("Red Team: " + redTeamScore);
         greenTeamLabel.setText("Green Team: " + greenTeamScore);
+
+        // Determine which team has the higher score and start flashing the label
+        if (redTeamScore > greenTeamScore) {
+            startFlashing(redTeamLabel);
+        } else if (greenTeamScore > redTeamScore) {
+            startFlashing(greenTeamLabel);
+        } else {
+            stopFlashing(); // Stop flashing if scores are tied
+        }
+    }
+
+    private void startFlashing(JLabel label) {
+        if (flashingLabel == label) {
+            return; // Already flashing this label
+        }
+
+        stopFlashing(); // Stop any existing flashing
+
+        flashingLabel = label;
+        flashingTimer = new Timer(500, new ActionListener() { // Flash every 500ms
+            private boolean visible = true;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (flashingLabel != null) {
+                    flashingLabel.setVisible(visible);
+                    visible = !visible; // Toggle visibility
+                }
+            }
+        });
+        flashingTimer.start();
+    }
+
+    private void stopFlashing() {
+        if (flashingTimer != null) {
+            flashingTimer.stop();
+            flashingTimer = null;
+        }
+        if (flashingLabel != null) {
+            flashingLabel.setVisible(true); // Ensure label is visible
+            flashingLabel = null;
+        }
     }
 
     public void addActionLogEntry(String entry) {
