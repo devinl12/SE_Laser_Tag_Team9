@@ -177,12 +177,11 @@ public class PlayerActionDisplay {
         String attackerId = parts[0];
         String targetId = parts[1];
 
-        System.out.println("Attacker ID:" + attackerId + " targetID:" + targetId);
 
 
         if (targetId.equals("43")) { // Greenbase has been scored
             String whichTeam = getTeamForPlayer(attackerId);
-            System.out.println("AttackerId " + attackerId + "is on team" + whichTeam);
+            //System.out.println("AttackerId " + attackerId + "is on team" + whichTeam);
             if (whichTeam.equals("Red Team")){
                 addBaseHit(attackerId);
                 addPlayerScore(attackerId, 100, redTeamModel);
@@ -193,7 +192,7 @@ public class PlayerActionDisplay {
         }
         else if (targetId.equals("53")) {
             String whichTeam = getTeamForPlayer(attackerId); //red base has been scored
-            System.out.println("AttackerId " + attackerId + "is on team" + whichTeam);
+            //System.out.println("AttackerId " + attackerId + "is on team" + whichTeam);
             if (whichTeam.equals("Green Team")){
                 addBaseHit(attackerId);
                 addPlayerScore(attackerId, 100, greenTeamModel);
@@ -250,8 +249,8 @@ public class PlayerActionDisplay {
     }
 
     private void updateTeamScores(int redTeamScore, int greenTeamScore) {
-    redTeamLabel.setText("Red Team: " + redTeamScore);
-    greenTeamLabel.setText("Green Team: " + greenTeamScore);
+        redTeamLabel.setText("Red Team: " + redTeamScore);
+        greenTeamLabel.setText("Green Team: " + greenTeamScore);
     }
 
     public void addActionLogEntry(String entry) {
@@ -330,39 +329,39 @@ public String choosingScoreToAdd(String attackerId, String targetId) {
     }   
 
     private void sendGameEndSignal() {
-    try {
-        InetAddress address = InetAddress.getByName("127.0.0.1");
-        String endMessage = "221";
-        byte[] buffer = endMessage.getBytes();
+        try {
+            InetAddress address = InetAddress.getByName("127.0.0.1");
+            String endMessage = "221";
+            byte[] buffer = endMessage.getBytes();
 
-        // Send the signal three times
-        for (int i = 0; i < 3; i++) {
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
-            acknowledgmentSocket.send(packet);
+            // Send the signal three times
+            for (int i = 0; i < 3; i++) {
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
+                acknowledgmentSocket.send(packet);
+            }
+            System.out.println("Sent game end signal: 221");
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        System.out.println("Sent game end signal: 221");
-    } catch (Exception ex) {
-        ex.printStackTrace();
-    }
     }
 
     public String getTeamForPlayer(String equipmentId) {
-    // Check Red Team
-    for (int i = 0; i < redTeamModel.getRowCount(); i++) {
-        if (equipmentId.equals(redTeamModel.getValueAt(i, 2))) { // Match equipment ID in the third column
-            return "Red Team";
+        // Check Red Team
+        for (int i = 0; i < redTeamModel.getRowCount(); i++) {
+            if (equipmentId.equals(redTeamModel.getValueAt(i, 2))) { // Match equipment ID in the third column
+                return "Red Team";
+            }
         }
-    }
 
-    // Check Green Team
-    for (int i = 0; i < greenTeamModel.getRowCount(); i++) {
-        if (equipmentId.equals(greenTeamModel.getValueAt(i, 2))) { // Match equipment ID in the third column
-            return "Green Team";
+        // Check Green Team
+        for (int i = 0; i < greenTeamModel.getRowCount(); i++) {
+            if (equipmentId.equals(greenTeamModel.getValueAt(i, 2))) { // Match equipment ID in the third column
+                return "Green Team";
+            }
         }
-    }
 
-    // If not found in either team
-    return "Not assigned to any team";
+        // If not found in either team
+        return "Not assigned to any team";
 }
 
 
