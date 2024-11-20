@@ -177,6 +177,9 @@ public class PlayerActionDisplay {
     String attackerId = parts[0];
     String targetId = parts[1];
 
+    System.out.println("Attacker ID: " + attackerId + " targetID: " + targetId);
+
+
     if (targetId.equals("43")) { // Green team hits Red base
         if (isPlayerInTeam(attackerId, greenTeamModel)) {
             AddingB(greenTeamModel, attackerId);
