@@ -9,6 +9,8 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerActionDisplay {
     private JFrame frame;
