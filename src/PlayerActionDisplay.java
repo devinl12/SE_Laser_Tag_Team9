@@ -25,7 +25,7 @@ public class PlayerActionDisplay {
     private DefaultTableModel redTeamModel;
     private DefaultTableModel greenTeamModel;
     private Timer timer;
-    private int gameLength = 360;
+    private int gameLength = 30;
     private DefaultListModel<String> eventLogModel;
     private DatagramSocket acknowledgmentSocket;
     private Map<String, Integer> playerScores; // To store player scores
