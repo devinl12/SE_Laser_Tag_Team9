@@ -123,20 +123,20 @@ public class PlayerActionDisplay {
     greenTeamModel.setRowCount(0);
 
     // Add the "Score" column
-    redTeamModel.setColumnIdentifiers(new String[]{"Red Team Players", "Score"});
-    greenTeamModel.setColumnIdentifiers(new String[]{"Green Team Players", "Score"});
+    redTeamModel.setColumnIdentifiers(new String[]{"Red Team Players", "Score", "PlayerID"});
+    greenTeamModel.setColumnIdentifiers(new String[]{"Green Team Players", "Score", , "PlayerID"});
 
     // Populate Red Team Table
-    for (String[] player : redTeam) {
-        playerScores.put(player[0], 0); // Initialize scores for each player
-        redTeamModel.addRow(new Object[]{player[1], 0});
-    }
+for (String[] player : redTeam) {
+    playerScores.put(player[0], 0); // Initialize scores for each player
+    redTeamModel.addRow(new Object[]{player[1], 0, player[0]}); // Add PlayerID (player[0])
+}
 
-    // Populate Green Team Table
-    for (String[] player : greenTeam) {
-        playerScores.put(player[0], 0); // Initialize scores for each player
-        greenTeamModel.addRow(new Object[]{player[1], 0});
-    }
+// Populate Green Team Table
+for (String[] player : greenTeam) {
+    playerScores.put(player[0], 0); // Initialize scores for each player
+    greenTeamModel.addRow(new Object[]{player[1], 0, player[0]}); // Add PlayerID (player[0])
+}
 }
 
 
