@@ -128,13 +128,13 @@ public class PlayerActionDisplay {
 
     // Populate Red Team Table
 for (String[] player : redTeam) {
-    playerScores.put(player[0], 0); // Initialize scores for each player
+    playerScores.put(player[1], 0); // Initialize scores for each player
     redTeamModel.addRow(new Object[]{player[0], 0, player[1]}); // Add PlayerID (player[0])
 }
 
 // Populate Green Team Table
 for (String[] player : greenTeam) {
-    playerScores.put(player[0], 0); // Initialize scores for each player
+    playerScores.put(player[1], 0); // Initialize scores for each player
     greenTeamModel.addRow(new Object[]{player[0], 0, player[1]}); // Add PlayerID (player[0])
 }
 }
@@ -254,8 +254,8 @@ for (String[] player : greenTeam) {
         
     // Iterate through players to find the matching equipmentId
     for (String[] player : players) {
-        if (player[0].equals(attackerId))  { // Match attackerId with equipmentId
-            String playerName = player[1]; // Get player's name
+        if (player[1].equals(attackerId))  { // Match attackerId with equipmentId
+            String playerName = player[0]; // Get player's name
 
             
             // Determine the team model to update
@@ -284,11 +284,11 @@ public String choosingScoreToAdd(String attackerId, String targetId) {
 
     //Figure out which team they both are on
     for (String[] player : players) {
-            if (player[0].equals(attackerId)) { //change from 2
-                attackerName = player[1];
+            if (player[1].equals(attackerId)) { //change from 2
+                attackerName = player[0];
             }
-            if (player[0].equals(targetId)) { //change from 2
-                hitName = player[1];
+            if (player[1].equals(targetId)) { //change from 2
+                hitName = player[0];
             }
     }
 
@@ -334,8 +334,8 @@ public void AddingB(DefaultTableModel model, String attackerID) {
     String attackerName = "null";
 
     for (String[] player : players) {
-            if (player[0].equals(attackerID)) { //change from 2
-                attackerName = player[1];
+            if (player[1].equals(attackerID)) { //change from 2
+                attackerName = player[0];
             }
     }
 
