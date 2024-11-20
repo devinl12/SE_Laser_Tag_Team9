@@ -149,19 +149,19 @@ public class PlayerActionDisplay {
 
     public void processEvent(String event) {
 
-    // if (event.equals(lastProcessedEvent)) {
-    //     try {
-    //     InetAddress address = InetAddress.getByName("127.0.0.1");
-    //     String ackMessage = "Acknowledged: " + event;
-    //     byte[] buffer = ackMessage.getBytes();
-    //     DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
-    //     acknowledgmentSocket.send(packet);
-    // } catch (Exception ex) {
-    //     ex.printStackTrace();
-    // }
-    //     return; // Skip if this event is the same as the last one
-    // }
-    // lastProcessedEvent = event; // Update the last processed event
+    if (event.equals(lastProcessedEvent)) {
+        try {
+        InetAddress address = InetAddress.getByName("127.0.0.1");
+        String ackMessage = "Acknowledged: " + event;
+        byte[] buffer = ackMessage.getBytes();
+        DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
+        acknowledgmentSocket.send(packet);
+    } catch (Exception ex) {
+        ex.printStackTrace();
+    }
+        return; // Skip if this event is the same as the last one
+    }
+    lastProcessedEvent = event; // Update the last processed event
 
     if (event == null || event.isEmpty()) {
         System.out.println("Received an empty event, skipping...");
@@ -181,19 +181,16 @@ public class PlayerActionDisplay {
 
 
     if (targetId.equals("43")) { // Green team hits Red base
-        if (isPlayerInTeam(attackerId, greenTeamModel)) {
             AddingB(greenTeamModel, attackerId);
             addPlayerScore(attackerId, 100);
             greenTeamScore += 100;
             addEvent("Green player " + attackerId + " hit the Red base!");
-        }
+
     } else if (targetId.equals("53")) { // Red team hits Green base
-        if (isPlayerInTeam(attackerId, redTeamModel)) {
             AddingB(redTeamModel, attackerId);
             addPlayerScore(attackerId, 100);
             redTeamScore += 100;
             addEvent("Red player " + attackerId + " hit the Green base!");
-        }
     } else {
         addEvent("Player " + attackerId + " tagged player " + targetId);
         String points = choosingScoreToAdd(attackerId, targetId);
