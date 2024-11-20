@@ -180,19 +180,27 @@ public class PlayerActionDisplay {
         System.out.println("Attacker ID:" + attackerId + " targetID:" + targetId);
 
 
-        if (targetId.equals("43")) { // Green team hits Red base
-                AddingB(greenTeamModel, attackerId);
-                addPlayerScore(attackerId, 100, greenTeamModel);
-                greenTeamScore += 100;
-                addEvent("Green player " + attackerId + " hit the Red base!");
-
-            }
-        else if (targetId.equals("53")) { // Red team hits Green base
+        if (targetId.equals("43")) { // Greenbase has been scored
+            String whichTeam = getTeamForPlayer(attackerID);
+            System.out.println("AttackerId " + attackerId + "is on team" + whichTeam);
+            if (whichTeam.equals("Red Team")){
                 AddingB(redTeamModel, attackerId);
                 addPlayerScore(attackerId, 100, redTeamModel);
                 redTeamScore += 100;
                 addEvent("Red player " + attackerId + " hit the Green base!");
+            }
+
+        }
+        else if (targetId.equals("53")) {
+            String whichTeam = getTeamForPlayer(attackerID); //red base has been scored
+            System.out.println("AttackerId " + attackerId + "is on team" + whichTeam);
+            if (whichTeam.equals("Green Team")){
+                AddingB(greenTeamModel, attackerId);
+                addPlayerScore(attackerId, 100, greenTeamModel);
+                greenTeamScore += 100;
+                addEvent("Green player " + attackerId + " hit the Green base!");
             } 
+        }
         else {
             addEvent("Player " + attackerId + " tagged player " + targetId);
             String points = choosingScoreToAdd(attackerId, targetId);
@@ -279,55 +287,25 @@ public class PlayerActionDisplay {
 public String choosingScoreToAdd(String attackerId, String targetId) {
     String attackTeam = "none";
     String hitTeam = "none";
-    String attackerName = "none";
-    String hitName = "none";
 
-    //Figure out which team they both are on
-    for (String[] player : players) {
-            if (player[1].equals(attackerId)) { //change from 2
-                attackerName = player[0];
-            }
-            if (player[1].equals(targetId)) { //change from 2
-                hitName = player[0];
-            }
+    // Determine attacker's team
+    attackTeam = getTeamForPlayer(attackerId);
+
+    // Determine target's team
+    hitTeam = getTeamForPlayer(targetId);
+
+    // Compare teams and return the result
+    if ("Red Team".equals(attackTeam) && "Red Team".equals(hitTeam)) {
+        return "SameRed"; // Both are in Red Team
+    } else if ("Green Team".equals(attackTeam) && "Green Team".equals(hitTeam)) {
+        return "SameGreen"; // Both are in Green Team
+    } else if ("Red Team".equals(attackTeam) && "Green Team".equals(hitTeam)) {
+        return "RedHitsGreen"; // Red hits Green
+    } else if ("Green Team".equals(attackTeam) && "Red Team".equals(hitTeam)) {
+        return "GreenHitsRed"; // Green hits Red
     }
 
-    for (int i = 0; i < redTeamModel.getRowCount(); i++) {
-        if (redTeamModel.getValueAt(i, 0).equals(attackerName)) {
-            attackTeam = "red"; // Player is in the red team
-        }
-    }
-
-    // Check in greenTeamModel
-    for (int i = 0; i < greenTeamModel.getRowCount(); i++) {
-        if (greenTeamModel.getValueAt(i, 0).equals(attackerName)) {
-            attackTeam = "green"; // Player is in the green team
-        }
-    }
-
-    for (int i = 0; i < redTeamModel.getRowCount(); i++) {
-        if (redTeamModel.getValueAt(i, 0).equals(hitName)) {
-            hitTeam = "red"; // Player is in the red team
-        }
-    }
-
-    for (int i = 0; i < greenTeamModel.getRowCount(); i++) {
-        if (greenTeamModel.getValueAt(i, 0).equals(hitName)) {
-            hitTeam = "green"; // Player is in the green team
-        }
-    }
-    if ("red".equals(hitTeam) && "red".equals(attackTeam)) {
-        return "SameRed"; // Both teams are red
-    } else if ("green".equals(hitTeam) && "green".equals(attackTeam)) {
-        return "SameGreen"; // Both teams are green
-    } else if ("red".equals(hitTeam) && "green".equals(attackTeam)) {
-        return "GreenHitsRed"; // Green hits red
-    } else if ("green".equals(hitTeam) && "red".equals(attackTeam)) {
-        return "RedHitsGreen";
-    }
-
-    // Default case (if needed)
-    return "NoHit";
+    return "NoHit"; // Default case
 }
 
 public void AddingB(DefaultTableModel model, String attackerID) {
@@ -385,6 +363,26 @@ public void AddingB(DefaultTableModel model, String attackerID) {
         ex.printStackTrace();
     }
     }
+
+    public String getTeamForPlayer(String equipmentId) {
+    // Check Red Team
+    for (int i = 0; i < redTeamModel.getRowCount(); i++) {
+        if (equipmentId.equals(redTeamModel.getValueAt(i, 2))) { // Match equipment ID in the third column
+            return "Red Team";
+        }
+    }
+
+    // Check Green Team
+    for (int i = 0; i < greenTeamModel.getRowCount(); i++) {
+        if (equipmentId.equals(greenTeamModel.getValueAt(i, 2))) { // Match equipment ID in the third column
+            return "Green Team";
+        }
+    }
+
+    // If not found in either team
+    return "Not assigned to any team";
+}
+
 
 private class CountdownAction implements ActionListener {
         @Override
