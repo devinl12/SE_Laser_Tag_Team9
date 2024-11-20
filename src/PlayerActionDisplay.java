@@ -118,7 +118,7 @@ public class PlayerActionDisplay {
     }
 
     public void populateTeams(List<String[]> redTeam, List<String[]> greenTeam) {
-        // Clear existing data
+    // Clear existing data
         redTeamModel.setRowCount(0);
         greenTeamModel.setRowCount(0);
 
@@ -137,6 +137,10 @@ public class PlayerActionDisplay {
             playerScores.put(player[1], 0); // Initialize scores for each player
             greenTeamModel.addRow(new Object[]{player[0], 0, player[1]}); // Add PlayerID (player[0])
         }
+
+        // Sort the tables by score
+        sortTableByScore(redTeamModel);
+        sortTableByScore(greenTeamModel);
     }
 
 
@@ -312,21 +316,53 @@ public String choosingScoreToAdd(String attackerId, String targetId) {
 }
 
     private void addPlayerScore(String attackerId, int scoreChange, DefaultTableModel model) {
-        // Update score in the playerScores map
+    // Update score in the playerScores map
         int newScore = playerScores.getOrDefault(attackerId, 0) + scoreChange;
         playerScores.put(attackerId, newScore);
 
         // Update the score in the appropriate table
+        boolean updated = false;
         for (int i = 0; i < model.getRowCount(); i++) {
-            // Compare attackerId with the equipment ID column (third column in the model)
             if (attackerId.equals(model.getValueAt(i, 2))) { // Match equipment ID
                 model.setValueAt(newScore, i, 1); // Update the "Score" column
-                return;
+                updated = true;
+                break;
             }
         }
 
-        System.out.println("Could not match ID: " + attackerId);
-    }   
+        if (!updated) {
+            System.out.println("Could not match ID: " + attackerId);
+            return;
+        }
+
+        // Sort the rows by score in descending order
+        sortTableByScore(model);
+    }
+
+    private void sortTableByScore(DefaultTableModel model) {
+        int rowCount = model.getRowCount();
+        if (rowCount < 2) return; // No need to sort if there's only one row or none
+
+        // Extract rows into a list for sorting
+        List<Object[]> rows = new ArrayList<>();
+        for (int i = 0; i < rowCount; i++) {
+            Object[] row = new Object[model.getColumnCount()];
+            for (int j = 0; j < model.getColumnCount(); j++) {
+                row[j] = model.getValueAt(i, j);
+            }
+            rows.add(row);
+        }
+
+        // Sort rows by the "Score" column (index 1) in descending order
+        rows.sort((r1, r2) -> Integer.compare((int) r2[1], (int) r1[1]));
+
+        // Clear the model and re-add sorted rows
+        model.setRowCount(0);
+        for (Object[] row : rows) {
+            model.addRow(row);
+        }
+    }
+ 
 
     private void sendGameEndSignal() {
         try {
