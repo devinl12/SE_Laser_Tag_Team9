@@ -333,7 +333,6 @@ public class PlayerActionDisplay {
                 String playerName = (String) teamModel.getValueAt(i, 0); // Get the player's name
                 String newName = "<html>" + playerName + " <i>B</i></html>"; // Add italicized "B"
                 teamModel.setValueAt(newName, i, 0); // Update the player's name in the first column
-                System.out.println("Updated player: " + playerName + " with italicized 'B' in " + team);
                 return; // Exit after updating
             }
         }
