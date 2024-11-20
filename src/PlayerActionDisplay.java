@@ -122,30 +122,35 @@ public class PlayerActionDisplay {
     }
 
     public void populateTeams(List<String[]> redTeam, List<String[]> greenTeam) {
-    // Clear existing data
+        // Clear existing data
         redTeamModel.setRowCount(0);
         greenTeamModel.setRowCount(0);
 
-        // Add the "Score" column
-        redTeamModel.setColumnIdentifiers(new String[]{"Red Team Players", "Score", "EquiptmentID"});
-        greenTeamModel.setColumnIdentifiers(new String[]{"Green Team Players", "Score", "EquiptmentID"});
+        // Add the "Score" column without showing EquipmentID
+        redTeamModel.setColumnIdentifiers(new String[]{"Red Team Players", "Score", "EquipmentID"});
+        greenTeamModel.setColumnIdentifiers(new String[]{"Green Team Players", "Score", "EquipmentID"});
 
         // Populate Red Team Table
         for (String[] player : redTeam) {
             playerScores.put(player[1], 0); // Initialize scores for each player
-            redTeamModel.addRow(new Object[]{player[0], 0, player[1]}); // Add PlayerID (player[0])
+            redTeamModel.addRow(new Object[]{player[0], 0, player[1]}); // Add Player Name, Score, and EquipmentID
         }
 
         // Populate Green Team Table
         for (String[] player : greenTeam) {
             playerScores.put(player[1], 0); // Initialize scores for each player
-            greenTeamModel.addRow(new Object[]{player[0], 0, player[1]}); // Add PlayerID (player[0])
+            greenTeamModel.addRow(new Object[]{player[0], 0, player[1]}); // Add Player Name, Score, and EquipmentID
         }
+
+        // Hide the EquipmentID column for both tables
+        hideColumn(redTeamTable, 2); // 2 = EquipmentID column index
+        hideColumn(greenTeamTable, 2);
 
         // Sort the tables by score
         sortTableByScore(redTeamModel);
         sortTableByScore(greenTeamModel);
     }
+
 
 
     public void addEvent(String event) {
@@ -275,17 +280,17 @@ public class PlayerActionDisplay {
             return; // Already flashing this label
         }
 
-        stopFlashing(); // Stop any existing flashing
+        stopFlashing(); 
 
         flashingLabel = label;
-        flashingTimer = new Timer(500, new ActionListener() { // Flash every 500ms
+        flashingTimer = new Timer(500, new ActionListener() { 
             private boolean visible = true;
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (flashingLabel != null) {
                     flashingLabel.setVisible(visible);
-                    visible = !visible; // Toggle visibility
+                    visible = !visible; 
                 }
             }
         });
@@ -298,7 +303,7 @@ public class PlayerActionDisplay {
             flashingTimer = null;
         }
         if (flashingLabel != null) {
-            flashingLabel.setVisible(true); // Ensure label is visible
+            flashingLabel.setVisible(true); 
             flashingLabel = null;
         }
     }
@@ -444,7 +449,13 @@ public String choosingScoreToAdd(String attackerId, String targetId) {
 
         // If not found in either team
         return "Not assigned to any team";
-}
+    }
+// Helper method to hide a column in a JTable
+    private void hideColumn(JTable table, int columnIndex) {
+        table.getColumnModel().getColumn(columnIndex).setMinWidth(0);
+        table.getColumnModel().getColumn(columnIndex).setMaxWidth(0);
+        table.getColumnModel().getColumn(columnIndex).setWidth(0);
+    }
 
 
 private class CountdownAction implements ActionListener {
