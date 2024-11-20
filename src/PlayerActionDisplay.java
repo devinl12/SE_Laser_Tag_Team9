@@ -181,7 +181,7 @@ public class PlayerActionDisplay {
 
 
         if (targetId.equals("43")) { // Greenbase has been scored
-            String whichTeam = getTeamForPlayer(attackerID);
+            String whichTeam = getTeamForPlayer(attackerId);
             System.out.println("AttackerId " + attackerId + "is on team" + whichTeam);
             if (whichTeam.equals("Red Team")){
                 AddingB(redTeamModel, attackerId);
@@ -192,7 +192,7 @@ public class PlayerActionDisplay {
 
         }
         else if (targetId.equals("53")) {
-            String whichTeam = getTeamForPlayer(attackerID); //red base has been scored
+            String whichTeam = getTeamForPlayer(attackerId); //red base has been scored
             System.out.println("AttackerId " + attackerId + "is on team" + whichTeam);
             if (whichTeam.equals("Green Team")){
                 AddingB(greenTeamModel, attackerId);
