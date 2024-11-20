@@ -352,14 +352,14 @@ public void AddingB(DefaultTableModel model, String attackerID) {
 
 
 
-private void addPlayerScore(String playerId, int scoreChange, DefaultTableModel model) {
+private void addPlayerScore(String attackerId, int scoreChange, DefaultTableModel model) {
     // Update score in the playerScores map
-    int newScore = playerScores.getOrDefault(playerId, 0) + scoreChange;
-    playerScores.put(playerId, newScore);
+    int newScore = playerScores.getOrDefault(attackerId, 0) + scoreChange;
+    playerScores.put(attackerId, newScore);
 
     // Update the score in the appropriate table
     for (int i = 0; i < model.getRowCount(); i++) {
-        if (playerId.equals(players.get(i)[0])) { // Match player ID
+        if (attackerId.equals(players.get(i)[1])) { // Match player ID
             model.setValueAt(newScore, i, 1); // Update the "Score" column
             return;
         }
