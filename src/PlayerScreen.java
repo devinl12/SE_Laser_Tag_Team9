@@ -203,13 +203,13 @@ public class PlayerScreen implements KeyListener {
 }
 
 private List<String[]> getGreenTeamPlayers() {
-    List<String[]> GreenTeamPlayers = new ArrayList<>();
+    List<String[]> greenTeamPlayers = new ArrayList<>();
     DefaultTableModel model = (DefaultTableModel) team2Table.getModel();
 
     for (int i = 0; i < model.getRowCount(); i++) {
         String codename = model.getValueAt(i, 0).toString();
         String equipmentCode = model.getValueAt(i, 1).toString(); // Second column
-        gedTeamPlayers.add(new String[]{codename, equipmentCode});
+        greenTeamPlayers.add(new String[]{codename, equipmentCode});
     }
 
     return greenTeamPlayers;
