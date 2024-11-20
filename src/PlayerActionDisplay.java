@@ -184,7 +184,7 @@ public class PlayerActionDisplay {
             String whichTeam = getTeamForPlayer(attackerId);
             System.out.println("AttackerId " + attackerId + "is on team" + whichTeam);
             if (whichTeam.equals("Red Team")){
-                AddingB(redTeamModel, attackerId);
+                addBaseHit(attackerId);
                 addPlayerScore(attackerId, 100, redTeamModel);
                 redTeamScore += 100;
                 addEvent("Red player " + attackerId + " hit the Green base!");
@@ -195,7 +195,7 @@ public class PlayerActionDisplay {
             String whichTeam = getTeamForPlayer(attackerId); //red base has been scored
             System.out.println("AttackerId " + attackerId + "is on team" + whichTeam);
             if (whichTeam.equals("Green Team")){
-                AddingB(greenTeamModel, attackerId);
+                addBaseHit(attackerId);
                 addPlayerScore(attackerId, 100, greenTeamModel);
                 greenTeamScore += 100;
                 addEvent("Green player " + attackerId + " hit the Green base!");
@@ -258,31 +258,35 @@ public class PlayerActionDisplay {
         actionLog.append(entry + "\n");
     }
 
-    private void addBaseHit(String attackerId, String team) {
-        
-    // Iterate through players to find the matching equipmentId
-    for (String[] player : players) {
-        if (player[1].equals(attackerId))  { // Match attackerId with equipmentId
-            String playerName = player[0]; // Get player's name
+    private void addBaseHit(String attackerId) {
+        // Determine the team of the player using getTeamForPlayer
+        String team = getTeamForPlayer(attackerId);
+        DefaultTableModel teamModel;
 
-            
-            // Determine the team model to update
-            DefaultTableModel teamModel = team.equals("red") ? redTeamModel : greenTeamModel;
+        // Select the appropriate team model based on the team
+        if ("Red Team".equals(team)) {
+            teamModel = redTeamModel;
+        } else if ("Green Team".equals(team)) {
+            teamModel = greenTeamModel;
+        } else {
+            System.out.println("Player with ID " + attackerId + " is not assigned to any team.");
+            return; // Exit if the player is not found on any team
+        }
 
-            // Iterate through the team table to find the player's name
-            for (int i = 0; i < teamModel.getRowCount(); i++) {
-                if (teamModel.getValueAt(i, 0).equals(playerName)) {
-                    // Update the player's name with an italicized "B"
-                    teamModel.setValueAt("<html>" + playerName + " <i>B</i></html>", i, 0);
-                    return; // Exit after updating
-                }
+        // Iterate through the team table to find the attacker's equipmentId
+        for (int i = 0; i < teamModel.getRowCount(); i++) {
+            if (attackerId.equals(teamModel.getValueAt(i, 2))) { // Match equipmentId in the third column
+                String playerName = (String) teamModel.getValueAt(i, 0); // Get the player's name
+                String newName = "<html>" + playerName + " <i>B</i></html>"; // Add italicized "B"
+                teamModel.setValueAt(newName, i, 0); // Update the player's name in the first column
+                System.out.println("Updated player: " + playerName + " with italicized 'B' in " + team);
+                return; // Exit after updating
             }
         }
-        else{
-            System.out.println("Player ID not matched");
-        }
+
+        // If no match was found in the team model
+        System.out.println("Could not find player with ID: " + attackerId + " in " + team);
     }
-}
 
 public String choosingScoreToAdd(String attackerId, String targetId) {
     String attackTeam = "none";
@@ -307,28 +311,6 @@ public String choosingScoreToAdd(String attackerId, String targetId) {
 
     return "NoHit"; // Default case
 }
-
-public void AddingB(DefaultTableModel model, String attackerID) {
-    String attackerName = "null";
-
-    for (String[] player : players) {
-            if (player[1].equals(attackerID)) { //change from 2
-                attackerName = player[0];
-            }
-    }
-
-    String newName = "<html>" + attackerName + " <i>B</i></html>";
-
-    for (int row = 0; row < model.getRowCount(); row++) {
-            if (model.getValueAt(row, 0).equals(attackerName)) { // Check if name matches
-                model.setValueAt(newName, row, 0); // Update name in the first column
-                System.out.println("Updated " + attackerName + " to " + newName + " at row " + row);
-                break;
-            }
-        }
-    }
-
-
 
     private void addPlayerScore(String attackerId, int scoreChange, DefaultTableModel model) {
         // Update score in the playerScores map
