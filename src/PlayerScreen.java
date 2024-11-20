@@ -34,11 +34,9 @@ public class PlayerScreen implements KeyListener {
     }
 
 
-    // Graphics for the player screen
     public void showPlayerScreen() {
         frame.getContentPane().removeAll();
         frame.setLayout(new BorderLayout());
-
 
         // Main panel for teams
         JPanel mainPanel = new JPanel(new GridLayout(1, 2));
@@ -51,6 +49,9 @@ public class PlayerScreen implements KeyListener {
         JScrollPane team1ScrollPane = new JScrollPane(team1Table);
         leftPanel.add(team1ScrollPane, BorderLayout.CENTER);
         customizeTable(team1Table, new Color(255, 69, 0), new Color(220, 20, 60));
+
+        // Hide the EquipmentID column for the red team
+        hideColumn(team1Table, 1);
 
         // Add Player Button for Red Team
         JButton addTeam1PlayerButton = new JButton("Add Player to Red Team");
@@ -71,6 +72,9 @@ public class PlayerScreen implements KeyListener {
         rightPanel.add(team2ScrollPane, BorderLayout.CENTER);
         customizeTable(team2Table, new Color(119, 221, 119), new Color(144, 238, 144));
 
+        // Hide the EquipmentID column for the green team
+        hideColumn(team2Table, 1);
+
         // Add Player Button for Green Team
         JButton addTeam2PlayerButton = new JButton("Add Player to Green Team");
         addTeam2PlayerButton.addActionListener(new ActionListener() {
@@ -88,7 +92,7 @@ public class PlayerScreen implements KeyListener {
         // Bottom panel for instructions
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 10));
-        
+
         JLabel f5Label = new JLabel("Press F5 to start game");
         f5Label.setFont(new Font("SansSerif", Font.BOLD, 16));
         f5Label.setForeground(Color.BLUE);
@@ -108,6 +112,14 @@ public class PlayerScreen implements KeyListener {
         frame.revalidate();
         frame.repaint();
     }
+
+// Helper method to hide a column in a JTable
+    private void hideColumn(JTable table, int columnIndex) {
+        table.getColumnModel().getColumn(columnIndex).setMinWidth(0);
+        table.getColumnModel().getColumn(columnIndex).setMaxWidth(0);
+        table.getColumnModel().getColumn(columnIndex).setWidth(0);
+    }
+
 
     private void addPlayerToTeam(DefaultTableModel teamModel) {
         // Prompt the user to input the player's ID
