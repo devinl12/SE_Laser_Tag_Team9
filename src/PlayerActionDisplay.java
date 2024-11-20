@@ -186,12 +186,14 @@ public class PlayerActionDisplay {
             greenTeamScore += 100;
             addEvent("Green player " + attackerId + " hit the Red base!");
 
-    } else if (targetId.equals("53")) { // Red team hits Green base
+        }
+     else if (targetId.equals("53")) { // Red team hits Green base
             AddingB(redTeamModel, attackerId);
             addPlayerScore(attackerId, 100);
             redTeamScore += 100;
             addEvent("Red player " + attackerId + " hit the Green base!");
-    } else {
+        } 
+    else {
         addEvent("Player " + attackerId + " tagged player " + targetId);
         String points = choosingScoreToAdd(attackerId, targetId);
         int scoreChange = 0;
@@ -199,15 +201,19 @@ public class PlayerActionDisplay {
         if (points.equals("SameRed")) {
             redTeamScore -= 10;
             scoreChange = -10;
+            addPlayerScore(attackerId, scoreChange, redTeamModel);
         } else if (points.equals("SameGreen")) {
             greenTeamScore -= 10;
             scoreChange = -10;
+            addPlayerScore(attackerId, scoreChange, greenTeamModel);
         } else if (points.equals("RedHitsGreen")) {
             redTeamScore += 10;
             scoreChange = 10;
+            addPlayerScore(attackerId, scoreChange, redTeamModel);
         } else if (points.equals("GreenHitsRed")) {
             greenTeamScore += 10;
             scoreChange = 10;
+            addPlayerScore(attackerId, scoreChange, greenTeamModel);
         }
 
         addPlayerScore(attackerId, scoreChange); // Update individual score
@@ -346,37 +352,23 @@ public void AddingB(DefaultTableModel model, String attackerID) {
         }
     }
 
-    
 
 
-private boolean isPlayerInTeam(String playerId, DefaultTableModel teamModel) {
-    for (int i = 0; i < teamModel.getRowCount(); i++) {
-        if (teamModel.getValueAt(i, 0).equals(playerId)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-private void addPlayerScore(String playerId, int scoreChange) {
+private void addPlayerScore(String playerId, int scoreChange, DefaultTableModel model) {
     // Update score in the playerScores map
     int newScore = playerScores.getOrDefault(playerId, 0) + scoreChange;
     playerScores.put(playerId, newScore);
 
     // Update the score in the appropriate table
-    for (int i = 0; i < redTeamModel.getRowCount(); i++) {
+    for (int i = 0; i < model.getRowCount(); i++) {
         if (playerId.equals(players.get(i)[0])) { // Match player ID
-            redTeamModel.setValueAt(newScore, i, 1); // Update the "Score" column
+            model.setValueAt(newScore, i, 1); // Update the "Score" column
             return;
         }
-    }
-
-    for (int i = 0; i < greenTeamModel.getRowCount(); i++) {
-        if (playerId.equals(players.get(i)[0])) { // Match player ID
-            greenTeamModel.setValueAt(newScore, i, 1); // Update the "Score" column
-            return;
+        else{
+            System.out.println("Could not match ID!" + model)
         }
-    }   
+    }  
 }
 
     private void sendGameEndSignal() {
