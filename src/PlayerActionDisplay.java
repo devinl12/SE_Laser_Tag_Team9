@@ -124,7 +124,7 @@ public class PlayerActionDisplay {
 
     // Add the "Score" column
     redTeamModel.setColumnIdentifiers(new String[]{"Red Team Players", "Score", "PlayerID"});
-    greenTeamModel.setColumnIdentifiers(new String[]{"Green Team Players", "Score", , "PlayerID"});
+    greenTeamModel.setColumnIdentifiers(new String[]{"Green Team Players", "Score", "PlayerID"});
 
     // Populate Red Team Table
 for (String[] player : redTeam) {
