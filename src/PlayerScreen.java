@@ -182,38 +182,18 @@ public class PlayerScreen implements KeyListener {
         return null;
     }
 
-    // private List<String[]> getRedTeamPlayers() {
-    //     List<String[]> redTeamPlayers = new ArrayList<>();
-    //     DefaultTableModel model = (DefaultTableModel) team1Table.getModel();
-    //     for (int i = 0; i < model.getRowCount(); i++) {
-    //         String codename = model.getValueAt(i, 0).toString();
-    //         redTeamPlayers.add(new String[]{String.valueOf(i), codename});
-    //     }
-    //     return redTeamPlayers;
-    // }
-    // private List<String[]> getGreenTeamPlayers() {
-    //     List<String[]> greenTeamPlayers = new ArrayList<>();
-    //     DefaultTableModel model = (DefaultTableModel) team2Table.getModel();
-    //     for (int i = 0; i < model.getRowCount(); i++) {
-    //         String codename = model.getValueAt(i, 0).toString();
-    //         greenTeamPlayers.add(new String[]{String.valueOf(i), codename});
-    //     }
-    //     return greenTeamPlayers;
-    // }
-
+    
     private List<String[]> getRedTeamPlayers() {
-    List<String[]> redTeamPlayers = new ArrayList<>();
-    DefaultTableModel model = (DefaultTableModel) team1Table.getModel();
+        List<String[]> redTeamPlayers = new ArrayList<>();
+        DefaultTableModel model = (DefaultTableModel) team1Table.getModel();
 
-    for (int i = 0; i < model.getRowCount(); i++) {
-        String codename = model.getValueAt(i, 0).toString();
-        String equipmentCode = model.getValueAt(i, 1).toString(); // Second column
-        redTeamPlayers.add(new String[]{codename, equipmentCode});
-        System.out.println(" RED Codename: " + codename + " Equiptment ID: " + equipmentCode);
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String codename = model.getValueAt(i, 0).toString();
+            String equipmentCode = model.getValueAt(i, 1).toString(); // Second column
+            redTeamPlayers.add(new String[]{codename, equipmentCode});
+        }
+        return redTeamPlayers;
     }
-
-    return redTeamPlayers;
-}
 
 private List<String[]> getGreenTeamPlayers() {
     List<String[]> greenTeamPlayers = new ArrayList<>();
@@ -223,9 +203,7 @@ private List<String[]> getGreenTeamPlayers() {
         String codename = model.getValueAt(i, 0).toString();
         String equipmentCode = model.getValueAt(i, 1).toString(); // Second column
         greenTeamPlayers.add(new String[]{codename, equipmentCode});
-        System.out.println(" GREEN Codename: " + codename + " Equiptment ID: " + equipmentCode);
     }
-
     return greenTeamPlayers;
 }
 

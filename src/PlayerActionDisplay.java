@@ -459,19 +459,37 @@ public String choosingScoreToAdd(String attackerId, String targetId) {
 
 
 private class CountdownAction implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (gameLength > 0) {
-                updateTimer();
-                gameLength--;
-            } else {
-                timer.stop();
-                timerLabel.setText("Game Complete!");
-                sendGameEndSignal();
-                PlayerScreen nextGame = new PlayerScreen(frame, PlayerActionDisplay.this, playerService);
-                nextGame.showPlayerScreen();
-                frame.setVisible(true);
-            }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (gameLength > 0) {
+            updateTimer();
+            gameLength--;
+        } else {
+            timer.stop();
+            timerLabel.setText("Game Complete!");
+            sendGameEndSignal();
+            showReturnToPlayerScreenButton(); // Add the button to return to the player entry screen
         }
     }
+}
+
+private void showReturnToPlayerScreenButton() {
+    JPanel bottomPanel = new JPanel(new BorderLayout());
+    JButton returnButton = new JButton("Return to Player Entry Screen");
+
+    returnButton.setFont(new Font("SansSerif", Font.BOLD, 18));
+    returnButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            PlayerScreen playerScreen = new PlayerScreen(frame, PlayerActionDisplay.this, playerService);
+            playerScreen.showPlayerScreen();
+        }
+    });
+
+    bottomPanel.add(returnButton, BorderLayout.CENTER);
+    frame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
+    frame.revalidate();
+    frame.repaint();
+}
+
 }
