@@ -364,7 +364,7 @@ private void addPlayerScore(String playerId, int scoreChange, DefaultTableModel 
             return;
         }
         else{
-            System.out.println("Could not match ID!" + model)
+            System.out.println("Could not match ID!" + model);
         }
     }  
 }
