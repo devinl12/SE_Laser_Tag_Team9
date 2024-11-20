@@ -118,26 +118,26 @@ public class PlayerActionDisplay {
     }
 
     public void populateTeams(List<String[]> redTeam, List<String[]> greenTeam) {
-    // Clear existing data
-    redTeamModel.setRowCount(0);
-    greenTeamModel.setRowCount(0);
+        // Clear existing data
+        redTeamModel.setRowCount(0);
+        greenTeamModel.setRowCount(0);
 
-    // Add the "Score" column
-    redTeamModel.setColumnIdentifiers(new String[]{"Red Team Players", "Score", "EquiptmentID"});
-    greenTeamModel.setColumnIdentifiers(new String[]{"Green Team Players", "Score", "EquiptmentID"});
+        // Add the "Score" column
+        redTeamModel.setColumnIdentifiers(new String[]{"Red Team Players", "Score", "EquiptmentID"});
+        greenTeamModel.setColumnIdentifiers(new String[]{"Green Team Players", "Score", "EquiptmentID"});
 
-    // Populate Red Team Table
-for (String[] player : redTeam) {
-    playerScores.put(player[1], 0); // Initialize scores for each player
-    redTeamModel.addRow(new Object[]{player[0], 0, player[1]}); // Add PlayerID (player[0])
-}
+        // Populate Red Team Table
+        for (String[] player : redTeam) {
+            playerScores.put(player[1], 0); // Initialize scores for each player
+            redTeamModel.addRow(new Object[]{player[0], 0, player[1]}); // Add PlayerID (player[0])
+        }
 
-// Populate Green Team Table
-for (String[] player : greenTeam) {
-    playerScores.put(player[1], 0); // Initialize scores for each player
-    greenTeamModel.addRow(new Object[]{player[0], 0, player[1]}); // Add PlayerID (player[0])
-}
-}
+        // Populate Green Team Table
+        for (String[] player : greenTeam) {
+            playerScores.put(player[1], 0); // Initialize scores for each player
+            greenTeamModel.addRow(new Object[]{player[0], 0, player[1]}); // Add PlayerID (player[0])
+        }
+    }
 
 
     public void addEvent(String event) {
@@ -149,87 +149,87 @@ for (String[] player : greenTeam) {
 
     public void processEvent(String event) {
 
-    if (event.equals(lastProcessedEvent)) {
+        if (event.equals(lastProcessedEvent)) {
+            try {
+            InetAddress address = InetAddress.getByName("127.0.0.1");
+            String ackMessage = "Acknowledged: " + event;
+            byte[] buffer = ackMessage.getBytes();
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
+            acknowledgmentSocket.send(packet);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+            return; // Skip if this event is the same as the last one
+        }
+        lastProcessedEvent = event; // Update the last processed event
+
+        if (event == null || event.isEmpty()) {
+            System.out.println("Received an empty event, skipping...");
+            return;
+        }
+
+        String[] parts = event.split(":");
+        if (parts.length < 2) {
+            System.out.println("Malformed event: " + event);
+            return;
+        }
+
+        String attackerId = parts[0];
+        String targetId = parts[1];
+
+        System.out.println("Attacker ID:" + attackerId + " targetID:" + targetId);
+
+
+        if (targetId.equals("43")) { // Green team hits Red base
+                AddingB(greenTeamModel, attackerId);
+                addPlayerScore(attackerId, 100, greenTeamModel);
+                greenTeamScore += 100;
+                addEvent("Green player " + attackerId + " hit the Red base!");
+
+            }
+        else if (targetId.equals("53")) { // Red team hits Green base
+                AddingB(redTeamModel, attackerId);
+                addPlayerScore(attackerId, 100, redTeamModel);
+                redTeamScore += 100;
+                addEvent("Red player " + attackerId + " hit the Green base!");
+            } 
+        else {
+            addEvent("Player " + attackerId + " tagged player " + targetId);
+            String points = choosingScoreToAdd(attackerId, targetId);
+            int scoreChange = 0;
+
+            if (points.equals("SameRed")) {
+                redTeamScore -= 10;
+                scoreChange = -10;
+                addPlayerScore(attackerId, scoreChange, redTeamModel);
+            } else if (points.equals("SameGreen")) {
+                greenTeamScore -= 10;
+                scoreChange = -10;
+                addPlayerScore(attackerId, scoreChange, greenTeamModel);
+            } else if (points.equals("RedHitsGreen")) {
+                redTeamScore += 10;
+                scoreChange = 10;
+                addPlayerScore(attackerId, scoreChange, redTeamModel);
+            } else if (points.equals("GreenHitsRed")) {
+                greenTeamScore += 10;
+                scoreChange = 10;
+                addPlayerScore(attackerId, scoreChange, greenTeamModel);
+            }
+        }
+
+        // Update displayed scores
+        updateTeamScores(redTeamScore, greenTeamScore);
+
         try {
-        InetAddress address = InetAddress.getByName("127.0.0.1");
-        String ackMessage = "Acknowledged: " + event;
-        byte[] buffer = ackMessage.getBytes();
-        DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
-        acknowledgmentSocket.send(packet);
-    } catch (Exception ex) {
-        ex.printStackTrace();
-    }
-        return; // Skip if this event is the same as the last one
-    }
-    lastProcessedEvent = event; // Update the last processed event
-
-    if (event == null || event.isEmpty()) {
-        System.out.println("Received an empty event, skipping...");
-        return;
-    }
-
-    String[] parts = event.split(":");
-    if (parts.length < 2) {
-        System.out.println("Malformed event: " + event);
-        return;
-    }
-
-    String attackerId = parts[0];
-    String targetId = parts[1];
-
-    System.out.println("Attacker ID:" + attackerId + " targetID:" + targetId);
-
-
-    if (targetId.equals("43")) { // Green team hits Red base
-            AddingB(greenTeamModel, attackerId);
-            addPlayerScore(attackerId, 100, greenTeamModel);
-            greenTeamScore += 100;
-            addEvent("Green player " + attackerId + " hit the Red base!");
-
-        }
-     else if (targetId.equals("53")) { // Red team hits Green base
-            AddingB(redTeamModel, attackerId);
-            addPlayerScore(attackerId, 100, redTeamModel);
-            redTeamScore += 100;
-            addEvent("Red player " + attackerId + " hit the Green base!");
-        } 
-    else {
-        addEvent("Player " + attackerId + " tagged player " + targetId);
-        String points = choosingScoreToAdd(attackerId, targetId);
-        int scoreChange = 0;
-
-        if (points.equals("SameRed")) {
-            redTeamScore -= 10;
-            scoreChange = -10;
-            addPlayerScore(attackerId, scoreChange, redTeamModel);
-        } else if (points.equals("SameGreen")) {
-            greenTeamScore -= 10;
-            scoreChange = -10;
-            addPlayerScore(attackerId, scoreChange, greenTeamModel);
-        } else if (points.equals("RedHitsGreen")) {
-            redTeamScore += 10;
-            scoreChange = 10;
-            addPlayerScore(attackerId, scoreChange, redTeamModel);
-        } else if (points.equals("GreenHitsRed")) {
-            greenTeamScore += 10;
-            scoreChange = 10;
-            addPlayerScore(attackerId, scoreChange, greenTeamModel);
+            InetAddress address = InetAddress.getByName("127.0.0.1");
+            String ackMessage = "Acknowledged: " + event;
+            byte[] buffer = ackMessage.getBytes();
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
+            acknowledgmentSocket.send(packet);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
-
-    // Update displayed scores
-    updateTeamScores(redTeamScore, greenTeamScore);
-
-    try {
-        InetAddress address = InetAddress.getByName("127.0.0.1");
-        String ackMessage = "Acknowledged: " + event;
-        byte[] buffer = ackMessage.getBytes();
-        DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 7500);
-        acknowledgmentSocket.send(packet);
-    } catch (Exception ex) {
-        ex.printStackTrace();
-    }
-}
 
 
 
@@ -352,22 +352,22 @@ public void AddingB(DefaultTableModel model, String attackerID) {
 
 
 
-private void addPlayerScore(String attackerId, int scoreChange, DefaultTableModel model) {
-    // Update score in the playerScores map
-    int newScore = playerScores.getOrDefault(attackerId, 0) + scoreChange;
-    playerScores.put(attackerId, newScore);
+    private void addPlayerScore(String attackerId, int scoreChange, DefaultTableModel model) {
+        // Update score in the playerScores map
+        int newScore = playerScores.getOrDefault(attackerId, 0) + scoreChange;
+        playerScores.put(attackerId, newScore);
 
-    // Update the score in the appropriate table
-    for (int i = 0; i < model.getRowCount(); i++) {
-        if (attackerId.equals(players.get(i)[1])) { // Match player ID
-            model.setValueAt(newScore, i, 1); // Update the "Score" column
-            return;
+        // Update the score in the appropriate table
+        for (int i = 0; i < model.getRowCount(); i++) {
+            // Compare attackerId with the equipment ID column (third column in the model)
+            if (attackerId.equals(model.getValueAt(i, 2))) { // Match equipment ID
+                model.setValueAt(newScore, i, 1); // Update the "Score" column
+                return;
+            }
         }
-        else{
-            System.out.println("Could not match ID!" + model);
-        }
-    }  
-}
+
+        System.out.println("Could not match ID: " + attackerId);
+    }   
 
     private void sendGameEndSignal() {
     try {
