@@ -39,12 +39,13 @@ public class PlayerScreen implements KeyListener {
         frame.getContentPane().removeAll();
         frame.setLayout(new BorderLayout());
 
+
         // Main panel for teams
         JPanel mainPanel = new JPanel(new GridLayout(1, 2));
 
         // Red Team table
         JPanel leftPanel = new JPanel(new BorderLayout());
-        String[] team1Columns = {"Team Red Players"};
+        String[] team1Columns = {"Team Red Players", "Equipment Code"};
         DefaultTableModel team1Model = new DefaultTableModel(team1Columns, 0);
         team1Table = new JTable(team1Model);
         JScrollPane team1ScrollPane = new JScrollPane(team1Table);
@@ -63,7 +64,7 @@ public class PlayerScreen implements KeyListener {
 
         // Green Team Table
         JPanel rightPanel = new JPanel(new BorderLayout());
-        String[] team2Columns = {"Team Green Players"};
+        String[] team2Columns = {"Team Green Players", "Equipment Code"};
         DefaultTableModel team2Model = new DefaultTableModel(team2Columns, 0);
         team2Table = new JTable(team2Model);
         JScrollPane team2ScrollPane = new JScrollPane(team2Table);
@@ -118,32 +119,36 @@ public class PlayerScreen implements KeyListener {
 
             if (player != null) {
                 // Player ID found, add the player to the table
-                teamModel.addRow(new Object[]{player[1]});
+                //teamModel.addRow(new Object[]{player[1]});
 
                 // Prompt for the equipment code
                 String equipmentCodeInput = JOptionPane.showInputDialog(frame, "Enter Equipment Code for " + player[1] + ":");
                 if (equipmentCodeInput != null) {
                     try {
                         int equipmentCode = Integer.parseInt(equipmentCodeInput);
+                        teamModel.addRow(new Object[]{player[1], equipmentCode});
                         // Transmit the equipment code via UDP
                         UDPTransmit.transmitEquipmentCode(equipmentCode);
                     } catch (NumberFormatException e) {
                         JOptionPane.showMessageDialog(frame, "Invalid Equipment Code. Please enter a valid number.");
                     }
                 }
-            } else {
+            } 
+            
+            else {
                 // Player ID not found, prompt to add a new player
                 String newCodename = JOptionPane.showInputDialog(frame, "ID not found. Enter new player's name:");
                 if (newCodename != null && !newCodename.trim().isEmpty()) {
                     // Add the new player to the list and database
                     playerService.addNewPlayer(inputId, newCodename);
-                    teamModel.addRow(new Object[]{newCodename});
+                    //teamModel.addRow(new Object[]{newCodename});
 
                     // Prompt for the equipment code
                     String equipmentCodeInput = JOptionPane.showInputDialog(frame, "Enter Equipment Code for " + newCodename + ":");
                     if (equipmentCodeInput != null) {
                         try {
                             int equipmentCode = Integer.parseInt(equipmentCodeInput);
+                            teamModel.addRow(new Object[]{player[1], equipmentCode});
                             // Transmit the equipment code via UDP
                             UDPTransmit.transmitEquipmentCode(equipmentCode);
                         } catch (NumberFormatException e) {
@@ -165,24 +170,50 @@ public class PlayerScreen implements KeyListener {
         return null;
     }
 
+    // private List<String[]> getRedTeamPlayers() {
+    //     List<String[]> redTeamPlayers = new ArrayList<>();
+    //     DefaultTableModel model = (DefaultTableModel) team1Table.getModel();
+    //     for (int i = 0; i < model.getRowCount(); i++) {
+    //         String codename = model.getValueAt(i, 0).toString();
+    //         redTeamPlayers.add(new String[]{String.valueOf(i), codename});
+    //     }
+    //     return redTeamPlayers;
+    // }
+    // private List<String[]> getGreenTeamPlayers() {
+    //     List<String[]> greenTeamPlayers = new ArrayList<>();
+    //     DefaultTableModel model = (DefaultTableModel) team2Table.getModel();
+    //     for (int i = 0; i < model.getRowCount(); i++) {
+    //         String codename = model.getValueAt(i, 0).toString();
+    //         greenTeamPlayers.add(new String[]{String.valueOf(i), codename});
+    //     }
+    //     return greenTeamPlayers;
+    // }
+
     private List<String[]> getRedTeamPlayers() {
-        List<String[]> redTeamPlayers = new ArrayList<>();
-        DefaultTableModel model = (DefaultTableModel) team1Table.getModel();
-        for (int i = 0; i < model.getRowCount(); i++) {
-            String codename = model.getValueAt(i, 0).toString();
-            redTeamPlayers.add(new String[]{String.valueOf(i), codename});
-        }
-        return redTeamPlayers;
+    List<String[]> redTeamPlayers = new ArrayList<>();
+    DefaultTableModel model = (DefaultTableModel) team1Table.getModel();
+
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String codename = model.getValueAt(i, 0).toString();
+        String equipmentCode = model.getValueAt(i, 1).toString(); // Second column
+        redTeamPlayers.add(new String[]{codename, equipmentCode});
     }
-    private List<String[]> getGreenTeamPlayers() {
-        List<String[]> greenTeamPlayers = new ArrayList<>();
-        DefaultTableModel model = (DefaultTableModel) team2Table.getModel();
-        for (int i = 0; i < model.getRowCount(); i++) {
-            String codename = model.getValueAt(i, 0).toString();
-            greenTeamPlayers.add(new String[]{String.valueOf(i), codename});
-        }
-        return greenTeamPlayers;
+
+    return redTeamPlayers;
+}
+
+private List<String[]> getGreenTeamPlayers() {
+    List<String[]> GreenTeamPlayers = new ArrayList<>();
+    DefaultTableModel model = (DefaultTableModel) team2Table.getModel();
+
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String codename = model.getValueAt(i, 0).toString();
+        String equipmentCode = model.getValueAt(i, 1).toString(); // Second column
+        gedTeamPlayers.add(new String[]{codename, equipmentCode});
     }
+
+    return greenTeamPlayers;
+}
 
     // Method to customize the JTable
     private void customizeTable(JTable table, Color bgColor, Color selectionColor) {
